@@ -6,7 +6,9 @@ const TRANSLATIONS = {
     alphabet: TRANSLATIONS_ALPHABET,
     pronunciation: TRANSLATIONS_PRONUNCIATION,
     pronouns: TRANSLATIONS_PRONOUNS,
-    vocabulary: TRANSLATIONS_VOCABULARY
+    vocabulary: TRANSLATIONS_VOCABULARY,
+    verb_conjugation: TRANSLATIONS_VERB_CONJUGATION,
+    haben_sein: TRANSLATIONS_HABEN_SEIN
 };
 
 // Функция для получения текущего языка из памяти

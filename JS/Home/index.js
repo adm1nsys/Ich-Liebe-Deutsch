@@ -393,6 +393,20 @@ COURSE_MODULES.forEach(module => {
             });
         }
 
+        // Bind click for topic 2. Verb Conjugation
+        if (topicText === t("home", "module_1_topic_2")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=VerbConjugation";
+            });
+        }
+
+        // Bind click for topic 3. Verbs haben & sein
+        if (topicText === t("home", "module_1_topic_3")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=HabenSein";
+            });
+        }
+
         topicListInnerDiv.appendChild(btn);
     });
 

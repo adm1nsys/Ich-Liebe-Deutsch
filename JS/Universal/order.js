@@ -6,6 +6,8 @@ sync_load('JS/Translate/Dict_Alphabet.js');
 sync_load('JS/Translate/Dict_Pronunciation.js');
 sync_load('JS/Translate/Dict_Pronouns.js');
 sync_load('JS/Translate/Dict_Vocabulary.js');
+sync_load('JS/Translate/Dict_VerbConjugation.js');
+sync_load('JS/Translate/Dict_HabenSein.js');
 sync_load('JS/Translate/Translate.js');
 
 // Load Page
@@ -27,6 +29,12 @@ switch (PAGE_NAME) {
         break;
     case "Pronouns":
         sync_load('JS/A1_1/Pronouns/index.js');
+        break;
+    case "VerbConjugation":
+        sync_load('JS/A1_1/VerbConjugation/index.js');
+        break;
+    case "HabenSein":
+        sync_load('JS/A1_1/HabenSein/index.js');
         break;
     default:
         sync_load('JS/Home/index.js');
