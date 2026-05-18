@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ich Liebe Deutsch - Pronunciation</title>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        // По умолчанию грузим Pronunciation, если параметр не передан
+        const PAGE_NAME = urlParams.get('page') || "Pronunciation";
+        const script = document.createElement("script");
+        script.src = "JS/Universal/linker.js?t=" + Date.now();
+        document.head.appendChild(script);
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
