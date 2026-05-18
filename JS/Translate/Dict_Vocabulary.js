@@ -1797,5 +1797,7 @@ const TRANSLATIONS_VOCABULARY = {
     "word_aufmachen":   { en: "to open",            de: "aufmachen",        cs: "otevřít",          pl: "otwierać",         da: "at åbne",      uk: "відкривати" },
     "word_in":          { en: "in / into",          de: "in",               cs: "v / do",           pl: "w / do",           da: "i / ind i",    uk: "в / у" },
     "word_und":         { en: "and",                de: "und",              cs: "a",                pl: "i",                da: "og",           uk: "і / та" },
-    "word_redewendung": { en: "to keep a low profile", de: "sich bedeckt halten", cs: "chovat se nenápadně", pl: "trzymać się w cieniu", da: "holde lav profil", uk: "триматися в тіні" }
+    "word_redewendung": { en: "to keep a low profile", de: "sich bedeckt halten", cs: "chovat se nenápadně", pl: "trzymać się w cieniu", da: "holde lav profil", uk: "триматися в тіні" },
+    "word_punkt":           { en: "the Period / Dot",           de: "der Punkt",                cs: "Tečka",                        pl: "Kropka",                    da: "Punktum",          uk: "Крапка" },
+    "word_fragezeichen":    { en: "the Question Mark",          de: "das Fragezeichen",         cs: "Otazník",                      pl: "Znak zapytania",            da: "Spørgsmålstegn",   uk: "Знак питання" }
 };
