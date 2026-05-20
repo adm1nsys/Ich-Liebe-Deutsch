@@ -192,6 +192,36 @@ styleElement.textContent = `
         border-color: var(--accent-gold);
     }
 
+    .pill-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .pill-btn {
+        background: var(--content-bg);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        border-radius: 999px;
+        padding: 0.75rem 1rem;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .pill-btn:hover {
+        border-color: var(--accent-gold);
+        transform: translateY(-2px);
+    }
+
+    .pill-btn.active {
+        color: white;
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-red));
+        box-shadow: 0 4px 10px rgba(255, 75, 43, 0.25);
+    }
+
     .action-group {
         display: flex;
         gap: 1rem;
@@ -459,6 +489,7 @@ const settingsCard = document.createElement("div");
 settingsCard.classList.add("card");
 const settingsGrid = document.createElement("div");
 settingsGrid.classList.add("settings-grid");
+let selectedCases = [...CASES];
 
 function createSelect(label, options) {
     const group = document.createElement("label");
@@ -480,13 +511,42 @@ function createSelect(label, options) {
     return select;
 }
 
-const caseSelect = createSelect(t("articles", "case_label"), [
-    { value: "all", label: t("articles", "all_cases") },
-    { value: "nominative", label: t("articles", "nominative") },
-    { value: "accusative", label: t("articles", "accusative") },
-    { value: "dative", label: t("articles", "dative") },
-    { value: "genitive", label: t("articles", "genitive") }
-]);
+function createCaseSelector() {
+    const group = document.createElement("div");
+    group.classList.add("setting-group");
+
+    const labelEl = document.createElement("span");
+    labelEl.classList.add("setting-label");
+    labelEl.textContent = t("articles", "case_label");
+
+    const pillGroup = document.createElement("div");
+    pillGroup.classList.add("pill-group");
+
+    CASES.forEach(caseName => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.classList.add("pill-btn", "active");
+        btn.dataset.case = caseName;
+        btn.textContent = t("articles", caseName);
+        btn.addEventListener("click", () => {
+            if (selectedCases.includes(caseName)) {
+                if (selectedCases.length === 1) return;
+                selectedCases = selectedCases.filter(item => item !== caseName);
+                btn.classList.remove("active");
+            } else {
+                selectedCases.push(caseName);
+                btn.classList.add("active");
+            }
+        });
+        pillGroup.appendChild(btn);
+    });
+
+    group.appendChild(labelEl);
+    group.appendChild(pillGroup);
+    settingsGrid.appendChild(group);
+}
+
+createCaseSelector();
 
 const articleSelect = createSelect(t("articles", "article_label"), [
     { value: "both", label: t("articles", "both_articles") },
@@ -577,11 +637,11 @@ let gameMode = "ASSISTED";
 let questionCount = 5;
 let currentIndex = 0;
 let currentQuestion = null;
-let selectedCase = "all";
 let selectedArticleType = "both";
+let questionQueue = [];
 
 function buildQuestionPool() {
-    const cases = selectedCase === "all" ? CASES : [selectedCase];
+    const cases = selectedCases.length ? selectedCases : CASES;
     const articleTypes = selectedArticleType === "both" ? ["definite", "indefinite"] : [selectedArticleType];
     const pool = [];
 
@@ -603,11 +663,24 @@ function buildQuestionPool() {
     return pool;
 }
 
+function shuffleQuestions(items) {
+    const shuffled = [...items];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
 function startGame(mode) {
     gameMode = mode;
     questionCount = Number(countSelect.value);
-    selectedCase = caseSelect.value;
     selectedArticleType = articleSelect.value;
+    const questionPool = buildQuestionPool();
+    questionQueue = shuffleQuestions(questionPool);
+    while (questionQueue.length < questionCount) {
+        questionQueue = questionQueue.concat(shuffleQuestions(questionPool));
+    }
     currentIndex = 0;
     rulesSection.style.display = "none";
     gameSection.style.display = "flex";
@@ -620,7 +693,7 @@ function nextQuestion() {
         return;
     }
 
-    currentQuestion = getRandom(buildQuestionPool());
+    currentQuestion = questionQueue[currentIndex];
     answerInput.value = "";
     answerInput.className = "answer-input";
     feedback.className = "feedback-message";

@@ -587,16 +587,21 @@ function buildSimpleIntro(forcedSubj = null, forcedTemplate = null) {
         let vBase = split[0];
         let prefix = split[1];
         let refl = getReflexive(pronounKey);
+        let time = { de: "heute", uk: "сьогодні" };
         
         return {
             blocks: [
                 { id: "s", text: sText, trans: subj.uk, type: "subject" },
                 { id: "v", text: v.infinitive, trans: v.uk, conjugated: vBase, type: "verb" },
-                { id: "o", text: refl + " " + prefix, trans: "себе", type: "object" }
+                { id: "r", text: refl, trans: "себе", type: "object" },
+                { id: "t", text: time.de, trans: time.uk, type: "object" },
+                { id: "pref", text: prefix, trans: "(префікс)", type: "object" }
             ],
             prompt: `[${subj.en}] [to introduce oneself] / [${subj.uk}] [представлятися]`,
-            standardStr: `${sText} ${vBase} ${refl} ${prefix}`,
-            invertedStr: `heute ${vBase} ${sText} ${refl} ${prefix}` // Add "heute" (today) to force inversion nicely
+            standardStr: `${sText} ${vBase} ${refl} ${time.de} ${prefix}`,
+            invertedStr: `${time.de} ${vBase} ${sText} ${refl} ${prefix}`,
+            standardIds: ["s", "v", "r", "t", "pref"],
+            invertedIds: ["t", "v", "s", "r", "pref"]
         };
     }
     else if (templateType === 6) { // arbeiten als
@@ -1106,13 +1111,9 @@ function setupPhase() {
     }
     
     if (practiceMode === 'ASSISTED') {
-        if (practiceFormat === 'TYPING') {
-            let hint = currentPhase === 'STANDARD' ? currentSentence.standardStr : currentSentence.invertedStr;
-            hint = hint.charAt(0).toUpperCase() + hint.slice(1);
-            promptText.innerHTML = `<span style="color:var(--accent-gold); font-size:1.2rem; font-weight:800;">Hint: ${hint}</span>`;
-        } else {
-            promptText.innerHTML = `<span style="color:var(--text-secondary); font-size:1.2rem; font-weight:600;">${currentSentence.prompt}</span>`;
-        }
+        let hint = currentPhase === 'STANDARD' ? currentSentence.standardStr : currentSentence.invertedStr;
+        hint = hint.charAt(0).toUpperCase() + hint.slice(1);
+        promptText.innerHTML = `<span style="color:var(--accent-gold); font-size:1.2rem; font-weight:800;">Очікується: ${hint}</span>`;
     } else {
         promptText.innerHTML = "";
     }
@@ -1140,7 +1141,15 @@ function setupBlocksMode(isClickable) {
         const blockEl = document.createElement("div");
         blockEl.classList.add("word-block");
         blockEl.dataset.blockId = block.id;
-        
+
+        const helperIndex = correctOrder.findIndex(correctBlock => correctBlock && correctBlock.id === block.id);
+        if (practiceMode === 'ASSISTED' && practiceFormat === 'BLOCKS' && helperIndex !== -1) {
+            blockEl.classList.add("helper");
+            const helperNumber = document.createElement("div");
+            helperNumber.classList.add("helper-number");
+            helperNumber.textContent = helperIndex + 1;
+            blockEl.appendChild(helperNumber);
+        }
 
 
         const mainText = document.createElement("div");

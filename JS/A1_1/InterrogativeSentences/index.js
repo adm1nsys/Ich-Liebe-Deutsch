@@ -547,7 +547,25 @@ function buildSimpleIntro(forcedSubj = null, forcedActionIdx = -1) {
     let pronounKey = subj.de === "(name)" ? "er" : subj.de;
     let action = forcedActionIdx >= 0 ? VOCAB.actions[forcedActionIdx] : getRandom(VOCAB.actions);
     let conj = conjugate(action.verb.de, pronounKey);
-    let w = getRandom(VOCAB.wWords);
+    let w = { de: "Was", uk: "Що" };
+    let wQuestionStr = `Was ${conj} ${subj.de}?`;
+
+    if (action.verb.de === "heißen") {
+        w = { de: "Wie", uk: "Як" };
+        wQuestionStr = `Wie ${conj} ${subj.de}?`;
+    } else if (action.verb.de === "wohnen") {
+        w = { de: "Wo", uk: "Де" };
+        wQuestionStr = `Wo ${conj} ${subj.de}?`;
+    } else if (action.verb.de === "kommen") {
+        w = { de: "Woher", uk: "Звідки" };
+        wQuestionStr = `Woher ${conj} ${subj.de}?`;
+    } else if (action.verb.de === "sprechen") {
+        w = { de: "Welche Sprache", uk: "Якою мовою" };
+        wQuestionStr = `Welche Sprache ${conj} ${subj.de}?`;
+    } else if (action.verb.de === "arbeiten") {
+        w = { de: "Als was", uk: "Ким" };
+        wQuestionStr = `Als was ${conj} ${subj.de}?`;
+    }
     
     return {
         blocks: [
@@ -558,9 +576,9 @@ function buildSimpleIntro(forcedSubj = null, forcedActionIdx = -1) {
         ],
         prompt: `[${subj.uk}] [${action.uk}]`,
         standardStr: `${conj} ${subj.de} ${action.obj.de}?`,
-        invertedStr: `${w.de} ${conj} ${subj.de} ${action.obj.de}?`,
+        invertedStr: wQuestionStr,
         standardIds: ["v", "s", "o"],
-        invertedIds: ["w", "v", "s", "o"]
+        invertedIds: ["w", "v", "s"]
     };
 }
 
@@ -570,7 +588,7 @@ function buildModalSentence(forcedSubj = null) {
     let v_mod = getRandom(VOCAB.modals);
     let conj = conjugate(v_mod.infinitive, pronounKey);
     let action = getRandom(VOCAB.modalActions);
-    let w = getRandom(VOCAB.wWords);
+    let w = { de: "Was", uk: "Що" };
     
     return {
         blocks: [
@@ -582,9 +600,9 @@ function buildModalSentence(forcedSubj = null) {
         ],
         prompt: `[${subj.uk}] [${v_mod.uk}] [${action.uk}]`,
         standardStr: `${conj} ${subj.de} ${action.obj.de} ${action.verb.de}?`,
-        invertedStr: `${w.de} ${conj} ${subj.de} ${action.obj.de} ${action.verb.de}?`,
+        invertedStr: `${w.de} ${conj} ${subj.de} ${action.verb.de}?`,
         standardIds: ["vm", "s", "o", "vi"],
-        invertedIds: ["w", "vm", "s", "o", "vi"]
+        invertedIds: ["w", "vm", "s", "vi"]
     };
 }
 
@@ -594,7 +612,7 @@ function buildAlltagSentence(forcedSubj = null) {
     let v = getRandom(VOCAB.sepVerbsAlltag);
     let conj = conjugate(v.stem, pronounKey);
     let time = getRandom(VOCAB.timeAdverbs);
-    let w = getRandom(VOCAB.wWords);
+    let w = { de: "Wann", uk: "Коли" };
     
     return {
         blocks: [
@@ -606,9 +624,9 @@ function buildAlltagSentence(forcedSubj = null) {
         ],
         prompt: `[${subj.uk}] [${v.uk}] [${time.uk}]`,
         standardStr: `${conj} ${subj.de} ${time.de} ${v.prefix}?`,
-        invertedStr: `${w.de} ${conj} ${subj.de} ${time.de} ${v.prefix}?`,
+        invertedStr: `${w.de} ${conj} ${subj.de} ${v.prefix}?`,
         standardIds: ["v", "s", "t", "pref"],
-        invertedIds: ["w", "v", "s", "t", "pref"]
+        invertedIds: ["w", "v", "s", "pref"]
     };
 }
 
@@ -625,7 +643,7 @@ function buildFoodSentence(forcedSubj = null) {
         food = getRandom([{ de: "eine Pizza", uk: "піцу" }, { de: "ein Brot", uk: "хліб" }, { de: "einen Apfel", uk: "яблуко" }, { de: "eine Suppe", uk: "суп" }]);
     }
     
-    let w = getRandom([{ de: "Warum", uk: "Чому" }, { de: "Wann", uk: "Коли" }, { de: "Wo", uk: "Де" }]);
+    let w = { de: "Was", uk: "Що" };
     
     return {
         blocks: [
@@ -636,9 +654,9 @@ function buildFoodSentence(forcedSubj = null) {
         ],
         prompt: `[${subj.uk}] [${v.uk}] [${food.uk}]`,
         standardStr: `${conj} ${subj.de} ${food.de}?`,
-        invertedStr: `${w.de} ${conj} ${subj.de} ${food.de}?`,
+        invertedStr: `${w.de} ${conj} ${subj.de}?`,
         standardIds: ["v", "s", "o"],
-        invertedIds: ["w", "v", "s", "o"]
+        invertedIds: ["w", "v", "s"]
     };
 }
 
@@ -669,7 +687,7 @@ function buildFamilySentence(forcedSubj = null) {
     if (poss === "unser" && ending === "en") fullPoss = "unseren";
     
     let objectText = `${fullPoss} ${member.de}`;
-    let w = getRandom([{ de: "Warum", uk: "Чому" }, { de: "Wann", uk: "Коли" }, { de: "Wo", uk: "Де" }]);
+    let w = { de: "Wen", uk: "Кого" };
     
     return {
         blocks: [
@@ -680,9 +698,9 @@ function buildFamilySentence(forcedSubj = null) {
         ],
         prompt: `[${subj.uk}] [${v.uk}] [${member.uk}]`,
         standardStr: `${conj} ${subj.de} ${objectText}?`,
-        invertedStr: `${w.de} ${conj} ${subj.de} ${objectText}?`,
+        invertedStr: `${w.de} ${conj} ${subj.de}?`,
         standardIds: ["v", "s", "o"],
-        invertedIds: ["w", "v", "s", "o"]
+        invertedIds: ["w", "v", "s"]
     };
 }
 
@@ -965,7 +983,7 @@ function nextQuestion() {
 
 function setupPhase() {
     userSelection = [];
-    reRenderSentenceArea();
+    sentenceArea.innerHTML = "";
     wordBank.innerHTML = "";
     typingInput.value = "";
     typingInput.className = "typing-input";
@@ -1012,7 +1030,15 @@ function setupBlocksMode(isClickable) {
         const blockEl = document.createElement("div");
         blockEl.classList.add("word-block");
         blockEl.dataset.blockId = block.id;
-        
+
+        const helperIndex = correctOrder.findIndex(correctBlock => correctBlock && correctBlock.id === block.id);
+        if (practiceMode === 'ASSISTED' && practiceFormat === 'BLOCKS' && helperIndex !== -1) {
+            blockEl.classList.add("helper");
+            const helperNumber = document.createElement("div");
+            helperNumber.classList.add("helper-number");
+            helperNumber.textContent = helperIndex + 1;
+            blockEl.appendChild(helperNumber);
+        }
 
 
         const mainText = document.createElement("div");
@@ -1041,37 +1067,14 @@ function selectBlock(block, originalEl) {
     
     originalEl.classList.add("selected");
     userSelection.push(block);
-
-    const clone = document.createElement("div");
-    clone.classList.add("word-block", "in-sentence");
-    
-    let displayMain = block.text;
-    if (block.type === "verb" || block.type === "verb_modal") displayMain = block.conjugated;
-    
-    if (userSelection.length === 1) {
-        displayMain = displayMain.charAt(0).toUpperCase() + displayMain.slice(1);
-    }
-
-    clone.innerHTML = `<div class="word-main">${displayMain}</div>`;
-
-    clone.onclick = () => {
-        let idx = userSelection.indexOf(block);
-        if (idx > -1) {
-            userSelection.splice(idx, 1);
-            clone.remove();
-            originalEl.classList.remove("selected");
-            reRenderSentenceArea();
-        }
-    };
-
-    sentenceArea.appendChild(clone);
+    reRenderSentenceArea();
 }
 
 function reRenderSentenceArea() {
     sentenceArea.innerHTML = "";
     userSelection.forEach((block, index) => {
         const clone = document.createElement("div");
-        clone.classList.add("word-block");
+        clone.classList.add("word-block", "in-sentence");
         
         let displayMain = block.text;
         if (block.type === "verb" || block.type === "verb_modal") displayMain = block.conjugated;
