@@ -295,7 +295,7 @@ let currentPhase = 1; // 1 = ASSISTED, 2 = UNASSISTED
 // ==========================================
 function conjugate(infinitive, pronoun) {
     let prefix = "";
-    let baseVerb = infinitive;
+    let baseVerb = infinitive.replace(/\s*\(.*?\)\s*/g, '').trim();
     
     // Split separable prefixes
     const prefixes = ["auf", "an", "aus", "mit", "ein", "um", "ab", "zu", "vor", "bei", "weg", "los"];
@@ -729,7 +729,10 @@ function checkAnswer() {
     let cleanInput = currentInputStr.trim().replace(/\s+/g, ' ').toLowerCase();
     let cleanAnswer = q.answer.trim().replace(/\s+/g, ' ').toLowerCase();
 
-    if (cleanInput === cleanAnswer) {
+    // Allow alternative umlaut spellings for users without German keyboards
+    let normalizedInput = cleanInput.replace(/oe/g, 'ö').replace(/ue/g, 'ü').replace(/ae/g, 'ä').replace(/ss/g, 'ß');
+
+    if (cleanInput === cleanAnswer || normalizedInput === cleanAnswer) {
         inputBox.classList.add("correct");
         setTimeout(() => {
             currentIndex++;
@@ -746,7 +749,7 @@ function checkAnswer() {
             if (mode === 'ASSISTED') {
                 showModal(
                     "Ой-ой!",
-                    t("verb_conjugation", "incorrect_assisted"),
+                    t("verb_conjugation", "incorrect_assisted") + `\n\nПравильно: ${q.answer}`,
                     [{ text: t("verb_conjugation", "back_to_rules"), primary: true, action: showRules }]
                 );
             } else {
@@ -754,7 +757,7 @@ function checkAnswer() {
                 if (attemptsLeft < 0) {
                     showModal(
                         "Ой-ой!",
-                        t("verb_conjugation", "failed_unassisted") + " " + t("verb_conjugation", "choose_action"),
+                        t("verb_conjugation", "failed_unassisted") + `\n\nПравильна відповідь була: ${q.answer}\n\n` + t("verb_conjugation", "choose_action"),
                         [
                             { text: t("verb_conjugation", "back_to_rules"), primary: true, action: showRules }
                         ]

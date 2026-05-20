@@ -96,131 +96,139 @@ const TRANSLATIONS_HOME = {
         uk: "3. Дієслова 'haben' та 'sein'"
     },
     "module_1_topic_4": {
-        en: "4. Affirmative Sentences",
-        de: "4. Aussagesätze",
-        cs: "4. Oznamovací věty",
-        pl: "4. Zdania twierdzące",
-        da: "4. Bekræftende sætninger",
-        uk: "4. Стверджувальні речення"
+        en: "4. Definite & Indefinite Articles in All Cases",
+        de: "4. Bestimmte & unbestimmte Artikel in allen Fällen",
+        cs: "4. Určité a neurčité členy ve všech pádech",
+        pl: "4. Przedimki określone i nieokreślone we wszystkich przypadkach",
+        da: "4. Bestemte og ubestemte kendeord i alle kasus",
+        uk: "4. Означені та неозначені артиклі у всіх відмінках"
     },
     "module_1_topic_5": {
-        en: "5. Interrogative Sentences",
-        de: "5. Fragesätze",
-        cs: "5. Tázací věty",
-        pl: "5. Zdania pytające",
-        da: "5. Spørgende sætninger",
-        uk: "5. Питальні речення"
+        en: "5. Affirmative Sentences",
+        de: "5. Aussagesätze",
+        cs: "5. Oznamovací věty",
+        pl: "5. Zdania twierdzące",
+        da: "5. Bekræftende sætninger",
+        uk: "5. Стверджувальні речення"
     },
     "module_1_topic_6": {
-        en: "6. Question Words (W-Words)",
-        de: "6. Fragewörter (W-Wörter)",
-        cs: "6. Tázací slova (W-slova)",
-        pl: "6. Zaimki pytające (W-słówka)",
-        da: "6. Spørgeord (W-ord)",
-        uk: "6. Питальні слова (W-слова)"
+        en: "6. Interrogative Sentences",
+        de: "6. Fragesätze",
+        cs: "6. Tázací věty",
+        pl: "6. Zdania pytające",
+        da: "6. Spørgende sætninger",
+        uk: "6. Питальні речення"
     },
     "module_1_topic_7": {
-        en: "7. Negation: nicht / kein",
-        de: "7. Negation: nicht / kein",
-        cs: "7. Negace: nicht / kein",
-        pl: "7. Przeczenie: nicht / kein",
-        da: "7. Nægtelse: nicht / kein",
-        uk: "7. Заперечення: nicht / kein"
+        en: "7. Question Words (W-Words)",
+        de: "7. Fragewörter (W-Wörter)",
+        cs: "7. Tázací slova (W-slova)",
+        pl: "7. Zaimki pytające (W-słówka)",
+        da: "7. Spørgeord (W-ord)",
+        uk: "7. Питальні слова (W-слова)"
     },
     "module_1_topic_8": {
-        en: "8. Negative Sentences",
-        de: "8. Negative Sätze",
-        cs: "8. Záporné věty",
-        pl: "8. Zdania przeczące",
-        da: "8. Benægtende sætninger",
-        uk: "8. Заперечні речення"
+        en: "8. Negation: nicht / kein",
+        de: "8. Negation: nicht / kein",
+        cs: "8. Negace: nicht / kein",
+        pl: "8. Przeczenie: nicht / kein",
+        da: "8. Nægtelse: nicht / kein",
+        uk: "8. Заперечення: nicht / kein"
     },
     "module_1_topic_9": {
-        en: "9. Definite Articles",
-        de: "9. Bestimmte Artikel",
-        cs: "9. Určité členy",
-        pl: "9. Przedimki określone",
-        da: "9. Bestemte kendeord",
-        uk: "9. Означені артиклі"
+        en: "9. Negative Sentences",
+        de: "9. Negative Sätze",
+        cs: "9. Záporné věty",
+        pl: "9. Zdania przeczące",
+        da: "9. Benægtende sætninger",
+        uk: "9. Заперечні речення"
     },
     "module_1_topic_10": {
-        en: "10. Indefinite Articles",
-        de: "10. Unbestimmte Artikel",
-        cs: "10. Neurčité členy",
-        pl: "10. Przedimki nieokreślone",
-        da: "10. Ubestemte kendeord",
-        uk: "10. Неозначені артиклі"
+        en: "10. Definite Articles",
+        de: "10. Bestimmte Artikel",
+        cs: "10. Určité členy",
+        pl: "10. Przedimki określone",
+        da: "10. Bestemte kendeord",
+        uk: "10. Означені артиклі"
     },
     "module_1_topic_11": {
-        en: "11. Nominative Case",
-        de: "11. Nominativ",
-        cs: "11. Nominativ (1. pád)",
-        pl: "11. Mianownik (Nominativ)",
-        da: "11. Nominativ",
-        uk: "11. Називний відмінок (Nominativ)"
+        en: "11. Indefinite Articles",
+        de: "11. Unbestimmte Artikel",
+        cs: "11. Neurčité členy",
+        pl: "11. Przedimki nieokreślone",
+        da: "11. Ubestemte kendeord",
+        uk: "11. Неозначені артиклі"
     },
     "module_1_topic_12": {
-        en: "12. Accusative Case",
-        de: "12. Akkusativ",
-        cs: "12. Akuzativ (4. pád)",
-        pl: "12. Biernik (Akkusativ)",
-        da: "12. Akkusativ",
-        uk: "12. Знахідний відмінок (Akkusativ)"
+        en: "12. Nominative Case",
+        de: "12. Nominativ",
+        cs: "12. Nominativ (1. pád)",
+        pl: "12. Mianownik (Nominativ)",
+        da: "12. Nominativ",
+        uk: "12. Називний відмінок (Nominativ)"
     },
     "module_1_topic_13": {
-        en: "13. Plural Nouns",
-        de: "13. Plural der Substantive",
-        cs: "13. Množné číslo podstatných jmen",
-        pl: "13. Liczba mnoga rzeczowników",
-        da: "13. Navneord i flertal",
-        uk: "13. Множина іменників"
+        en: "13. Accusative Case",
+        de: "13. Akkusativ",
+        cs: "13. Akuzativ (4. pád)",
+        pl: "13. Biernik (Akkusativ)",
+        da: "13. Akkusativ",
+        uk: "13. Знахідний відмінок (Akkusativ)"
     },
     "module_1_topic_14": {
-        en: "14. Possessive Pronouns",
-        de: "14. Possessivpronomen",
-        cs: "14. Přivlastňovací zájmena",
-        pl: "14. Zaimki dzierżawcze",
-        da: "14. Ejestedord",
-        uk: "14. Присвійні займенники"
+        en: "14. Plural Nouns",
+        de: "14. Plural der Substantive",
+        cs: "14. Množné číslo podstatných jmen",
+        pl: "14. Liczba mnoga rzeczowników",
+        da: "14. Navneord i flertal",
+        uk: "14. Множина іменників"
     },
     "module_1_topic_15": {
-        en: "15. Basic Modal Verbs",
-        de: "15. Grundlegende Modalverben",
-        cs: "15. Základní modální slovesa",
-        pl: "15. Podstawowe czasowniki modalne",
-        da: "15. Grundlæggende mådesudsagnsord",
-        uk: "15. Базові модальні дієслова"
+        en: "15. Possessive Pronouns",
+        de: "15. Possessivpronomen",
+        cs: "15. Přivlastňovací zájmena",
+        pl: "15. Zaimki dzierżawcze",
+        da: "15. Ejestedord",
+        uk: "15. Присвійні займенники"
     },
     "module_1_topic_16": {
-        en: "16. Separable Verbs",
-        de: "16. Trennbare Verben",
-        cs: "16. Odlučitelná slovesa",
-        pl: "16. Czasowniki rozdzielnie złożone",
-        da: "16. Løst sammensatte udsagnsord",
-        uk: "16. Відокремлювані префікси"
+        en: "16. Basic Modal Verbs",
+        de: "16. Grundlegende Modalverben",
+        cs: "16. Základní modální slovesa",
+        pl: "16. Podstawowe czasowniki modalne",
+        da: "16. Grundlæggende mådesudsagnsord",
+        uk: "16. Базові модальні дієслова"
     },
     "module_1_topic_17": {
-        en: "17. Basic Prepositions",
-        de: "17. Grundlegende Präpositionen",
-        cs: "17. Základní předložky",
-        pl: "17. Podstawowe przyimki",
-        da: "17. Grundlæggende forholdsord",
-        uk: "17. Базові прийменники"
+        en: "17. Separable Verbs",
+        de: "17. Trennbare Verben",
+        cs: "17. Odlučitelná slovesa",
+        pl: "17. Czasowniki rozdzielnie złożone",
+        da: "17. Løst sammensatte udsagnsord",
+        uk: "17. Відокремлювані префікси"
     },
     "module_1_topic_18": {
-        en: "18. Numbers, Time & Dates",
-        de: "18. Zahlen, Zeit & Daten",
-        cs: "18. Čísla, čas a data",
-        pl: "18. Liczby, czas i daty",
-        da: "18. Tal, tid & datoer",
-        uk: "18. Числа, час та дати"
+        en: "18. Basic Prepositions",
+        de: "18. Grundlegende Präpositionen",
+        cs: "18. Základní předložky",
+        pl: "18. Podstawowe przyimki",
+        da: "18. Grundlæggende forholdsord",
+        uk: "18. Базові прийменники"
     },
     "module_1_topic_19": {
-        en: "19. Basic Structures: das ist / es gibt / ich möchte / ich hätte gern",
-        de: "19. Grundstrukturen: das ist / es gibt / ich möchte / ich hätte gern",
-        cs: "19. Základní fráze: das ist / es gibt / ich möchte / ich hätte gern",
-        pl: "19. Podstawowe zwroty: das ist / es gibt / ich möchte / ich hätte gern",
-        da: "19. Grundlæggende strukturer: das ist / es gibt / ich möchte / ich hätte gern",
-        uk: "19. Базові конструкції: das ist / es gibt / ich möchte / ich hätte gern"
+        en: "19. Numbers, Time & Dates",
+        de: "19. Zahlen, Zeit & Daten",
+        cs: "19. Čísla, čas a data",
+        pl: "19. Liczby, czas i daty",
+        da: "19. Tal, tid & datoer",
+        uk: "19. Числа, час та дати"
+    },
+    "module_1_topic_20": {
+        en: "20. Basic Structures: das ist / es gibt / ich möchte / ich hätte gern",
+        de: "20. Grundstrukturen: das ist / es gibt / ich möchte / ich hätte gern",
+        cs: "20. Základní fráze: das ist / es gibt / ich möchte / ich hätte gern",
+        pl: "20. Podstawowe zwroty: das ist / es gibt / ich möchte / ich hätte gern",
+        da: "20. Grundlæggende strukturer: das ist / es gibt / ich möchte / ich hätte gern",
+        uk: "20. Базові конструкції: das ist / es gibt / ich möchte / ich hätte gern"
     }
 };

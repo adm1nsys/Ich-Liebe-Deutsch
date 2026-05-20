@@ -8,6 +8,9 @@ sync_load('JS/Translate/Dict_Pronouns.js');
 sync_load('JS/Translate/Dict_Vocabulary.js');
 sync_load('JS/Translate/Dict_VerbConjugation.js');
 sync_load('JS/Translate/Dict_HabenSein.js');
+sync_load('JS/Translate/Dict_Articles.js');
+sync_load('JS/Translate/Dict_AffirmativeSentences.js');
+sync_load('JS/Translate/Dict_InterrogativeSentences.js');
 sync_load('JS/Translate/Translate.js');
 
 // Load Page
@@ -35,6 +38,15 @@ switch (PAGE_NAME) {
         break;
     case "HabenSein":
         sync_load('JS/A1_1/HabenSein/index.js');
+        break;
+    case "Articles":
+        sync_load('JS/A1_1/Articles/index.js');
+        break;
+    case "AffirmativeSentences":
+        sync_load('JS/A1_1/AffirmativeSentences/index.js');
+        break;
+    case "InterrogativeSentences":
+        sync_load('JS/A1_1/InterrogativeSentences/index.js');
         break;
     default:
         sync_load('JS/Home/index.js');

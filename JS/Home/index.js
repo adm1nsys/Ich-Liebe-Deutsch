@@ -29,7 +29,8 @@ const COURSE_MODULES = [
             t("home", "module_1_topic_16"),
             t("home", "module_1_topic_17"),
             t("home", "module_1_topic_18"),
-            t("home", "module_1_topic_19")
+            t("home", "module_1_topic_19"),
+            t("home", "module_1_topic_20")
         ]
     }
 ];
@@ -404,6 +405,26 @@ COURSE_MODULES.forEach(module => {
         if (topicText === t("home", "module_1_topic_3")) {
             btn.addEventListener('click', () => {
                 window.location.href = "index.html?page=HabenSein";
+            });
+        }
+
+        // Bind click for topic 4. Articles
+        if (topicText === t("home", "module_1_topic_4")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=Articles";
+            });
+        }
+
+        // Bind click for topic 5. Affirmative Sentences
+        if (topicText === t("home", "module_1_topic_5")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=AffirmativeSentences";
+            });
+        }
+        
+        if (topicText === t("home", "module_1_topic_6")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=InterrogativeSentences";
             });
         }
 

@@ -8,7 +8,10 @@ const TRANSLATIONS = {
     pronouns: TRANSLATIONS_PRONOUNS,
     vocabulary: TRANSLATIONS_VOCABULARY,
     verb_conjugation: TRANSLATIONS_VERB_CONJUGATION,
-    haben_sein: TRANSLATIONS_HABEN_SEIN
+    haben_sein: TRANSLATIONS_HABEN_SEIN,
+    articles: TRANSLATIONS_ARTICLES,
+    affirmative: TRANSLATIONS_AFFIRMATIVE,
+    interrogative: TRANSLATIONS_INTERROGATIVE
 };
 
 // Функция для получения текущего языка из памяти
