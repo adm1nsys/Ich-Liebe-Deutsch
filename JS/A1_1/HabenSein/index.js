@@ -112,6 +112,16 @@ styleElement.textContent = `
     .highlight-match { color: var(--accent-green); font-weight: 800; }
     .highlight-exc { color: var(--accent-red); font-style: italic; }
 
+    /* Pronoun Reference Grid */
+    .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; width: 100%; }
+    .ref-block { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 0.8rem; padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; transition: transform 0.3s, border-color 0.3s; box-shadow: 0 2px 4px var(--shadow-color); }
+    .ref-block:hover { transform: translateY(-2px); border-color: var(--accent-gold); }
+    .ref-head { font-size: 1.2rem; font-weight: 800; color: var(--accent-gold); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
+    .ref-trans { font-size: 0.95rem; color: var(--text-secondary); font-weight: 400; font-style: italic; }
+    .ref-verbs { font-size: 1.1rem; color: var(--text-primary); font-weight: 600; padding-top: 0.5rem; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; }
+    .ref-block.formal { border-left: 4px solid var(--accent-green); }
+    .ref-block.plural { border-left: 4px solid var(--accent-red); }
+
     /* Pill Selection Segmented Controls */
     .section-title {
         font-size: 1.05rem; font-weight: 600; color: var(--text-secondary);
@@ -318,9 +328,9 @@ hackTable.innerHTML = `
     <thead>
         <tr>
             <th>${t("haben_sein", "for_pronoun")}</th>
-            <th>sein (бути)</th>
-            <th>haben (мати)</th>
-            <th>Закономірність / Pattern</th>
+            <th>${t("haben_sein", "verb_sein_trans")}</th>
+            <th>${t("haben_sein", "verb_haben_trans")}</th>
+            <th>${t("haben_sein", "hack_pattern_header")}</th>
         </tr>
     </thead>
     <tbody>
@@ -328,25 +338,19 @@ hackTable.innerHTML = `
             <td><b>er / sie / es</b></td>
             <td>is<b class="highlight-match">t</b></td>
             <td>ha<b class="highlight-match">t</b></td>
-            <td>Закінчуються на <b class="highlight-match">-t</b></td>
+            <td>${t("haben_sein", "hack_rule_1")}</td>
         </tr>
         <tr>
             <td><b>wir / sie / Sie</b></td>
             <td>sin<b class="highlight-match">d</b></td>
             <td>habe<b class="highlight-match">n</b></td>
-            <td>Закінчуються на приголосну <b class="highlight-match">-d / -n</b></td>
-        </tr>
-        <tr>
-            <td><b>ihr</b></td>
-            <td>sei<b class="highlight-match">d</b></td>
-            <td>hab<b class="highlight-match">t</b></td>
-            <td>Закінчуються на <b class="highlight-match">-d / -t</b> (звук [t])</td>
+            <td>${t("haben_sein", "hack_rule_2")}</td>
         </tr>
         <tr class="highlight-exc">
-            <td><b>ich / du</b></td>
-            <td>bin / bist</td>
-            <td>habe / hast</td>
-            <td style="color: var(--accent-red); font-weight: 600;">Унікальні винятки!</td>
+            <td><b>ich / du / ihr</b></td>
+            <td>bin / bist / seid</td>
+            <td>habe / hast / habt</td>
+            <td style="color: var(--accent-red); font-weight: 600;">${t("haben_sein", "hack_exceptions")}</td>
         </tr>
     </tbody>
 `;
@@ -355,6 +359,46 @@ hackCard.appendChild(hackHeader);
 hackCard.appendChild(hackDesc);
 hackCard.appendChild(hackTable);
 rulesContainer.appendChild(hackCard);
+
+// Card 2: Full Pronoun Cheat Sheet
+const refCard = document.createElement("div");
+refCard.classList.add("rule-card");
+const refHeader = document.createElement("div");
+refHeader.classList.add("rule-header");
+refHeader.textContent = t("haben_sein", "ref_title");
+const refDesc = document.createElement("div");
+refDesc.classList.add("rule-desc");
+refDesc.textContent = t("haben_sein", "ref_desc");
+
+const refGrid = document.createElement("div");
+refGrid.classList.add("ref-grid");
+
+const pronounsData = [
+    { name: "ich", trans: "trans_ich", sein: "bin", haben: "habe" },
+    { name: "du", trans: "trans_du", sein: "bist", haben: "hast" },
+    { name: "er / sie / es", trans: "trans_er", sein: "ist", haben: "hat" },
+    { name: "wir", trans: "trans_wir", sein: "sind", haben: "haben", extraClass: "plural" },
+    { name: "ihr", trans: "trans_ihr", sein: "seid", haben: "habt", extraClass: "plural" },
+    { name: "sie", trans: "trans_sie_they", sein: "sind", haben: "haben", extraClass: "plural" },
+    { name: "Sie", trans: "trans_sie_you", sein: "sind", haben: "haben", extraClass: "formal" }
+];
+
+pronounsData.forEach(p => {
+    const block = document.createElement("div");
+    block.classList.add("ref-block");
+    if (p.extraClass) block.classList.add(p.extraClass);
+    
+    block.innerHTML = `
+        <div class="ref-head">${p.name} <span class="ref-trans">(${t("haben_sein", p.trans)})</span></div>
+        <div class="ref-verbs"><span>sein: <b style="color: var(--accent-gold)">${p.sein}</b></span><span>haben: <b style="color: var(--accent-gold)">${p.haben}</b></span></div>
+    `;
+    refGrid.appendChild(block);
+});
+
+refCard.appendChild(refHeader);
+refCard.appendChild(refDesc);
+refCard.appendChild(refGrid);
+rulesContainer.appendChild(refCard);
 
 rulesSection.appendChild(rulesContainer);
 

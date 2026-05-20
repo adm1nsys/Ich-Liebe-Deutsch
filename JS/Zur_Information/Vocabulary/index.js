@@ -1636,7 +1636,8 @@ const VOCABULARY = [
         { de: "traurig",                key: "word_traurig" },
         { de: "müde",                   key: "word_muede" },
         { de: "krank",                  key: "word_krank" },
-        { de: "gesund",                 key: "word_gesund" }
+        { de: "gesund",                 key: "word_gesund" },
+        { de: "voll",                   key: "word_full" }
     ] },
     { catKey: "cat_adverbs", words: [
         // Общее понятие
@@ -1717,7 +1718,9 @@ const VOCABULARY = [
         { de: "kennen",                 key: "word_kennen" },
         { de: "denken",                 key: "word_denken" },
         { de: "glauben",                key: "word_glauben" },
-        { de: "lernen",                 key: "word_lernen_v" }
+        { de: "lernen",                 key: "word_lernen_v" },
+        { de: "hinzufügen",             key: "word_add" },
+        { de: "nennen",                 key: "word_nennen" }
     ] },
     { catKey: "cat_modal_verbs", words: [
         { de: "das Modalverb",          key: "word_modalverb" },
@@ -1727,7 +1730,8 @@ const VOCABULARY = [
         { de: "wollen",                 key: "word_wollen" },
         { de: "sollen",                 key: "word_sollen" },
         { de: "mögen",                  key: "word_moegen" },
-        { de: "möchten",                key: "word_moechten" }
+        { de: "möchten",                key: "word_moechten" },
+        { de: "werden (Futur) / wollen", key: "word_will" }
     ] },
     { catKey: "cat_sep_verbs", words: [
         // Повседневная рутина
@@ -1811,6 +1815,14 @@ const VOCABULARY = [
         { de: "entweder ... oder",      key: "word_entweder_oder" },
         { de: "weder ... noch",         key: "word_weder_noch" },
         { de: "nicht nur ... sondern",  key: "word_nicht_nur" }
+    ] },
+    { catKey: "cat_language", words: [
+        { de: "der Stamm",              key: "word_stamm" },
+        { de: "die Endung",             key: "word_endung" },
+        { de: "der Punkt",              key: "word_punkt" },
+        { de: "das Fragezeichen",       key: "word_fragezeichen" },
+        { de: "der Wortschatz",         key: "word_vocabulary" },
+        { de: "die Liste",              key: "word_list" }
     ] },
     { catKey: "cat_idioms", words: [
         // Общее понятие

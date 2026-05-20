@@ -56,6 +56,7 @@ const TRANSLATIONS_VOCABULARY = {
     "cat_prepositions": { en: "Prepositions",               de: "Präpositionen",                    cs: "Předložky",                pl: "Przyimki",                     da: "Præpositioner",            uk: "Прийменники" },
     "cat_conjunctions": { en: "Conjunctions & Connectors",  de: "Konjunktionen",                    cs: "Spojky",                   pl: "Spójniki",                     da: "Konjunktioner",            uk: "Сполучники" },
     "cat_idioms":       { en: "Idioms & Fixed Phrases",     de: "Redewendungen & feste Ausdrücke",  cs: "Idiomy a ustálené výrazy", pl: "Idiomy i zwroty",              da: "Idiomer & faste udtryk",   uk: "Ідіоми та стійкі вирази" },
+    "cat_language":     { en: "Language & Grammar",         de: "Sprache & Grammatik",              cs: "Jazyk a gramatika",        pl: "Język i gramatyka",            da: "Sprog & Grammatik",        uk: "Мова та граматика" },
 
     // ─── Words: Greetings & Farewells ────────────────────────────────────────
     // Приветствия
@@ -1799,5 +1800,13 @@ const TRANSLATIONS_VOCABULARY = {
     "word_und":         { en: "and",                de: "und",              cs: "a",                pl: "i",                da: "og",           uk: "і / та" },
     "word_redewendung": { en: "to keep a low profile", de: "sich bedeckt halten", cs: "chovat se nenápadně", pl: "trzymać się w cieniu", da: "holde lav profil", uk: "триматися в тіні" },
     "word_punkt":           { en: "the Period / Dot",           de: "der Punkt",                cs: "Tečka",                        pl: "Kropka",                    da: "Punktum",          uk: "Крапка" },
-    "word_fragezeichen":    { en: "the Question Mark",          de: "das Fragezeichen",         cs: "Otazník",                      pl: "Znak zapytania",            da: "Spørgsmålstegn",   uk: "Знак питання" }
+    "word_fragezeichen":    { en: "the Question Mark",          de: "das Fragezeichen",         cs: "Otazník",                      pl: "Znak zapytania",            da: "Spørgsmålstegn",   uk: "Знак питання" },
+    "word_nennen":          { en: "to call / to name",          de: "nennen",                   cs: "nazývat",                      pl: "nazywać",                   da: "at kalde",         uk: "називати" },
+    "word_stamm":           { en: "the Stem",                   de: "der Stamm",                cs: "kmen (slova)",                 pl: "temat (słowa)",             da: "stammen",          uk: "основа (слова)" },
+    "word_endung":          { en: "the Ending",                 de: "die Endung",               cs: "koncovka",                     pl: "końcówka",                  da: "endelsen",         uk: "закінчення" },
+    "word_add":             { en: "to add",                     de: "hinzufügen",               cs: "přidat",                       pl: "dodać",                     da: "at tilføje",       uk: "додавати" },
+    "word_will":            { en: "will (future / volition)",   de: "werden (Futur) / wollen",  cs: "budoucí čas / chtít",          pl: "czasownik posiłkowy / chcieć", da: "vil",              uk: "майбутній час / хотіти" },
+    "word_vocabulary":      { en: "the Vocabulary",             de: "der Wortschatz",           cs: "slovní zásoba",                pl: "słownictwo",                da: "ordforrådet",      uk: "словниковий запас" },
+    "word_list":            { en: "the List",                   de: "die Liste",                cs: "seznam",                       pl: "lista",                     da: "listen",           uk: "список" },
+    "word_full":            { en: "full",                       de: "voll",                     cs: "plný",                         pl: "pełny",                     da: "fuld",             uk: "повний" }
 };

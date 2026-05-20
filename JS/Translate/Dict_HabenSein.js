@@ -32,12 +32,12 @@ const TRANSLATIONS_HABEN_SEIN = {
         uk: "💡 Грамматичний хак: Паралельна закономірність"
     },
     "hack_desc": {
-        en: "To memorize 'haben' and 'sein' easily, notice how their endings correspond in the plural and 3rd person singular forms. Only 'ich' and 'du' are completely unique exceptions!",
-        de: "Um 'haben' und 'sein' leicht zu lernen, achte darauf, wie ihre Endungen im Plural und in der 3. Person Singular übereinstimmen. Nur 'ich' und 'du' sind Ausnahmen!",
-        cs: "Abyste si 'haben' a 'sein' snadno zapamatovali, všimněte si, jak jejich koncovky odpovídají v množném čísle a 3. osobě jednotného čísla. Pouze 'ich' a 'du' jsou výjimky!",
-        pl: "Aby łatwo zapamiętać 'haben' i 'sein', zauważ, jak ich końcówki odpowiadają w liczbie mnogiej i 3. osobie liczby pojedynczej. Tylko 'ich' i 'du' są wyjątkami!",
-        da: "For nemt at huske 'haben' og 'sein', skal du bemærke, hvordan deres endelser stemmer overens i flertal og 3. person ental. Kun 'ich' og 'du' er undtagelser!",
-        uk: "Щоб легко запам'ятати відмінювання 'haben' та 'sein', зверніть увагу на дзеркальну схожість закінчень у множині та 3-й особі однини. Займенники 'ich' та 'du' є єдиними винятками!"
+        en: "To memorize 'haben' and 'sein' easily, notice how their endings correspond in the plural and 3rd person singular forms. 'ich', 'du', and 'ihr' are unique exceptions!",
+        de: "Um 'haben' und 'sein' leicht zu lernen, achte darauf, wie ihre Endungen übereinstimmen. 'ich', 'du' und 'ihr' sind Ausnahmen!",
+        cs: "Abyste si 'haben' a 'sein' snadno zapamatovali, všimněte si, jak jejich koncovky odpovídají. 'ich', 'du' a 'ihr' jsou výjimky!",
+        pl: "Aby łatwo zapamiętać 'haben' i 'sein', zauważ, jak ich końcówki odpowiadają. 'ich', 'du' i 'ihr' są wyjątkami!",
+        da: "For nemt at huske 'haben' og 'sein', bemærk endelserne. 'ich', 'du' og 'ihr' er undtagelser!",
+        uk: "Щоб легко запам'ятати 'haben' та 'sein', зверніть увагу на дзеркальну схожість закінчень. Займенники 'ich', 'du' та 'ihr' є винятками!"
     },
     "pattern_sing": {
         en: "3rd Person Singular (er / sie / es)",
@@ -222,5 +222,76 @@ const TRANSLATIONS_HABEN_SEIN = {
         pl: "dla zaimka",
         da: "for stedordet",
         uk: "для займенника"
-    }
+    },
+    "verb_sein_trans": {
+        en: "sein (to be)",
+        de: "sein (sein)",
+        cs: "sein (být)",
+        pl: "sein (być)",
+        da: "sein (at være)",
+        uk: "sein (бути)"
+    },
+    "verb_haben_trans": {
+        en: "haben (to have)",
+        de: "haben (haben)",
+        cs: "haben (mít)",
+        pl: "haben (mieć)",
+        da: "haben (at have)",
+        uk: "haben (мати)"
+    },
+    "hack_pattern_header": {
+        en: "Pattern",
+        de: "Muster",
+        cs: "Vzorec",
+        pl: "Wzór",
+        da: "Mønster",
+        uk: "Закономірність"
+    },
+    "hack_rule_1": {
+        en: "Ends in -t",
+        de: "Endet auf -t",
+        cs: "Končí na -t",
+        pl: "Kończy się na -t",
+        da: "Ender på -t",
+        uk: "Закінчуються на -t"
+    },
+    "hack_rule_2": {
+        en: "Ends in consonant -d / -n",
+        de: "Endet auf Konsonant -d / -n",
+        cs: "Končí na souhlásku -d / -n",
+        pl: "Kończy się na spółgłoskę -d / -n",
+        da: "Ender på konsonanten -d / -n",
+        uk: "Закінчуються на приголосну -d / -n"
+    },
+    "hack_exceptions": {
+        en: "Unique exceptions!",
+        de: "Ausnahmen!",
+        cs: "Výjimky!",
+        pl: "Wyjątki!",
+        da: "Undtagelser!",
+        uk: "Унікальні винятки!"
+    },
+    "ref_title": {
+        en: "Pronoun Reference",
+        de: "Pronomen-Referenz",
+        cs: "Přehled zájmen",
+        pl: "Przewodnik po zaimkach",
+        da: "Stedordsreference",
+        uk: "Довідник займенників"
+    },
+    "ref_desc": {
+        en: "Translations and verb forms for each individual pronoun:",
+        de: "Übersetzungen und Verbformen für jedes Pronomen:",
+        cs: "Překlady a tvary sloves pro každé zájmeno:",
+        pl: "Tłumaczenia i formy czasowników dla każdego zaimka:",
+        da: "Oversættelser og udsagnsordsformer for hvert stedord:",
+        uk: "Переклад та форми дієслів для кожного займенника:"
+    },
+    "trans_ich": { en: "I", de: "ich", cs: "já", pl: "ja", da: "jeg", uk: "я" },
+    "trans_du": { en: "you", de: "du", cs: "ty", pl: "ty", da: "du", uk: "ти" },
+    "trans_er": { en: "he / she / it", de: "er / sie / es", cs: "on / ona / ono", pl: "on / ona / ono", da: "han / hun / det", uk: "він / вона / воно" },
+    "trans_wir": { en: "we", de: "wir", cs: "my", pl: "my", da: "vi", uk: "ми" },
+    "trans_ihr": { en: "you (plural)", de: "ihr", cs: "vy (množné)", pl: "wy", da: "I (flertal)", uk: "ви (множина)" },
+    "trans_sie_they": { en: "they", de: "sie (Plural)", cs: "oni / ony", pl: "oni / one", da: "de", uk: "вони" },
+    "trans_sie_you": { en: "You (formal)", de: "Sie (höflich)", cs: "Vy (formální)", pl: "Pan / Pani / Państwo", da: "De (formel)", uk: "Ви (ввічливо)" }
 };
