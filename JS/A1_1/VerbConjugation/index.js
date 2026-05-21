@@ -229,18 +229,23 @@ const VERB_KEYS = [
     "word_zumachen", "word_einschalten_sep", "word_ausschalten_sep", "word_abfahren", 
     "word_ankommen", "word_einsteigen", "word_aussteigen", "word_umsteigen",
     "word_essen", "word_trinken", "word_kochen", "word_backen", "word_braten", 
-    "word_probieren", "word_bestellen", "word_heiraten"
+    "word_probieren", "word_bestellen", "word_heiraten",
+    "word_wohnen", "word_reisen", "word_studieren", "word_schreiben",
+    "word_kaufen", "word_verkaufen", "word_bezahlen", "word_kosten",
+    "word_spielen", "word_lieben", "word_arbeiten"
 ];
 
 const VERB_TOPIC_KEYS = {
     basic_regular: [
-        "word_machen", "word_brauchen", "word_gehen", "word_kommen", "word_sagen",
-        "word_fragen", "word_hoeren", "word_suchen_v", "word_glauben", "word_lernen_v",
-        "word_wohnen", "word_studieren", "word_kaufen", "word_spielen", "word_kochen",
-        "word_bestellen", "word_trinken"
+        "word_machen", "word_bringen", "word_brauchen", "word_gehen", "word_kommen",
+        "word_bleiben", "word_stehen", "word_liegen", "word_sitzen", "word_sagen",
+        "word_fragen", "word_hoeren", "word_suchen_v", "word_kennen", "word_denken", "word_schreiben",
+        "word_glauben", "word_lernen_v", "word_wohnen", "word_reisen", "word_studieren",
+        "word_kaufen", "word_verkaufen", "word_bezahlen", "word_spielen", "word_lieben",
+        "word_kochen", "word_probieren", "word_bestellen", "word_trinken"
     ],
     stem_t_s: [
-        "word_antworten", "word_arbeiten", "word_finden", "word_heiraten"
+        "word_antworten", "word_arbeiten", "word_finden", "word_heiraten", "word_kosten"
     ],
     strong: [
         "word_geben", "word_nehmen", "word_fahren", "word_sehen", "word_essen"
