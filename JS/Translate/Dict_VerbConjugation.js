@@ -143,6 +143,70 @@ const TRANSLATIONS_VERB_CONJUGATION = {
         da: "Start med hjælp",
         uk: "Почати з підказками"
     },
+    "topic_info": {
+        en: "Choose a subtopic:",
+        de: "Wähle ein Unterthema:",
+        cs: "Vyberte podtéma:",
+        pl: "Wybierz podtemat:",
+        da: "Vælg et underemne:",
+        uk: "Оберіть підтему:"
+    },
+    "topic_basic_regular": {
+        en: "A1.1 Basics: regular endings",
+        de: "A1.1 Basis: regelmäßige Endungen",
+        cs: "A1.1 základ: pravidelné koncovky",
+        pl: "A1.1 podstawa: regularne końcówki",
+        da: "A1.1 basis: regelmæssige endelser",
+        uk: "A1.1 база: правильні закінчення"
+    },
+    "topic_stem_t_s": {
+        en: "-d/-t and -s/-ß/-z/-x stems",
+        de: "Stämme auf -d/-t und -s/-ß/-z/-x",
+        cs: "Kmeny na -d/-t a -s/-ß/-z/-x",
+        pl: "Tematy na -d/-t oraz -s/-ß/-z/-x",
+        da: "Stammer på -d/-t og -s/-ß/-z/-x",
+        uk: "Основи на -d/-t та -s/-ß/-z/-x"
+    },
+    "topic_strong": {
+        en: "Strong verbs",
+        de: "Starke Verben",
+        cs: "Silná slovesa",
+        pl: "Czasowniki mocne",
+        da: "Stærke verber",
+        uk: "Сильні дієслова"
+    },
+    "topic_modal": {
+        en: "Modal verbs",
+        de: "Modalverben",
+        cs: "Modální slovesa",
+        pl: "Czasowniki modalne",
+        da: "Modalverber",
+        uk: "Модальні дієслова"
+    },
+    "topic_separable": {
+        en: "Separable verbs",
+        de: "Trennbare Verben",
+        cs: "Odlučitelná slovesa",
+        pl: "Czasowniki rozdzielnie złożone",
+        da: "Løst sammensatte verber",
+        uk: "Відокремлювані дієслова"
+    },
+    "topic_auxiliaries": {
+        en: "sein / haben / werden",
+        de: "sein / haben / werden",
+        cs: "sein / haben / werden",
+        pl: "sein / haben / werden",
+        da: "sein / haben / werden",
+        uk: "sein / haben / werden"
+    },
+    "topic_all": {
+        en: "All mixed",
+        de: "Alles gemischt",
+        cs: "Vše smíchané",
+        pl: "Wszystko razem",
+        da: "Alt blandet",
+        uk: "Усе разом"
+    },
     "back_to_rules": {
         en: "Back to Rules",
         de: "Zurück zu Regeln",

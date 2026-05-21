@@ -143,6 +143,21 @@ styleElement.textContent = `
     }
     .custom-select:focus { border-color: var(--accent-gold); }
 
+    .pill-group {
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 0.65rem;
+        max-width: 760px;
+    }
+    .pill-btn {
+        background: var(--surface-color); border: 1px solid var(--border-color);
+        color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 999px;
+        font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.3s ease;
+    }
+    .pill-btn:hover { border-color: var(--accent-gold); transform: translateY(-2px); }
+    .pill-btn.active {
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-red));
+        color: white; border-color: transparent; box-shadow: 0 4px 10px rgba(255, 75, 43, 0.25);
+    }
+
     /* --- MODALS / ALERTS --- */
     .modal-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -217,6 +232,37 @@ const VERB_KEYS = [
     "word_probieren", "word_bestellen", "word_heiraten"
 ];
 
+const VERB_TOPIC_KEYS = {
+    basic_regular: [
+        "word_machen", "word_brauchen", "word_gehen", "word_kommen", "word_sagen",
+        "word_fragen", "word_hoeren", "word_suchen_v", "word_glauben", "word_lernen_v",
+        "word_wohnen", "word_studieren", "word_kaufen", "word_spielen", "word_kochen",
+        "word_bestellen", "word_trinken"
+    ],
+    stem_t_s: [
+        "word_antworten", "word_arbeiten", "word_finden", "word_heiraten"
+    ],
+    strong: [
+        "word_geben", "word_nehmen", "word_fahren", "word_sehen", "word_essen"
+    ],
+    modal: [
+        "word_koennen", "word_muessen", "word_duerfen", "word_wollen", "word_sollen",
+        "word_moegen", "word_moechten"
+    ],
+    separable: [
+        "word_aufstehen", "word_aufwachen", "word_einschlafen", "word_anziehen",
+        "word_ausziehen", "word_umziehen", "word_einkaufen", "word_ausgeben",
+        "word_einladen", "word_mitbringen", "word_anfangen", "word_aufhoeren",
+        "word_mitmachen", "word_anrufen_sep", "word_zuhoren", "word_aufmachen",
+        "word_zumachen", "word_einschalten_sep", "word_ausschalten_sep", "word_abfahren",
+        "word_ankommen", "word_einsteigen", "word_aussteigen", "word_umsteigen"
+    ],
+    auxiliaries: [
+        "word_sein", "word_haben", "word_werden"
+    ],
+    all: VERB_KEYS
+};
+
 const IRREGULAR_VERBS = {
     "sein": {
         "ich": "bin", "du": "bist", "er": "ist", "sie": "ist", "es": "ist",
@@ -287,6 +333,7 @@ let currentInputStr = "";
 let attemptsLeft = 2;
 let isAnimating = false;
 let repeatCount = 10; // Number of questions selected by user
+let selectedVerbTopic = "basic_regular";
 
 let currentPhase = 1; // 1 = ASSISTED, 2 = UNASSISTED
 
@@ -473,6 +520,35 @@ rulesSection.appendChild(rulesContainer);
 
 const settingsRow = document.createElement("div");
 settingsRow.classList.add("settings-row");
+const topicInfo = document.createElement("div");
+topicInfo.textContent = t("verb_conjugation", "topic_info");
+const topicGroup = document.createElement("div");
+topicGroup.classList.add("pill-group");
+
+const topicOptions = [
+    { value: "basic_regular", labelKey: "topic_basic_regular" },
+    { value: "stem_t_s", labelKey: "topic_stem_t_s" },
+    { value: "strong", labelKey: "topic_strong" },
+    { value: "modal", labelKey: "topic_modal" },
+    { value: "separable", labelKey: "topic_separable" },
+    { value: "auxiliaries", labelKey: "topic_auxiliaries" },
+    { value: "all", labelKey: "topic_all" }
+];
+
+topicOptions.forEach(optionData => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.classList.add("pill-btn");
+    if (optionData.value === selectedVerbTopic) btn.classList.add("active");
+    btn.textContent = t("verb_conjugation", optionData.labelKey);
+    btn.addEventListener("click", () => {
+        selectedVerbTopic = optionData.value;
+        Array.from(topicGroup.children).forEach(child => child.classList.remove("active"));
+        btn.classList.add("active");
+    });
+    topicGroup.appendChild(btn);
+});
+
 const repeatInfo = document.createElement("div");
 repeatInfo.textContent = t("verb_conjugation", "repeat_info");
 const repeatSelect = document.createElement("select");
@@ -486,6 +562,8 @@ repeatSelect.classList.add("custom-select");
 repeatSelect.addEventListener('change', (e) => {
     repeatCount = parseInt(e.target.value);
 });
+settingsRow.appendChild(topicInfo);
+settingsRow.appendChild(topicGroup);
 settingsRow.appendChild(repeatInfo);
 settingsRow.appendChild(repeatSelect);
 rulesSection.appendChild(settingsRow);
@@ -616,14 +694,19 @@ function nextPhase() {
     }
 }
 
+function getSelectedVerbKeys() {
+    return VERB_TOPIC_KEYS[selectedVerbTopic] || VERB_TOPIC_KEYS.basic_regular;
+}
+
 function startGame(selectedMode) {
     mode = selectedMode;
     gameState = 'PLAYING';
     queue = [];
+    const activeVerbKeys = getSelectedVerbKeys();
     
     // Generate fresh queue of size repeatCount
     for (let i = 0; i < repeatCount; i++) {
-        let randVerbKey = VERB_KEYS[Math.floor(Math.random() * VERB_KEYS.length)];
+        let randVerbKey = activeVerbKeys[Math.floor(Math.random() * activeVerbKeys.length)];
         let randPronoun = PRONOUNS[Math.floor(Math.random() * PRONOUNS.length)];
         
         let inf = TRANSLATIONS_VOCABULARY[randVerbKey].de;
