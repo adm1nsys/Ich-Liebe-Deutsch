@@ -85,11 +85,21 @@ styleElement.textContent = `
         background: var(--surface-color); border: 1px solid var(--border-color);
         border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 6px var(--shadow-color);
         display: flex; flex-direction: column; gap: 0.5rem; text-align: left; width: 100%; box-sizing: border-box;
+        overflow-x: auto;
     }
     .rule-header { font-size: 1.3rem; font-weight: 800; color: var(--accent-gold); display: flex; align-items: center; gap: 0.5rem; }
     .rule-desc { font-size: 0.95rem; color: var(--text-primary); line-height: 1.5; margin-bottom: 1rem; }
+    .rule-subtitle { font-size: 1rem; font-weight: 800; color: var(--accent-gold); margin-top: 1rem; }
+    .rule-list { margin: 0.25rem 0 0.5rem; padding-left: 1.2rem; color: var(--text-primary); line-height: 1.55; font-size: 0.95rem; }
+    .rule-list li { margin-bottom: 0.35rem; }
+    .rule-note {
+        background: var(--content-bg); border-left: 3px solid var(--accent-gold);
+        padding: 0.85rem 1rem; border-radius: 0.5rem; color: var(--text-primary);
+        line-height: 1.5; font-size: 0.95rem; margin-top: 0.5rem;
+    }
+    .bad-example { color: var(--accent-red); font-weight: 700; }
 
-    .example-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; border-radius: 0.5rem; overflow: hidden; margin-top: 0.5rem; }
+    .example-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.9rem; border-radius: 0.5rem; overflow: hidden; margin-top: 0.5rem; }
     .example-table th, .example-table td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: center; }
     .example-table th { background: rgba(245, 175, 25, 0.08); color: var(--accent-gold); font-weight: 600; }
     .pos-1 { color: #3b82f6; font-weight: bold; }
@@ -278,6 +288,14 @@ const IRREGULAR_VERBS = {
         "ich": "soll", "du": "sollst", "er": "soll", "sie": "soll", "es": "soll",
         "wir": "sollen", "ihr": "sollt", "sie_pl": "sollen", "sie_form": "sollen"
     },
+    "mögen": {
+        "ich": "mag", "du": "magst", "er": "mag", "sie": "mag", "es": "mag",
+        "wir": "mögen", "ihr": "mögt", "sie_pl": "mögen", "sie_form": "mögen"
+    },
+    "öffnen": {
+        "ich": "öffne", "du": "öffnest", "er": "öffnet", "sie": "öffnet", "es": "öffnet",
+        "wir": "öffnen", "ihr": "öffnet", "sie_pl": "öffnen", "sie_form": "öffnen"
+    },
     "geben": { "du": "gibst", "er": "gibt", "sie": "gibt", "es": "gibt" },
     "nehmen": { "du": "nimmst", "er": "nimmt", "sie": "nimmt", "es": "nimmt" },
     "sehen": { "du": "siehst", "er": "sieht", "sie": "sieht", "es": "sieht" },
@@ -366,6 +384,13 @@ function getReflexive(pronoun) {
     return map[pronoun] || "sich";
 }
 
+function getPronounKey(subject) {
+    if (!subject) return "er";
+    if (subject.pronoun) return subject.pronoun;
+    if (subject.de === "(name)") return "er";
+    return subject.de;
+}
+
 // ==========================================
 // 4. SENTENCE GENERATOR
 // ==========================================
@@ -380,7 +405,13 @@ const VOCAB = {
         { de: "Sie", en: "You (formal)", uk: "Ви (ввічливо)" }
     ],
     names: [
-        { de: "(name)", en: "(name)", uk: "(ім'я)" }
+        { de: "(name)", en: "(name)", uk: "(ім'я)", pronoun: "er" },
+        { de: "Anna", en: "Anna", uk: "Анна", pronoun: "sie" },
+        { de: "Maria", en: "Maria", uk: "Марія", pronoun: "sie" },
+        { de: "Sofia", en: "Sofia", uk: "Софія", pronoun: "sie" },
+        { de: "Lukas", en: "Lukas", uk: "Лукас", pronoun: "er" },
+        { de: "Max", en: "Max", uk: "Макс", pronoun: "er" },
+        { de: "Paul", en: "Paul", uk: "Пауль", pronoun: "er" }
     ],
     cities: [
         { de: "Berlin", en: "Berlin", uk: "Берліні", bare: "Берлін" },
@@ -388,7 +419,13 @@ const VOCAB = {
         { de: "Kyjiw", en: "Kyiv", uk: "Києві", bare: "Київ" },
         { de: "Hamburg", en: "Hamburg", uk: "Гамбурзі", bare: "Гамбург" },
         { de: "München", en: "Munich", uk: "Мюнхені", bare: "Мюнхен" },
-        { de: "Prag", en: "Prague", uk: "Празі", bare: "Прага" }
+        { de: "Prag", en: "Prague", uk: "Празі", bare: "Прага" },
+        { de: "Köln", en: "Cologne", uk: "Кельні", bare: "Кельн" },
+        { de: "Leipzig", en: "Leipzig", uk: "Лейпцигу", bare: "Лейпциг" },
+        { de: "Dresden", en: "Dresden", uk: "Дрездені", bare: "Дрезден" },
+        { de: "Stuttgart", en: "Stuttgart", uk: "Штутгарті", bare: "Штутгарт" },
+        { de: "Frankfurt", en: "Frankfurt", uk: "Франкфурті", bare: "Франкфурт" },
+        { de: "Bremen", en: "Bremen", uk: "Бремені", bare: "Бремен" }
     ],
     countries_aus: [
         { de: "der Ukraine", en: "Ukraine", uk: "України" },
@@ -396,15 +433,25 @@ const VOCAB = {
         { de: "Polen", en: "Poland", uk: "Польщі" },
         { de: "Tschechien", en: "Czechia", uk: "Чехії" },
         { de: "Dänemark", en: "Denmark", uk: "Данії" },
-        { de: "Österreich", en: "Austria", uk: "Австрії" }
+        { de: "Österreich", en: "Austria", uk: "Австрії" },
+        { de: "Frankreich", en: "France", uk: "Франції" },
+        { de: "Spanien", en: "Spain", uk: "Іспанії" },
+        { de: "Italien", en: "Italy", uk: "Італії" },
+        { de: "der Schweiz", en: "Switzerland", uk: "Швейцарії" },
+        { de: "Litauen", en: "Lithuania", uk: "Литви" },
+        { de: "Rumänien", en: "Romania", uk: "Румунії" }
     ],
     ages: [
-        { de: "20", en: "20", uk: "20" },
-        { de: "25", en: "25", uk: "25" },
-        { de: "30", en: "30", uk: "30" },
+        { de: "16", en: "16", uk: "16" },
         { de: "18", en: "18", uk: "18" },
+        { de: "20", en: "20", uk: "20" },
+        { de: "22", en: "22", uk: "22" },
+        { de: "25", en: "25", uk: "25" },
+        { de: "28", en: "28", uk: "28" },
+        { de: "30", en: "30", uk: "30" },
         { de: "35", en: "35", uk: "35" },
-        { de: "42", en: "42", uk: "42" }
+        { de: "42", en: "42", uk: "42" },
+        { de: "50", en: "50", uk: "50" }
     ],
     professions: [
         { de: "als Lehrer", en: "as a teacher", uk: "вчителем" },
@@ -412,7 +459,13 @@ const VOCAB = {
         { de: "als Programmierer", en: "as a programmer", uk: "програмістом" },
         { de: "als Verkäufer", en: "as a salesperson", uk: "продавцем" },
         { de: "als Koch", en: "as a cook", uk: "кухарем" },
-        { de: "als Student", en: "as a student", uk: "студентом" }
+        { de: "als Student", en: "as a student", uk: "студентом" },
+        { de: "als Fahrer", en: "as a driver", uk: "водієм" },
+        { de: "als Kellner", en: "as a waiter", uk: "офіціантом" },
+        { de: "als Designer", en: "as a designer", uk: "дизайнером" },
+        { de: "als Ingenieur", en: "as an engineer", uk: "інженером" },
+        { de: "als Mechaniker", en: "as a mechanic", uk: "механіком" },
+        { de: "als Friseur", en: "as a hairdresser", uk: "перукарем" }
     ],
     studies: [
         { de: "Informatik", en: "Computer Science", uk: "інформатику" },
@@ -420,7 +473,13 @@ const VOCAB = {
         { de: "Kunst", en: "Art", uk: "мистецтво" },
         { de: "Deutsch", en: "German", uk: "німецьку" },
         { de: "Mathematik", en: "Mathematics", uk: "математику" },
-        { de: "Musik", en: "Music", uk: "музику" }
+        { de: "Musik", en: "Music", uk: "музику" },
+        { de: "Biologie", en: "Biology", uk: "біологію" },
+        { de: "Geschichte", en: "History", uk: "історію" },
+        { de: "Wirtschaft", en: "Economics", uk: "економіку" },
+        { de: "Physik", en: "Physics", uk: "фізику" },
+        { de: "Jura", en: "Law", uk: "право" },
+        { de: "Literatur", en: "Literature", uk: "літературу" }
     ],
     languages: [
         { de: "Englisch", en: "English", uk: "англійською" },
@@ -428,13 +487,36 @@ const VOCAB = {
         { de: "Französisch", en: "French", uk: "французькою" },
         { de: "Deutsch", en: "German", uk: "німецькою" },
         { de: "Polnisch", en: "Polish", uk: "польською" },
-        { de: "Ukrainisch", en: "Ukrainian", uk: "українською" }
+        { de: "Ukrainisch", en: "Ukrainian", uk: "українською" },
+        { de: "Tschechisch", en: "Czech", uk: "чеською" },
+        { de: "Dänisch", en: "Danish", uk: "данською" },
+        { de: "Italienisch", en: "Italian", uk: "італійською" },
+        { de: "Russisch", en: "Russian", uk: "російською" },
+        { de: "Türkisch", en: "Turkish", uk: "турецькою" },
+        { de: "Arabisch", en: "Arabic", uk: "арабською" }
+    ],
+    states: [
+        { de: "krank", en: "sick", uk: "хворий / хвора" },
+        { de: "müde", en: "tired", uk: "втомлений / втомлена" },
+        { de: "glücklich", en: "happy", uk: "щасливий / щаслива" },
+        { de: "nervös", en: "nervous", uk: "нервовий / нервова" },
+        { de: "fertig", en: "ready / finished", uk: "готовий / готова" },
+        { de: "zu Hause", en: "at home", uk: "вдома" }
+    ],
+    haveObjects: [
+        { de: "Zeit", en: "time", uk: "час" },
+        { de: "Hunger", en: "hunger", uk: "голод" },
+        { de: "Durst", en: "thirst", uk: "спрагу" },
+        { de: "einen Termin", en: "an appointment", uk: "зустріч / термін" },
+        { de: "eine Frage", en: "a question", uk: "питання" },
+        { de: "ein Problem", en: "a problem", uk: "проблему" }
     ],
     verbs: {
         heißen: { infinitive: "heißen", en: "to be called", uk: "називатися" },
         wohnen: { infinitive: "wohnen", en: "to live", uk: "проживати" },
         kommen: { infinitive: "kommen", en: "to come", uk: "походити" },
         sein: { infinitive: "sein", en: "to be", uk: "бути" },
+        haben: { infinitive: "haben", en: "to have", uk: "мати" },
         lernen: { infinitive: "lernen", en: "to learn", uk: "вчити" },
         vorstellen: { infinitive: "vorstellen", en: "to introduce", uk: "представляти" },
         arbeiten: { infinitive: "arbeiten", en: "to work", uk: "працювати" },
@@ -450,7 +532,8 @@ const VOCAB = {
         { infinitive: "können", en: "can", uk: "могти" },
         { infinitive: "müssen", en: "must", uk: "мусити" },
         { infinitive: "möchten", en: "would like to", uk: "хотів би" },
-        { infinitive: "dürfen", en: "may", uk: "мати дозвіл" }
+        { infinitive: "dürfen", en: "may", uk: "мати дозвіл" },
+        { infinitive: "sollen", en: "should / be supposed to", uk: "мати щось зробити" }
     ],
     modalActions: [
         { verb: {de: "lernen", uk: "вчити"}, obj: {de: "Deutsch", uk: "німецьку"}, en: "learn German", uk: "вчити німецьку" },
@@ -460,16 +543,28 @@ const VOCAB = {
         { verb: {de: "machen", uk: "робити"}, obj: {de: "Sport", uk: "спорт"}, en: "do sports", uk: "займатися спортом" },
         { verb: {de: "lesen", uk: "читати"}, obj: {de: "ein Buch", uk: "книгу"}, en: "read a book", uk: "читати книгу" },
         { verb: {de: "schreiben", uk: "писати"}, obj: {de: "eine E-Mail", uk: "імейл"}, en: "write an email", uk: "писати імейл" },
-        { verb: {de: "kaufen", uk: "купувати"}, obj: {de: "Obst", uk: "фрукти"}, en: "buy fruit", uk: "купувати фрукти" }
+        { verb: {de: "kaufen", uk: "купувати"}, obj: {de: "Obst", uk: "фрукти"}, en: "buy fruit", uk: "купувати фрукти" },
+        { verb: {de: "gehen", uk: "йти"}, obj: {de: "nach Hause", uk: "додому"}, en: "go home", uk: "йти додому" },
+        { verb: {de: "fahren", uk: "їхати"}, obj: {de: "mit dem Bus", uk: "автобусом"}, en: "go by bus", uk: "їхати автобусом" },
+        { verb: {de: "sitzen", uk: "сидіти"}, obj: {de: "im Café", uk: "у кафе"}, en: "sit in the cafe", uk: "сидіти у кафе" },
+        { verb: {de: "kochen", uk: "готувати"}, obj: {de: "eine Suppe", uk: "суп"}, en: "cook soup", uk: "готувати суп" },
+        { verb: {de: "bezahlen", uk: "оплачувати"}, obj: {de: "die Rechnung", uk: "рахунок"}, en: "pay the bill", uk: "оплачувати рахунок" },
+        { verb: {de: "öffnen", uk: "відчиняти"}, obj: {de: "die Tür", uk: "двері"}, en: "open the door", uk: "відчиняти двері" }
     ],
     timeAdverbs: [
         { de: "um 7 Uhr", uk: "о 7 годині" },
+        { de: "um 8 Uhr", uk: "о 8 годині" },
+        { de: "um 9 Uhr", uk: "о 9 годині" },
         { de: "am Morgen", uk: "вранці" },
         { de: "am Abend", uk: "ввечері" },
+        { de: "am Nachmittag", uk: "після обіду" },
         { de: "am Wochenende", uk: "на вихідних" },
         { de: "jeden Tag", uk: "кожного дня" },
         { de: "heute", uk: "сьогодні" },
-        { de: "morgen", uk: "завтра" }
+        { de: "morgen", uk: "завтра" },
+        { de: "oft", uk: "часто" },
+        { de: "manchmal", uk: "іноді" },
+        { de: "später", uk: "пізніше" }
     ],
     sepVerbsAlltag: [
         { infinitive: "aufstehen", prefix: "auf", stem: "stehen", en: "wake up", uk: "прокидатися" },
@@ -481,7 +576,11 @@ const VOCAB = {
         { infinitive: "mitkommen", prefix: "mit", stem: "kommen", en: "come along", uk: "йти разом" },
         { infinitive: "aufmachen", prefix: "auf", stem: "machen", en: "open", uk: "відчиняти" },
         { infinitive: "zumachen", prefix: "zu", stem: "machen", en: "close", uk: "зачиняти" },
-        { infinitive: "mitbringen", prefix: "mit", stem: "bringen", en: "bring along", uk: "приносити з собою" }
+        { infinitive: "mitbringen", prefix: "mit", stem: "bringen", en: "bring along", uk: "приносити з собою" },
+        { infinitive: "ausgehen", prefix: "aus", stem: "gehen", en: "go out", uk: "виходити / гуляти" },
+        { infinitive: "einstellen", prefix: "ein", stem: "stellen", en: "set / adjust", uk: "налаштовувати" },
+        { infinitive: "abholen", prefix: "ab", stem: "holen", en: "pick up", uk: "забирати" },
+        { infinitive: "vorbereiten", prefix: "vor", stem: "bereiten", en: "prepare", uk: "готувати" }
     ],
     dailyActions: [
         { verb: { de: "arbeiten", uk: "працювати" }, obj: { de: "im Büro", uk: "в офісі" }, en: "work in the office", uk: "працювати в офісі" },
@@ -491,17 +590,33 @@ const VOCAB = {
         { verb: { de: "lesen", uk: "читати" }, obj: { de: "ein Buch", uk: "книгу" }, en: "read a book", uk: "читати книгу" },
         { verb: { de: "schreiben", uk: "писати" }, obj: { de: "eine E-Mail", uk: "імейл" }, en: "write an email", uk: "писати імейл" },
         { verb: { de: "trinken", uk: "пити" }, obj: { de: "Kaffee", uk: "каву" }, en: "drink coffee", uk: "пити каву" },
-        { verb: { de: "kochen", uk: "готувати" }, obj: { de: "eine Suppe", uk: "суп" }, en: "cook soup", uk: "готувати суп" }
+        { verb: { de: "kochen", uk: "готувати" }, obj: { de: "eine Suppe", uk: "суп" }, en: "cook soup", uk: "готувати суп" },
+        { verb: { de: "sitzen", uk: "сидіти" }, obj: { de: "im Café", uk: "у кафе" }, en: "sit in the cafe", uk: "сидіти у кафе" },
+        { verb: { de: "fahren", uk: "їхати" }, obj: { de: "zur Arbeit", uk: "на роботу" }, en: "go to work", uk: "їхати на роботу" },
+        { verb: { de: "hören", uk: "слухати" }, obj: { de: "Musik", uk: "музику" }, en: "listen to music", uk: "слухати музику" },
+        { verb: { de: "warten", uk: "чекати" }, obj: { de: "auf den Bus", uk: "на автобус" }, en: "wait for the bus", uk: "чекати автобус" },
+        { verb: { de: "bleiben", uk: "залишатися" }, obj: { de: "zu Hause", uk: "вдома" }, en: "stay at home", uk: "залишатися вдома" },
+        { verb: { de: "reisen", uk: "подорожувати" }, obj: { de: "nach Berlin", uk: "до Берліна" }, en: "travel to Berlin", uk: "подорожувати до Берліна" },
+        { verb: { de: "bezahlen", uk: "оплачувати" }, obj: { de: "die Rechnung", uk: "рахунок" }, en: "pay the bill", uk: "оплачувати рахунок" },
+        { verb: { de: "finden", uk: "знаходити" }, obj: { de: "den Schlüssel", uk: "ключ" }, en: "find the key", uk: "знаходити ключ" }
     ],
     foodItems: [
         { de: "einen Apfel", uk: "яблуко" },
         { de: "eine Pizza", uk: "піцу" },
         { de: "ein Brot", uk: "хліб" },
+        { de: "ein Brötchen", uk: "булочку" },
         { de: "einen Kaffee", uk: "каву" },
         { de: "einen Tee", uk: "чай" },
+        { de: "einen Saft", uk: "сік" },
+        { de: "eine Milch", uk: "молоко" },
         { de: "Wasser", uk: "воду" },
         { de: "eine Suppe", uk: "суп" },
         { de: "einen Kuchen", uk: "пиріг" },
+        { de: "einen Salat", uk: "салат" },
+        { de: "Reis", uk: "рис" },
+        { de: "Nudeln", uk: "локшину / макарони" },
+        { de: "Käse", uk: "сир" },
+        { de: "Obst", uk: "фрукти" },
         { de: "Fleisch", uk: "м'ясо" },
         { de: "Gemüse", uk: "овочі" }
     ],
@@ -512,7 +627,10 @@ const VOCAB = {
         { infinitive: "kochen", uk: "готувати" },
         { infinitive: "bestellen", uk: "замовляти" },
         { infinitive: "probieren", uk: "пробувати" },
-        { infinitive: "brauchen", uk: "потребувати" }
+        { infinitive: "brauchen", uk: "потребувати" },
+        { infinitive: "nehmen", uk: "брати" },
+        { infinitive: "mögen", uk: "любити / подобатися" },
+        { infinitive: "bezahlen", uk: "оплачувати" }
     ],
     familyMembers: [
         { de: "Bruder", gender: "m", uk: "брата" },
@@ -525,20 +643,32 @@ const VOCAB = {
         { de: "Freund", gender: "m", uk: "друга" },
         { de: "Freundin", gender: "f", uk: "подругу" },
         { de: "Kind", gender: "n", uk: "дитину" },
-        { de: "Kollegen", gender: "pl", uk: "колег" }
+        { de: "Kollegen", gender: "pl", uk: "колег" },
+        { de: "Tante", gender: "f", uk: "тітку" },
+        { de: "Onkel", gender: "m", uk: "дядька" },
+        { de: "Cousin", gender: "m", uk: "кузена" },
+        { de: "Cousine", gender: "f", uk: "кузину" },
+        { de: "Nachbar", gender: "m", uk: "сусіда" },
+        { de: "Nachbarin", gender: "f", uk: "сусідку" },
+        { de: "Chef", gender: "m", uk: "шефа" },
+        { de: "Chefin", gender: "f", uk: "керівницю" },
+        { de: "Freunde", gender: "pl", uk: "друзів" }
     ],
     familyVerbs: [
         { infinitive: "besuchen", uk: "відвідувати" },
         { infinitive: "lieben", uk: "любити" },
         { infinitive: "sehen", uk: "бачити" },
-        { infinitive: "treffen", uk: "зустрічати" }
+        { infinitive: "treffen", uk: "зустрічати" },
+        { infinitive: "fragen", uk: "питати" },
+        { infinitive: "kennen", uk: "знати" },
+        { infinitive: "brauchen", uk: "потребувати" }
     ]
 };
 
 function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 function buildSimpleIntro(forcedSubj = null, forcedTemplate = null, includeSeparable = false) {
-    const templatePool = includeSeparable ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2, 3, 4, 6, 7, 8];
+    const templatePool = includeSeparable ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] : [0, 1, 2, 3, 4, 6, 7, 8, 9, 10];
     let templateType = forcedTemplate !== null ? forcedTemplate : getRandom(templatePool);
     
     let subj = forcedSubj || getRandom([...VOCAB.subjects, ...VOCAB.names]);
@@ -546,7 +676,7 @@ function buildSimpleIntro(forcedSubj = null, forcedTemplate = null, includeSepar
         // Prevent (name) for heißen and sich vorstellen
         subj = getRandom(VOCAB.subjects);
     }
-    let pronounKey = subj.de === "(name)" ? "er" : subj.de;
+    let pronounKey = getPronounKey(subj);
     let sText = subj.de;
 
     if (templateType === 0) { // heißen
@@ -677,7 +807,7 @@ function buildSimpleIntro(forcedSubj = null, forcedTemplate = null, includeSepar
             invertedStr: `${study.de} ${conj} ${sText}`
         };
     }
-    else { // sprechen
+    else if (templateType === 8) { // sprechen
         let v = VOCAB.verbs.sprechen;
         let conj = conjugate(v.infinitive, pronounKey);
         let lang = getRandom(VOCAB.languages);
@@ -692,11 +822,49 @@ function buildSimpleIntro(forcedSubj = null, forcedTemplate = null, includeSepar
             invertedStr: `${lang.de} ${conj} ${sText}`
         };
     }
+    else if (templateType === 9) { // sein + state + time
+        let v = VOCAB.verbs.sein;
+        let conj = conjugate(v.infinitive, pronounKey);
+        let state = getRandom(VOCAB.states);
+        let time = getRandom(VOCAB.timeAdverbs);
+        return {
+            blocks: [
+                { id: "s", text: sText, trans: subj.uk, type: "subject" },
+                { id: "v", text: v.infinitive, trans: v.uk, conjugated: conj, type: "verb" },
+                { id: "t", text: time.de, trans: time.uk, type: "object" },
+                { id: "o", text: state.de, trans: state.uk, type: "object" }
+            ],
+            prompt: `[${subj.en}] [${v.en}] [${state.en}] [${time.uk}] / [${subj.uk}] [${v.uk}] [${state.uk}] [${time.uk}]`,
+            standardStr: `${sText} ${conj} ${time.de} ${state.de}`,
+            invertedStr: `${time.de} ${conj} ${sText} ${state.de}`,
+            standardIds: ["s", "v", "t", "o"],
+            invertedIds: ["t", "v", "s", "o"]
+        };
+    }
+    else { // haben + object + time
+        let v = VOCAB.verbs.haben;
+        let conj = conjugate(v.infinitive, pronounKey);
+        let obj = getRandom(VOCAB.haveObjects);
+        let time = getRandom(VOCAB.timeAdverbs);
+        return {
+            blocks: [
+                { id: "s", text: sText, trans: subj.uk, type: "subject" },
+                { id: "v", text: v.infinitive, trans: v.uk, conjugated: conj, type: "verb" },
+                { id: "t", text: time.de, trans: time.uk, type: "object" },
+                { id: "o", text: obj.de, trans: obj.uk, type: "object" }
+            ],
+            prompt: `[${subj.en}] [${v.en}] [${obj.en}] [${time.uk}] / [${subj.uk}] [${v.uk}] [${obj.uk}] [${time.uk}]`,
+            standardStr: `${sText} ${conj} ${time.de} ${obj.de}`,
+            invertedStr: `${time.de} ${conj} ${sText} ${obj.de}`,
+            standardIds: ["s", "v", "t", "o"],
+            invertedIds: ["t", "v", "s", "o"]
+        };
+    }
 }
 
 function buildModalSentence(forcedSubj = null) {
     let subj = forcedSubj || getRandom([...VOCAB.subjects, ...VOCAB.names]);
-    let pronounKey = subj.de === "(name)" ? "er" : subj.de;
+    let pronounKey = getPronounKey(subj);
     
     let modal = getRandom(VOCAB.modals);
     let conj = conjugate(modal.infinitive, pronounKey);
@@ -719,7 +887,7 @@ function buildModalSentence(forcedSubj = null) {
 
 function buildAlltagSentence(forcedSubj = null, includeSeparable = false) {
     let subj = forcedSubj || getRandom([...VOCAB.subjects, ...VOCAB.names]);
-    let pronounKey = subj.de === "(name)" ? "er" : subj.de;
+    let pronounKey = getPronounKey(subj);
     let time = getRandom(VOCAB.timeAdverbs);
 
     if (!includeSeparable) {
@@ -734,9 +902,9 @@ function buildAlltagSentence(forcedSubj = null, includeSeparable = false) {
                 { id: "t", text: time.de, trans: time.uk, type: "object" }
             ],
             prompt: `[${subj.uk}] [${action.uk}] [${time.uk}]`,
-            standardStr: `${subj.de} ${conj} ${action.obj.de} ${time.de}`,
+            standardStr: `${subj.de} ${conj} ${time.de} ${action.obj.de}`,
             invertedStr: `${time.de} ${conj} ${subj.de} ${action.obj.de}`,
-            standardIds: ["s", "v", "o", "t"],
+            standardIds: ["s", "v", "t", "o"],
             invertedIds: ["t", "v", "s", "o"]
         };
     }
@@ -761,13 +929,13 @@ function buildAlltagSentence(forcedSubj = null, includeSeparable = false) {
 
 function buildFoodSentence(forcedSubj = null) {
     let subj = forcedSubj || getRandom([...VOCAB.subjects, ...VOCAB.names]);
-    let pronounKey = subj.de === "(name)" ? "er" : subj.de;
+    let pronounKey = getPronounKey(subj);
     let v = getRandom(VOCAB.foodVerbs);
     let conj = conjugate(v.infinitive, pronounKey);
     let food = getRandom(VOCAB.foodItems);
     
     if (v.infinitive === "trinken") {
-        food = getRandom([{ de: "einen Kaffee", uk: "каву" }, { de: "einen Tee", uk: "чай" }, { de: "Wasser", uk: "воду" }]);
+        food = getRandom([{ de: "einen Kaffee", uk: "каву" }, { de: "einen Tee", uk: "чай" }, { de: "einen Saft", uk: "сік" }, { de: "eine Milch", uk: "молоко" }, { de: "Wasser", uk: "воду" }]);
     } else if (v.infinitive === "essen") {
         food = getRandom([{ de: "eine Pizza", uk: "піцу" }, { de: "ein Brot", uk: "хліб" }, { de: "einen Apfel", uk: "яблуко" }, { de: "eine Suppe", uk: "суп" }]);
     }
@@ -788,7 +956,7 @@ function buildFoodSentence(forcedSubj = null) {
 
 function buildFamilySentence(forcedSubj = null) {
     let subj = forcedSubj || getRandom(VOCAB.subjects); 
-    let pronounKey = subj.de;
+    let pronounKey = getPronounKey(subj);
     let v = getRandom(VOCAB.familyVerbs);
     let conj = conjugate(v.infinitive, pronounKey);
     let member = getRandom(VOCAB.familyMembers);
@@ -858,13 +1026,20 @@ function generateSentence(topic, difficulty, verbLevel = 'BASIC') {
         let s1 = buildFunc(subj);
         let s2 = buildFunc(subj);
         let conn = getRandom(VOCAB.connectors);
+        let guard = 0;
+        while (s2.standardStr === s1.standardStr && guard < 25) {
+            s2 = buildFunc(subj);
+            guard++;
+        }
         
         if (topic === 'INTRO') {
-            let combo = Math.floor(Math.random() * 4);
+            let combo = Math.floor(Math.random() * 6);
             if (combo === 0) { s1 = buildSimpleIntro(subj, 0, includeSeparable); s2 = buildSimpleIntro(subj, 2, includeSeparable); conn = VOCAB.connectors[0]; }
             else if (combo === 1) { s1 = buildSimpleIntro(subj, 1, includeSeparable); s2 = buildSimpleIntro(subj, 6, includeSeparable); conn = VOCAB.connectors[0]; }
             else if (combo === 2) { s1 = buildSimpleIntro(subj, 3, includeSeparable); s2 = buildSimpleIntro(subj, 7, includeSeparable); conn = VOCAB.connectors[0]; }
-            else { s1 = buildSimpleIntro(subj, 4, includeSeparable); s2 = buildSimpleIntro(subj, 8, includeSeparable); conn = VOCAB.connectors[1]; }
+            else if (combo === 3) { s1 = buildSimpleIntro(subj, 4, includeSeparable); s2 = buildSimpleIntro(subj, 8, includeSeparable); conn = VOCAB.connectors[1]; }
+            else if (combo === 4) { s1 = buildSimpleIntro(subj, 9, includeSeparable); s2 = buildSimpleIntro(subj, 10, includeSeparable); conn = VOCAB.connectors[0]; }
+            else { s1 = buildSimpleIntro(subj, 1, includeSeparable); s2 = buildSimpleIntro(subj, 9, includeSeparable); conn = VOCAB.connectors[1]; }
         }
         
         let s1_stdIds = s1.standardIds || ["s", "v", "o"];
@@ -894,6 +1069,78 @@ function generateSentence(topic, difficulty, verbLevel = 'BASIC') {
     }
 }
 
+function getSentenceKey(sentence) {
+    return `${sentence.standardStr}||${sentence.invertedStr}`;
+}
+
+const RECENT_SENTENCE_STORAGE_KEY = "affirmative_recent_sentence_keys";
+const RECENT_SENTENCE_LIMIT = 300;
+
+function loadRecentSentenceKeys() {
+    try {
+        if (typeof localStorage === "undefined") return [];
+        const saved = JSON.parse(localStorage.getItem(RECENT_SENTENCE_STORAGE_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveRecentSentenceKeys(newKeys) {
+    try {
+        if (typeof localStorage === "undefined") return;
+        const incoming = new Set(newKeys);
+        const previous = loadRecentSentenceKeys().filter(key => !incoming.has(key));
+        const uniqueRecent = [...previous, ...newKeys].slice(-RECENT_SENTENCE_LIMIT);
+        localStorage.setItem(RECENT_SENTENCE_STORAGE_KEY, JSON.stringify(uniqueRecent));
+    } catch (error) {
+        // Training should keep working even if browser storage is unavailable.
+    }
+}
+
+function buildPracticeQueue() {
+    const queue = [];
+    const seen = new Set();
+    const recent = new Set(loadRecentSentenceKeys());
+    const recentFallback = [];
+    const topics = practiceTopics.length > 0 ? [...practiceTopics] : ['INTRO'];
+    const maxAttempts = Math.max(1000, practiceCount * 300);
+    let attempts = 0;
+    let topicIndex = Math.floor(Math.random() * topics.length);
+
+    while (queue.length < practiceCount && attempts < maxAttempts) {
+        const pickedTopic = topics[topicIndex % topics.length];
+        const sentence = generateSentence(pickedTopic, practiceDifficulty, practiceVerbLevel);
+        const key = getSentenceKey(sentence);
+
+        if (!seen.has(key) && !recent.has(key)) {
+            seen.add(key);
+            queue.push(sentence);
+        } else if (!seen.has(key)) {
+            recentFallback.push(sentence);
+        }
+
+        topicIndex++;
+        attempts++;
+    }
+
+    while (queue.length < practiceCount && recentFallback.length > 0) {
+        const sentence = recentFallback.shift();
+        const key = getSentenceKey(sentence);
+        if (!seen.has(key)) {
+            seen.add(key);
+            queue.push(sentence);
+        }
+    }
+
+    while (queue.length < practiceCount) {
+        queue.push(generateSentence(getRandom(topics), practiceDifficulty, practiceVerbLevel));
+    }
+
+    saveRecentSentenceKeys(queue.map(getSentenceKey));
+    return queue;
+}
+
 // ==========================================
 // 5. APP STATE & UI LOGIC
 // ==========================================
@@ -910,6 +1157,7 @@ let currentPhase = 'STANDARD'; // STANDARD or INVERTED
 let currentBlocks = [];
 let userSelection = [];
 let attemptsLeft = 2; // For typing mode
+let sentenceQueue = [];
 
 const rulesSection = document.createElement("div");
 rulesSection.classList.add("rules-container");
@@ -920,22 +1168,108 @@ rulesCard.classList.add("rule-card");
 rulesCard.innerHTML = `
     <div class="rule-header">💡 ${t("affirmative", "rules_title")}</div>
     <div class="rule-desc">${t("affirmative", "rules_desc")}</div>
+
+    <div class="rule-subtitle">${t("affirmative", "rule_basic_title")}</div>
+    <ul class="rule-list">
+        <li>${t("affirmative", "rule_basic_1")}</li>
+        <li>${t("affirmative", "rule_basic_2")}</li>
+        <li>${t("affirmative", "rule_basic_3")}</li>
+    </ul>
     <table class="example-table">
         <thead>
-            <tr><th>Order</th><th>Pos 1</th><th>Pos 2 (Verb)</th><th>Pos 3</th></tr>
+            <tr>
+                <th>${t("affirmative", "table_order")}</th>
+                <th>${t("affirmative", "table_pos_1")}</th>
+                <th>${t("affirmative", "table_pos_2")}</th>
+                <th>${t("affirmative", "table_after")}</th>
+                <th>${t("affirmative", "table_rest")}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>${t("affirmative", "standard_order")}</td>
+                <td class="pos-1">Ihr</td>
+                <td class="pos-2">sitzt</td>
+                <td class="pos-3">um 8 Uhr</td>
+                <td>im Café</td>
+            </tr>
+            <tr>
+                <td>${t("affirmative", "inverted_order")}</td>
+                <td class="pos-3">Um 8 Uhr</td>
+                <td class="pos-2">sitzt</td>
+                <td class="pos-1">ihr</td>
+                <td>im Café</td>
+            </tr>
+            <tr>
+                <td>${t("affirmative", "inverted_order")}</td>
+                <td class="pos-3">Im Café</td>
+                <td class="pos-2">sitzt</td>
+                <td class="pos-1">ihr</td>
+                <td>um 8 Uhr</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="rule-note">${t("affirmative", "rule_time_place_note")}</div>
+
+    <div class="rule-subtitle">${t("affirmative", "rule_modal_title")}</div>
+    <ul class="rule-list">
+        <li>${t("affirmative", "rule_modal_1")}</li>
+        <li>${t("affirmative", "rule_modal_2")}</li>
+        <li>${t("affirmative", "rule_modal_3")}</li>
+    </ul>
+    <table class="example-table">
+        <thead>
+            <tr>
+                <th>${t("affirmative", "table_order")}</th>
+                <th>${t("affirmative", "table_pos_1")}</th>
+                <th>${t("affirmative", "table_pos_2")}</th>
+                <th>${t("affirmative", "table_middle")}</th>
+                <th>${t("affirmative", "table_end")}</th>
+            </tr>
         </thead>
         <tbody>
             <tr>
                 <td>${t("affirmative", "standard_order")}</td>
                 <td class="pos-1">Ich</td>
-                <td class="pos-2">wohne</td>
-                <td class="pos-3">in Berlin</td>
+                <td class="pos-2">möchte</td>
+                <td>Deutsch</td>
+                <td class="pos-3">lernen</td>
             </tr>
             <tr>
                 <td>${t("affirmative", "inverted_order")}</td>
-                <td class="pos-3">In Berlin</td>
-                <td class="pos-2">wohne</td>
-                <td class="pos-1">ich</td>
+                <td class="pos-3">Heute</td>
+                <td class="pos-2">möchte</td>
+                <td>ich Deutsch</td>
+                <td class="pos-3">lernen</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="rule-note">${t("affirmative", "rule_modal_note")}</div>
+
+    <div class="rule-subtitle">${t("affirmative", "rule_complex_title")}</div>
+    <ul class="rule-list">
+        <li>${t("affirmative", "rule_complex_1")}</li>
+        <li>${t("affirmative", "rule_complex_2")}</li>
+        <li>${t("affirmative", "rule_complex_3")}</li>
+    </ul>
+    <table class="example-table">
+        <thead>
+            <tr>
+                <th>${t("affirmative", "table_clause_1")}</th>
+                <th>${t("affirmative", "table_connector")}</th>
+                <th>${t("affirmative", "table_clause_2")}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ich wohne in Berlin</td>
+                <td class="pos-2">und</td>
+                <td>ich arbeite als Koch</td>
+            </tr>
+            <tr>
+                <td>Heute lerne ich Deutsch</td>
+                <td class="pos-2">aber</td>
+                <td>morgen arbeite ich im Büro</td>
             </tr>
         </tbody>
     </table>
@@ -999,10 +1333,10 @@ const createMultiSettingGroup = (titleKey, options, activeVals, onSelect) => {
 
 createMultiSettingGroup("settings_topic", [
     { val: "INTRO", labelKey: "topic_intro" },
-    { val: "MODALS", label: "Модальні" },
-    { val: "ALLTAG", label: "Мій день" },
-    { val: "FOOD", label: "Їжа та покупки" },
-    { val: "FAMILY", label: "Сім'я та друзі" }
+    { val: "MODALS", labelKey: "topic_modals" },
+    { val: "ALLTAG", labelKey: "topic_alltag" },
+    { val: "FOOD", labelKey: "topic_food" },
+    { val: "FAMILY", labelKey: "topic_family" }
 ], practiceTopics, (val) => practiceTopics = val);
 
 createSettingGroup("settings_format", [
@@ -1024,7 +1358,8 @@ createSettingGroup("settings_count", [
     { val: 5, label: "5" },
     { val: 10, label: "10" },
     { val: 15, label: "15" },
-    { val: 20, label: "20" }
+    { val: 20, label: "20" },
+    { val: 50, label: "50" }
 ], practiceCount, (val) => practiceCount = val);
 
 const actionGroup = document.createElement("div");
@@ -1127,6 +1462,7 @@ document.body.appendChild(modalOverlay);
 function startGame(mode) {
     practiceMode = mode;
     currentQuestionIndex = 0;
+    sentenceQueue = buildPracticeQueue();
     rulesSection.style.display = "none";
     gameSection.style.display = "flex";
     modalOverlay.classList.remove("active");
@@ -1151,8 +1487,7 @@ function nextQuestion() {
         showGameOver();
         return;
     }
-    let pickedTopic = getRandom(practiceTopics);
-    currentSentence = generateSentence(pickedTopic, practiceDifficulty, practiceVerbLevel);
+    currentSentence = sentenceQueue[currentQuestionIndex] || generateSentence(getRandom(practiceTopics), practiceDifficulty, practiceVerbLevel);
     currentPhase = 'STANDARD';
     attemptsLeft = 2; // For unassisted typing
     setupPhase();
@@ -1183,7 +1518,7 @@ function setupPhase() {
     if (practiceMode === 'ASSISTED') {
         let hint = currentPhase === 'STANDARD' ? currentSentence.standardStr : currentSentence.invertedStr;
         hint = hint.charAt(0).toUpperCase() + hint.slice(1);
-        promptText.innerHTML = `<span style="color:var(--accent-gold); font-size:1.2rem; font-weight:800;">Очікується: ${hint}</span>`;
+        promptText.innerHTML = `<span style="color:var(--accent-gold); font-size:1.2rem; font-weight:800;">${t("affirmative", "expected_label")} ${hint}</span>`;
     } else {
         promptText.innerHTML = "";
     }
@@ -1312,7 +1647,7 @@ function verifySentence() {
 
 function verifyBlocks() {
     if (userSelection.length !== currentSentence.blocks.length) {
-        feedbackMsg.textContent = "Please use all words!";
+        feedbackMsg.textContent = t("affirmative", "use_all_words");
         feedbackMsg.className = "feedback-message error";
         return;
     }
@@ -1388,12 +1723,12 @@ function verifyTyping() {
             if (attemptsLeft < 0) {
                 let actual = targetAnswer.charAt(0).toUpperCase() + targetAnswer.slice(1) + ".";
                 showModal(
-                    "Ой-ой!",
-                    `Спроби вичерпано!\n\nПравильна відповідь була:\n${actual}`,
-                    [{ text: "До правил", primary: true, action: showRules }]
+                    t("affirmative", "modal_error_title"),
+                    `${t("affirmative", "attempts_exhausted")}\n\n${t("affirmative", "correct_answer_was")}\n${actual}`,
+                    [{ text: t("affirmative", "back_to_rules"), primary: true, action: showRules }]
                 );
             } else {
-                feedbackMsg.textContent = `${t("affirmative", "incorrect_msg")} (${attemptsLeft} tries left)`;
+                feedbackMsg.textContent = `${t("affirmative", "incorrect_msg")} (${t("affirmative", "tries_left").replace("{count}", attemptsLeft)})`;
                 feedbackMsg.className = "feedback-message error";
             }
         }
@@ -1437,7 +1772,7 @@ function showGameOver() {
     finishScreen.innerHTML = `
         <div class="finish-icon">🎉</div>
         <h1 style="margin-bottom: 0.5rem;">${t("affirmative", "game_over")}</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 2rem;">You completed ${practiceCount} sentences perfectly!</p>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">${t("affirmative", "finish_summary").replace("{count}", practiceCount)}</p>
         <button class="btn-primary" onclick="window.location.reload()">${t("affirmative", "back_to_menu")}</button>
     `;
     

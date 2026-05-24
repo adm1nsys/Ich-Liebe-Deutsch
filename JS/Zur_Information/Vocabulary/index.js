@@ -1581,6 +1581,8 @@ const VOCABULARY = [
         { de: "der Mord",               key: "word_mord" },
         { de: "der Diebstahl",          key: "word_diebstahl" },
         { de: "der Betrug",             key: "word_betrug" },
+        { de: "die Geschwindigkeitsüberschreitung", key: "word_geschwindigkeitsueberschreitung" },
+        { de: "die Grundstücksverkehrsgenehmigungszuständigkeitsübertragungsverordnung", key: "word_grundstuecksverkehrsverordnung" },
         // Глаголы
         { de: "verbieten",              key: "word_verbieten" },
         { de: "erlauben",               key: "word_erlauben" },
@@ -1637,6 +1639,8 @@ const VOCABULARY = [
         { de: "müde",                   key: "word_muede" },
         { de: "krank",                  key: "word_krank" },
         { de: "gesund",                 key: "word_gesund" },
+        { de: "scheißegal",             key: "word_scheissegal" },
+        { de: "verrückt",               key: "word_verrueckt" },
         { de: "voll",                   key: "word_full" }
     ] },
     { catKey: "cat_adverbs", words: [
@@ -1680,7 +1684,15 @@ const VOCABULARY = [
         { de: "genau",                  key: "word_genau" },
         { de: "vielleicht",             key: "word_vielleicht" },
         { de: "sicher",                 key: "word_sicher" },
-        { de: "natürlich",              key: "word_natuerlich" }
+        { de: "natürlich",              key: "word_natuerlich" },
+        { de: "dabei",                  key: "word_dabei" },
+        { de: "vorbei",                 key: "word_vorbei" },
+        { de: "übrigens",               key: "word_uebrigens" },
+        { de: "deinetwegen",            key: "word_deinetwegen" },
+        { de: "überwiegend",            key: "word_ueberwiegend" },
+        { de: "eher nicht",             key: "word_eher_nicht" },
+        { de: "gleichfalls",            key: "word_gleichfalls" },
+        { de: "ebenso",                 key: "word_ebenso" }
     ] },
     { catKey: "cat_verbs", words: [
         // Общее понятие
@@ -1705,9 +1717,11 @@ const VOCABULARY = [
         { de: "stehen",                 key: "word_stehen" },
         { de: "liegen",                 key: "word_liegen" },
         { de: "sitzen",                 key: "word_sitzen" },
+        { de: "fallen",                 key: "word_fallen" },
         // Коммуникация и восприятие
         { de: "sagen",                  key: "word_sagen" },
         { de: "fragen",                 key: "word_fragen" },
+        { de: "erzählen",               key: "word_erzaehlen" },
         { de: "antworten",              key: "word_antworten" },
         { de: "sehen",                  key: "word_sehen" },
         { de: "hören",                  key: "word_hoeren" },
@@ -1741,6 +1755,7 @@ const VOCABULARY = [
         { de: "anziehen",               key: "word_anziehen" },
         { de: "ausziehen",              key: "word_ausziehen" },
         { de: "umziehen",               key: "word_umziehen" },
+        { de: "(du) umziehst",          key: "word_umziehst" },
         // Покупки и действия
         { de: "einkaufen",              key: "word_einkaufen" },
         { de: "ausgeben",               key: "word_ausgeben" },
@@ -1770,6 +1785,7 @@ const VOCABULARY = [
         // С Dativ (Всегда)
         { de: "aus",                    key: "word_aus" },
         { de: "bei",                    key: "word_bei" },
+        { de: "bei ...",                key: "word_bei_ellipsis" },
         { de: "mit",                    key: "word_mit" },
         { de: "nach",                   key: "word_nach" },
         { de: "seit",                   key: "word_seit" },
@@ -1800,6 +1816,7 @@ const VOCABULARY = [
         { de: "aber",                   key: "word_aber" },
         { de: "denn",                   key: "word_denn" },
         { de: "und",                    key: "word_und" },
+        { de: "und zwar",               key: "word_und_zwar" },
         { de: "sondern",                key: "word_sondern" },
         { de: "oder",                   key: "word_oder" },
         // Подчиняющие (Глагол в конец)
@@ -1819,10 +1836,12 @@ const VOCABULARY = [
     { catKey: "cat_language", words: [
         { de: "der Stamm",              key: "word_stamm" },
         { de: "die Endung",             key: "word_endung" },
+        { de: "das Präteritum",         key: "word_praeteritum" },
         { de: "der Punkt",              key: "word_punkt" },
         { de: "das Fragezeichen",       key: "word_fragezeichen" },
         { de: "der Wortschatz",         key: "word_vocabulary" },
-        { de: "die Liste",              key: "word_list" }
+        { de: "die Liste",              key: "word_list" },
+        { de: "der Eierschalensollbruchstellenverursacher", key: "word_eierschalensollbruchstellenverursacher" }
     ] },
     { catKey: "cat_idioms", words: [
         // Общее понятие
@@ -1843,7 +1862,17 @@ const VOCABULARY = [
         { de: "Hin und wieder",                     key: "word_idiom_hin_und_wieder" },
         { de: "Auf jeden Fall",                     key: "word_idiom_auf_jeden_fall" },
         { de: "Auf keinen Fall",                    key: "word_idiom_auf_keinen_fall" },
-        { de: "Im Großen und Ganzen",               key: "word_idiom_im_grossen_und_ganzen" }
+        { de: "Im Großen und Ganzen",               key: "word_idiom_im_grossen_und_ganzen" },
+        { de: "ich stelle mich vor",                key: "word_ich_stelle_mich_vor" },
+        { de: "ich stelle mir vor",                 key: "word_ich_stelle_mir_vor" },
+        { de: "ich auch",                           key: "word_ich_auch" },
+        { de: "es geht um ...",                     key: "word_es_geht_um" },
+        { de: "Ich habe das nicht verstanden",      key: "word_ich_habe_das_nicht_verstanden" },
+        { de: "es fällt mir leicht/schwer, ... zu VERB", key: "word_es_faellt_mir_leicht_schwer" },
+        { de: "ich bin krank",                      key: "word_ich_bin_krank" },
+        { de: "ich bin krank geworden",             key: "word_ich_bin_krank_geworden" },
+        { de: "ich werde krank",                    key: "word_ich_werde_krank" },
+        { de: "Scheiß drauf!",                      key: "word_scheiss_drauf" }
     ] }
 ];
 
