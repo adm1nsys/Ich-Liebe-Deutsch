@@ -24,12 +24,12 @@ const TRANSLATIONS_AFFIRMATIVE = {
         uk: "Прямий та зворотний порядок слів"
     },
     "rules_desc": {
-        en: "In German, the conjugated verb ALWAYS stays in the 2nd position in statements. If you start with a time or place, the subject moves to the 3rd position (Inversion).",
-        de: "Im Deutschen steht das konjugierte Verb in Aussagesätzen IMMER an 2. Position. Wenn du mit einer Zeit oder einem Ort beginnst, rückt das Subjekt an die 3. Position (Inversion).",
-        cs: "V němčině je časované sloveso v oznamovacích větách VŽDY na 2. pozici. Pokud začnete časem nebo místem, podmět se přesune na 3. pozici (inverze).",
-        pl: "W języku niemieckim odmieniony czasownik ZAWSZE znajduje się na 2. pozycji. Jeśli zaczniesz od czasu lub miejsca, podmiot przesuwa się na 3. pozycję (inwersja).",
-        da: "På tysk står det bøjede udsagnsord ALTID på 2. pladsen i fortællende sætninger. Hvis du starter med tid eller sted, flytter grundleddet til 3. pladsen.",
-        uk: "У німецькій мові відмінюване дієслово ЗАВЖДИ стоїть на 2-й позиції у стверджувальних реченнях. Якщо речення починається з часу або місця, підмет переміщується на 3-тю позицію (Інверсія)."
+        en: "In German, the conjugated verb ALWAYS stays in the 2nd position in statements. If you start with a time or place, the subject moves to the 3rd position (Inversion). Use the basic level for A1.1 sentences without separable prefixes.",
+        de: "Im Deutschen steht das konjugierte Verb in Aussagesätzen IMMER an 2. Position. Wenn du mit einer Zeit oder einem Ort beginnst, rückt das Subjekt an die 3. Position (Inversion). Nutze das Basisniveau für A1.1-Sätze ohne trennbare Präfixe.",
+        cs: "V němčině je časované sloveso v oznamovacích větách VŽDY na 2. pozici. Pokud začnete časem nebo místem, podmět se přesune na 3. pozici (inverze). Základní úroveň používá A1.1 věty bez odlučitelných předpon.",
+        pl: "W języku niemieckim odmieniony czasownik ZAWSZE znajduje się na 2. pozycji. Jeśli zaczniesz od czasu lub miejsca, podmiot przesuwa się na 3. pozycję (inwersja). Poziom podstawowy używa zdań A1.1 bez przedrostków rozdzielnych.",
+        da: "På tysk står det bøjede udsagnsord ALTID på 2. pladsen i fortællende sætninger. Hvis du starter med tid eller sted, flytter grundleddet til 3. pladsen. Basisniveauet bruger A1.1-sætninger uden adskillelige præfikser.",
+        uk: "У німецькій мові відмінюване дієслово ЗАВЖДИ стоїть на 2-й позиції у стверджувальних реченнях. Якщо речення починається з часу або місця, підмет переміщується на 3-тю позицію (інверсія). Базовий рівень дає A1.1-речення без відокремлюваних префіксів."
     },
     "standard_order": {
         en: "Standard Order", de: "Standardreihenfolge", cs: "Standardní slovosled", pl: "Szyk prosty", da: "Standardrækkefølge", uk: "Прямий порядок"
@@ -66,6 +66,30 @@ const TRANSLATIONS_AFFIRMATIVE = {
     },
     "diff_complex": {
         en: "Complex (with 'und', 'aber')", de: "Komplex (mit 'und', 'aber')", cs: "Složité", pl: "Złożone", da: "Kompleks", uk: "Складні (з und, aber)"
+    },
+    "settings_verb_level": {
+        en: "Verb level:",
+        de: "Verb-Niveau:",
+        cs: "Úroveň sloves:",
+        pl: "Poziom czasowników:",
+        da: "Udsagnsordsniveau:",
+        uk: "Рівень дієслів:"
+    },
+    "verb_level_basic": {
+        en: "A1.1 basic (no separable prefixes)",
+        de: "A1.1 Basis (ohne trennbare Präfixe)",
+        cs: "A1.1 základ (bez odlučitelných předpon)",
+        pl: "A1.1 podstawowy (bez przedrostków rozdzielnych)",
+        da: "A1.1 basis (uden adskillelige præfikser)",
+        uk: "A1.1 базовий (без відокремлюваних префіксів)"
+    },
+    "verb_level_separable": {
+        en: "With separable prefixes",
+        de: "Mit trennbaren Präfixen",
+        cs: "S odlučitelnými předponami",
+        pl: "Z przedrostkami rozdzielnymi",
+        da: "Med adskillelige præfikser",
+        uk: "З відокремлюваними префіксами"
     },
     "start_unassisted": {
         en: "Start without Helper", de: "Ohne Hilfe starten", cs: "Začít bez nápovědy", pl: "Zacznij bez podpowiedzi", da: "Start uden hjælp", uk: "Почати без підказок"

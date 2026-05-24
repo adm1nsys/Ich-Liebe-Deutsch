@@ -290,7 +290,8 @@ const IRREGULAR_VERBS = {
     "laufen": { "du": "läufst", "er": "läuft", "sie": "läuft", "es": "läuft" },
     "helfen": { "du": "hilfst", "er": "hilft", "sie": "hilft", "es": "hilft" },
     "treffen": { "du": "triffst", "er": "trifft", "sie": "trifft", "es": "trifft" },
-    "fahren": { "du": "fährst", "er": "fährt", "sie": "fährt", "es": "fährt" }
+    "fahren": { "du": "fährst", "er": "fährt", "sie": "fährt", "es": "fährt" },
+    "fangen": { "du": "fängst", "er": "fängt", "sie": "fängt", "es": "fängt" }
 };
 
 function conjugate(infinitive, pronoun) {
@@ -384,32 +385,50 @@ const VOCAB = {
     cities: [
         { de: "Berlin", en: "Berlin", uk: "Берліні", bare: "Берлін" },
         { de: "Wien", en: "Vienna", uk: "Відні", bare: "Відень" },
-        { de: "Kyjiw", en: "Kyiv", uk: "Києві", bare: "Київ" }
+        { de: "Kyjiw", en: "Kyiv", uk: "Києві", bare: "Київ" },
+        { de: "Hamburg", en: "Hamburg", uk: "Гамбурзі", bare: "Гамбург" },
+        { de: "München", en: "Munich", uk: "Мюнхені", bare: "Мюнхен" },
+        { de: "Prag", en: "Prague", uk: "Празі", bare: "Прага" }
     ],
     countries_aus: [
         { de: "der Ukraine", en: "Ukraine", uk: "України" },
         { de: "Deutschland", en: "Germany", uk: "Німеччини" },
-        { de: "Polen", en: "Poland", uk: "Польщі" }
+        { de: "Polen", en: "Poland", uk: "Польщі" },
+        { de: "Tschechien", en: "Czechia", uk: "Чехії" },
+        { de: "Dänemark", en: "Denmark", uk: "Данії" },
+        { de: "Österreich", en: "Austria", uk: "Австрії" }
     ],
     ages: [
         { de: "20", en: "20", uk: "20" },
         { de: "25", en: "25", uk: "25" },
-        { de: "30", en: "30", uk: "30" }
+        { de: "30", en: "30", uk: "30" },
+        { de: "18", en: "18", uk: "18" },
+        { de: "35", en: "35", uk: "35" },
+        { de: "42", en: "42", uk: "42" }
     ],
     professions: [
         { de: "als Lehrer", en: "as a teacher", uk: "вчителем" },
         { de: "als Arzt", en: "as a doctor", uk: "лікарем" },
-        { de: "als Programmierer", en: "as a programmer", uk: "програмістом" }
+        { de: "als Programmierer", en: "as a programmer", uk: "програмістом" },
+        { de: "als Verkäufer", en: "as a salesperson", uk: "продавцем" },
+        { de: "als Koch", en: "as a cook", uk: "кухарем" },
+        { de: "als Student", en: "as a student", uk: "студентом" }
     ],
     studies: [
         { de: "Informatik", en: "Computer Science", uk: "інформатику" },
         { de: "Medizin", en: "Medicine", uk: "медицину" },
-        { de: "Kunst", en: "Art", uk: "мистецтво" }
+        { de: "Kunst", en: "Art", uk: "мистецтво" },
+        { de: "Deutsch", en: "German", uk: "німецьку" },
+        { de: "Mathematik", en: "Mathematics", uk: "математику" },
+        { de: "Musik", en: "Music", uk: "музику" }
     ],
     languages: [
         { de: "Englisch", en: "English", uk: "англійською" },
         { de: "Spanisch", en: "Spanish", uk: "іспанською" },
-        { de: "Französisch", en: "French", uk: "французькою" }
+        { de: "Französisch", en: "French", uk: "французькою" },
+        { de: "Deutsch", en: "German", uk: "німецькою" },
+        { de: "Polnisch", en: "Polish", uk: "польською" },
+        { de: "Ukrainisch", en: "Ukrainian", uk: "українською" }
     ],
     verbs: {
         heißen: { infinitive: "heißen", en: "to be called", uk: "називатися" },
@@ -438,7 +457,10 @@ const VOCAB = {
         { verb: {de: "spielen", uk: "грати"}, obj: {de: "Fußball", uk: "в футбол"}, en: "play football", uk: "грати в футбол" },
         { verb: {de: "essen", uk: "їсти"}, obj: {de: "Pizza", uk: "піцу"}, en: "eat pizza", uk: "їсти піцу" },
         { verb: {de: "trinken", uk: "пити"}, obj: {de: "Kaffee", uk: "каву"}, en: "drink coffee", uk: "пити каву" },
-        { verb: {de: "machen", uk: "робити"}, obj: {de: "Sport", uk: "спорт"}, en: "do sports", uk: "займатися спортом" }
+        { verb: {de: "machen", uk: "робити"}, obj: {de: "Sport", uk: "спорт"}, en: "do sports", uk: "займатися спортом" },
+        { verb: {de: "lesen", uk: "читати"}, obj: {de: "ein Buch", uk: "книгу"}, en: "read a book", uk: "читати книгу" },
+        { verb: {de: "schreiben", uk: "писати"}, obj: {de: "eine E-Mail", uk: "імейл"}, en: "write an email", uk: "писати імейл" },
+        { verb: {de: "kaufen", uk: "купувати"}, obj: {de: "Obst", uk: "фрукти"}, en: "buy fruit", uk: "купувати фрукти" }
     ],
     timeAdverbs: [
         { de: "um 7 Uhr", uk: "о 7 годині" },
@@ -454,7 +476,22 @@ const VOCAB = {
         { infinitive: "fernsehen", prefix: "fern", stem: "sehen", en: "watch TV", uk: "дивитися телевізор" },
         { infinitive: "einkaufen", prefix: "ein", stem: "kaufen", en: "shop", uk: "робити покупки" },
         { infinitive: "anrufen", prefix: "an", stem: "rufen", en: "call", uk: "дзвонити" },
-        { infinitive: "anfangen", prefix: "an", stem: "fangen", en: "start", uk: "починати" }
+        { infinitive: "anfangen", prefix: "an", stem: "fangen", en: "start", uk: "починати" },
+        { infinitive: "aufräumen", prefix: "auf", stem: "räumen", en: "tidy up", uk: "прибирати" },
+        { infinitive: "mitkommen", prefix: "mit", stem: "kommen", en: "come along", uk: "йти разом" },
+        { infinitive: "aufmachen", prefix: "auf", stem: "machen", en: "open", uk: "відчиняти" },
+        { infinitive: "zumachen", prefix: "zu", stem: "machen", en: "close", uk: "зачиняти" },
+        { infinitive: "mitbringen", prefix: "mit", stem: "bringen", en: "bring along", uk: "приносити з собою" }
+    ],
+    dailyActions: [
+        { verb: { de: "arbeiten", uk: "працювати" }, obj: { de: "im Büro", uk: "в офісі" }, en: "work in the office", uk: "працювати в офісі" },
+        { verb: { de: "lernen", uk: "вчити" }, obj: { de: "Deutsch", uk: "німецьку" }, en: "learn German", uk: "вчити німецьку" },
+        { verb: { de: "gehen", uk: "йти" }, obj: { de: "zur Schule", uk: "до школи" }, en: "go to school", uk: "йти до школи" },
+        { verb: { de: "spielen", uk: "грати" }, obj: { de: "Fußball", uk: "у футбол" }, en: "play football", uk: "грати у футбол" },
+        { verb: { de: "lesen", uk: "читати" }, obj: { de: "ein Buch", uk: "книгу" }, en: "read a book", uk: "читати книгу" },
+        { verb: { de: "schreiben", uk: "писати" }, obj: { de: "eine E-Mail", uk: "імейл" }, en: "write an email", uk: "писати імейл" },
+        { verb: { de: "trinken", uk: "пити" }, obj: { de: "Kaffee", uk: "каву" }, en: "drink coffee", uk: "пити каву" },
+        { verb: { de: "kochen", uk: "готувати" }, obj: { de: "eine Suppe", uk: "суп" }, en: "cook soup", uk: "готувати суп" }
     ],
     foodItems: [
         { de: "einen Apfel", uk: "яблуко" },
@@ -473,7 +510,9 @@ const VOCAB = {
         { infinitive: "trinken", uk: "пити" },
         { infinitive: "kaufen", uk: "купувати" },
         { infinitive: "kochen", uk: "готувати" },
-        { infinitive: "bestellen", uk: "замовляти" }
+        { infinitive: "bestellen", uk: "замовляти" },
+        { infinitive: "probieren", uk: "пробувати" },
+        { infinitive: "brauchen", uk: "потребувати" }
     ],
     familyMembers: [
         { de: "Bruder", gender: "m", uk: "брата" },
@@ -483,7 +522,10 @@ const VOCAB = {
         { de: "Oma", gender: "f", uk: "бабусю" },
         { de: "Opa", gender: "m", uk: "дідуся" },
         { de: "Eltern", gender: "pl", uk: "батьків" },
-        { de: "Freund", gender: "m", uk: "друга" }
+        { de: "Freund", gender: "m", uk: "друга" },
+        { de: "Freundin", gender: "f", uk: "подругу" },
+        { de: "Kind", gender: "n", uk: "дитину" },
+        { de: "Kollegen", gender: "pl", uk: "колег" }
     ],
     familyVerbs: [
         { infinitive: "besuchen", uk: "відвідувати" },
@@ -495,8 +537,9 @@ const VOCAB = {
 
 function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-function buildSimpleIntro(forcedSubj = null, forcedTemplate = null) {
-    let templateType = forcedTemplate !== null ? forcedTemplate : Math.floor(Math.random() * 9); // 0-8
+function buildSimpleIntro(forcedSubj = null, forcedTemplate = null, includeSeparable = false) {
+    const templatePool = includeSeparable ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2, 3, 4, 6, 7, 8];
+    let templateType = forcedTemplate !== null ? forcedTemplate : getRandom(templatePool);
     
     let subj = forcedSubj || getRandom([...VOCAB.subjects, ...VOCAB.names]);
     if (!forcedSubj && (templateType === 0 || templateType === 5)) {
@@ -674,12 +717,32 @@ function buildModalSentence(forcedSubj = null) {
     };
 }
 
-function buildAlltagSentence(forcedSubj = null) {
+function buildAlltagSentence(forcedSubj = null, includeSeparable = false) {
     let subj = forcedSubj || getRandom([...VOCAB.subjects, ...VOCAB.names]);
     let pronounKey = subj.de === "(name)" ? "er" : subj.de;
+    let time = getRandom(VOCAB.timeAdverbs);
+
+    if (!includeSeparable) {
+        let action = getRandom(VOCAB.dailyActions);
+        let conj = conjugate(action.verb.de, pronounKey);
+
+        return {
+            blocks: [
+                { id: "s", text: subj.de, trans: subj.uk, type: "subject" },
+                { id: "v", text: action.verb.de, trans: action.verb.uk, conjugated: conj, type: "verb" },
+                { id: "o", text: action.obj.de, trans: action.obj.uk, type: "object" },
+                { id: "t", text: time.de, trans: time.uk, type: "object" }
+            ],
+            prompt: `[${subj.uk}] [${action.uk}] [${time.uk}]`,
+            standardStr: `${subj.de} ${conj} ${action.obj.de} ${time.de}`,
+            invertedStr: `${time.de} ${conj} ${subj.de} ${action.obj.de}`,
+            standardIds: ["s", "v", "o", "t"],
+            invertedIds: ["t", "v", "s", "o"]
+        };
+    }
+
     let v = getRandom(VOCAB.sepVerbsAlltag);
     let conj = conjugate(v.stem, pronounKey);
-    let time = getRandom(VOCAB.timeAdverbs);
     
     return {
         blocks: [
@@ -765,17 +828,18 @@ function buildFamilySentence(forcedSubj = null) {
     };
 }
 
-function generateSentence(topic, difficulty) {
+function generateSentence(topic, difficulty, verbLevel = 'BASIC') {
     let validTopics = ['INTRO', 'MODALS', 'ALLTAG', 'FOOD', 'FAMILY'];
     if (topic === 'RANDOM') topic = getRandom(validTopics);
 
+    const includeSeparable = verbLevel === 'SEPARABLE';
     let isModal = topic === 'MODALS';
     let buildFunc;
     if (topic === 'MODALS') buildFunc = buildModalSentence;
-    else if (topic === 'ALLTAG') buildFunc = buildAlltagSentence;
+    else if (topic === 'ALLTAG') buildFunc = (subj = null) => buildAlltagSentence(subj, includeSeparable);
     else if (topic === 'FOOD') buildFunc = buildFoodSentence;
     else if (topic === 'FAMILY') buildFunc = buildFamilySentence;
-    else buildFunc = buildSimpleIntro;
+    else buildFunc = (subj = null) => buildSimpleIntro(subj, null, includeSeparable);
 
     if (difficulty === 'SIMPLE') {
         let s = buildFunc();
@@ -797,10 +861,10 @@ function generateSentence(topic, difficulty) {
         
         if (topic === 'INTRO') {
             let combo = Math.floor(Math.random() * 4);
-            if (combo === 0) { s1 = buildSimpleIntro(subj, 0); s2 = buildSimpleIntro(subj, 2); conn = VOCAB.connectors[0]; }
-            else if (combo === 1) { s1 = buildSimpleIntro(subj, 1); s2 = buildSimpleIntro(subj, 6); conn = VOCAB.connectors[0]; }
-            else if (combo === 2) { s1 = buildSimpleIntro(subj, 3); s2 = buildSimpleIntro(subj, 7); conn = VOCAB.connectors[0]; }
-            else { s1 = buildSimpleIntro(subj, 4); s2 = buildSimpleIntro(subj, 8); conn = VOCAB.connectors[1]; }
+            if (combo === 0) { s1 = buildSimpleIntro(subj, 0, includeSeparable); s2 = buildSimpleIntro(subj, 2, includeSeparable); conn = VOCAB.connectors[0]; }
+            else if (combo === 1) { s1 = buildSimpleIntro(subj, 1, includeSeparable); s2 = buildSimpleIntro(subj, 6, includeSeparable); conn = VOCAB.connectors[0]; }
+            else if (combo === 2) { s1 = buildSimpleIntro(subj, 3, includeSeparable); s2 = buildSimpleIntro(subj, 7, includeSeparable); conn = VOCAB.connectors[0]; }
+            else { s1 = buildSimpleIntro(subj, 4, includeSeparable); s2 = buildSimpleIntro(subj, 8, includeSeparable); conn = VOCAB.connectors[1]; }
         }
         
         let s1_stdIds = s1.standardIds || ["s", "v", "o"];
@@ -837,6 +901,7 @@ let practiceTopics = ['INTRO', 'MODALS', 'ALLTAG', 'FOOD', 'FAMILY'];
 let practiceCount = 5;
 let practiceFormat = 'BLOCKS'; // BLOCKS or TYPING
 let practiceDifficulty = 'SIMPLE'; // SIMPLE or COMPLEX
+let practiceVerbLevel = 'BASIC'; // BASIC or SEPARABLE
 let practiceMode = 'ASSISTED'; // ASSISTED or UNASSISTED
 
 let currentQuestionIndex = 0;
@@ -949,6 +1014,11 @@ createSettingGroup("settings_diff", [
     { val: "SIMPLE", labelKey: "diff_simple" },
     { val: "COMPLEX", labelKey: "diff_complex" }
 ], practiceDifficulty, (val) => practiceDifficulty = val);
+
+createSettingGroup("settings_verb_level", [
+    { val: "BASIC", labelKey: "verb_level_basic" },
+    { val: "SEPARABLE", labelKey: "verb_level_separable" }
+], practiceVerbLevel, (val) => practiceVerbLevel = val);
 
 createSettingGroup("settings_count", [
     { val: 5, label: "5" },
@@ -1082,7 +1152,7 @@ function nextQuestion() {
         return;
     }
     let pickedTopic = getRandom(practiceTopics);
-    currentSentence = generateSentence(pickedTopic, practiceDifficulty);
+    currentSentence = generateSentence(pickedTopic, practiceDifficulty, practiceVerbLevel);
     currentPhase = 'STANDARD';
     attemptsLeft = 2; // For unassisted typing
     setupPhase();
