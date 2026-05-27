@@ -19,9 +19,6 @@ const COURSE_MODULES = [
             t("home", "module_1_topic_6"),
             t("home", "module_1_topic_7"),
             t("home", "module_1_topic_8"),
-            t("home", "module_1_topic_9"),
-            t("home", "module_1_topic_10"),
-            t("home", "module_1_topic_11"),
             t("home", "module_1_topic_12"),
             t("home", "module_1_topic_13"),
             t("home", "module_1_topic_14"),
@@ -425,6 +422,18 @@ COURSE_MODULES.forEach(module => {
         if (topicText === t("home", "module_1_topic_6")) {
             btn.addEventListener('click', () => {
                 window.location.href = "index.html?page=InterrogativeSentences";
+            });
+        }
+
+        if (topicText === t("home", "module_1_topic_7")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=QuestionWords";
+            });
+        }
+
+        if (topicText === t("home", "module_1_topic_8")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=Negation";
             });
         }
 

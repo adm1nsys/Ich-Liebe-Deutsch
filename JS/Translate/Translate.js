@@ -11,7 +11,9 @@ const TRANSLATIONS = {
     haben_sein: TRANSLATIONS_HABEN_SEIN,
     articles: TRANSLATIONS_ARTICLES,
     affirmative: TRANSLATIONS_AFFIRMATIVE,
-    interrogative: TRANSLATIONS_INTERROGATIVE
+    interrogative: TRANSLATIONS_INTERROGATIVE,
+    question_words: TRANSLATIONS_QUESTION_WORDS,
+    negation: TRANSLATIONS_NEGATION
 };
 
 // Функция для получения текущего языка из памяти

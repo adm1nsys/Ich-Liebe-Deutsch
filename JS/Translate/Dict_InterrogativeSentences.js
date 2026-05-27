@@ -26,27 +26,27 @@ const TRANSLATIONS_INTERROGATIVE = {
     "rules_desc": {
         en: `In German, there are two main types of questions:
 1. Yes/No Questions (Ja/Nein-Fragen): The verb comes FIRST.
-2. W-Questions (W-Fragen): The question word (Wo, Was, Warum) comes FIRST, and the verb is SECOND.
+2. W-Questions (W-Fragen): The question word or question block (Wo, Was, Um wie viel Uhr) comes FIRST, and the verb is SECOND.
 Use the levels to train simple questions first, then separable prefixes, then und/aber combinations.`,
         de: `Im Deutschen gibt es zwei Arten von Fragen:
 1. Ja/Nein-Fragen: Das Verb steht an ERSTER Stelle.
-2. W-Fragen: Das Fragewort (Wo, Was) steht an ERSTER Stelle, das Verb an ZWEITER Stelle.
+2. W-Fragen: Das Fragewort oder der Frageblock (Wo, Was, Um wie viel Uhr) steht an ERSTER Stelle, das Verb an ZWEITER Stelle.
 Nutze die Niveaus für einfache Fragen, trennbare Präfixe und danach und/aber-Kombinationen.`,
         cs: `V němčině jsou dva hlavní typy otázek:
 1. Otázky Ano/Ne: Sloveso je na PRVNÍM místě.
-2. W-otázky: Tázací slovo (Wo, Was) je na PRVNÍM místě, sloveso na DRUHÉM.
+2. W-otázky: Tázací slovo nebo tázací blok (Wo, Was, Um wie viel Uhr) je na PRVNÍM místě, sloveso na DRUHÉM.
 Úrovně procvičují jednoduché otázky, odlučitelné předpony a potom kombinace und/aber.`,
         pl: `W języku niemieckim są dwa główne typy pytań:
 1. Pytania Tak/Nie: Czasownik jest na PIERWSZYM miejscu.
-2. Pytania z 'W': Zaimek pytający (Wo, Was) jest na PIERWSZYM miejscu, a czasownik na DRUGIM.
+2. Pytania z 'W': Słowo pytające albo blok pytający (Wo, Was, Um wie viel Uhr) jest na PIERWSZYM miejscu, a czasownik na DRUGIM.
 Poziomy ćwiczą najpierw proste pytania, potem przedrostki rozdzielne, a potem und/aber.`,
         da: `På tysk er der to hovedtyper af spørgsmål:
 1. Ja/Nej-spørgsmål: Udsagnsordet kommer FØRST.
-2. W-spørgsmål: Spørgeordet (Wo, Was) kommer FØRST, og udsagnsordet er ANDET.
+2. W-spørgsmål: Spørgeordet eller spørgeblokken (Wo, Was, Um wie viel Uhr) kommer FØRST, og udsagnsordet er ANDET.
 Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser og så und/aber-kombinationer.`,
         uk: `У німецькій мові є два основні типи питань:
 1. Питання Так/Ні (Ja/Nein-Fragen): Дієслово стоїть на ПЕРШОМУ місці.
-2. W-Питання (W-Fragen): Питальне слово (Wo, Was, Warum) стоїть на ПЕРШОМУ місці, а дієслово — на ДРУГОМУ.
+2. W-Питання (W-Fragen): W-слово або питальний блок (Wo, Was, Um wie viel Uhr) стоїть на ПЕРШОМУ місці, а дієслово — на ДРУГОМУ.
 Рівні спочатку тренують прості питання, потім відокремлювані префікси, а потім комбінації з und/aber.`
     },
     "rule_from_statement_title": {
@@ -74,12 +74,12 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         uk: "У питанні так/ні відмінюване дієслово переходить на позицію 1: Du wohnst... -> Wohnst du...?"
     },
     "rule_from_statement_3": {
-        en: "For a W-question, put the question word first and keep the conjugated verb in position 2.",
-        de: "Bei einer W-Frage steht das Fragewort zuerst, und das konjugierte Verb bleibt auf Position 2.",
-        cs: "U W-otázky je tázací slovo první a časované sloveso zůstává na pozici 2.",
-        pl: "W pytaniu z W słowo pytające jest pierwsze, a odmieniony czasownik zostaje na pozycji 2.",
-        da: "I et W-spørgsmål står spørgeordet først, og det bøjede verbum bliver på position 2.",
-        uk: "У W-питанні питальне слово стоїть першим, а відмінюване дієслово залишається на позиції 2."
+        en: "For a W-question, put the question word or question block first and keep the conjugated verb in position 2.",
+        de: "Bei einer W-Frage steht das Fragewort oder der Frageblock zuerst, und das konjugierte Verb bleibt auf Position 2.",
+        cs: "U W-otázky je tázací slovo nebo tázací blok první a časované sloveso zůstává na pozici 2.",
+        pl: "W pytaniu z W słowo pytające albo blok pytający jest pierwszy, a odmieniony czasownik zostaje na pozycji 2.",
+        da: "I et W-spørgsmål står spørgeordet eller spørgeblokken først, og det bøjede verbum bliver på position 2.",
+        uk: "У W-питанні W-слово або питальний блок стоїть першим, а відмінюване дієслово залишається на позиції 2."
     },
     "rule_statement_note": {
         en: "The key beginner trick: find the conjugated verb first. In a yes/no question it is first; in a W-question it is second.",
@@ -90,20 +90,20 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         uk: "Головний трюк для початківця: спочатку знайди відмінюване дієслово. У питанні так/ні воно перше; у W-питанні воно друге."
     },
     "rule_w_words_title": {
-        en: "2. What W-words remove",
-        de: "2. Was W-Wörter ersetzen",
-        cs: "2. Co nahrazují W-slova",
-        pl: "2. Co zastępują słowa W",
-        da: "2. Hvad W-ord erstatter",
-        uk: "2. Що замінюють W-слова"
+        en: "2. What W-words/question blocks remove",
+        de: "2. Was W-Wörter/Frageblöcke ersetzen",
+        cs: "2. Co nahrazují W-slova/tázací bloky",
+        pl: "2. Co zastępują słowa W / bloki pytające",
+        da: "2. Hvad W-ord/spørgeblokke erstatter",
+        uk: "2. Що замінюють W-слова або питальні блоки"
     },
     "rule_w_words_1": {
-        en: "A W-word asks for one missing block: place, time, object, origin, person, etc.",
-        de: "Ein W-Wort fragt nach einem fehlenden Block: Ort, Zeit, Objekt, Herkunft, Person usw.",
-        cs: "W-slovo se ptá na jeden chybějící blok: místo, čas, objekt, původ, osobu atd.",
-        pl: "Słowo W pyta o jeden brakujący blok: miejsce, czas, dopełnienie, pochodzenie, osobę itd.",
-        da: "Et W-ord spørger efter én manglende blok: sted, tid, objekt, oprindelse, person osv.",
-        uk: "W-слово питає про один відсутній блок: місце, час, додаток, походження, людину тощо."
+        en: "A W-word or question block asks for one missing block: place, time, object, origin, person, etc.",
+        de: "Ein W-Wort oder Frageblock fragt nach einem fehlenden Block: Ort, Zeit, Objekt, Herkunft, Person usw.",
+        cs: "W-slovo nebo tázací blok se ptá na jeden chybějící blok: místo, čas, objekt, původ, osobu atd.",
+        pl: "Słowo W albo blok pytający pyta o jeden brakujący blok: miejsce, czas, dopełnienie, pochodzenie, osobę itd.",
+        da: "Et W-ord eller en spørgeblok spørger efter én manglende blok: sted, tid, objekt, oprindelse, person osv.",
+        uk: "W-слово або питальний блок питає про один відсутній блок: місце, час, додаток, походження, людину тощо."
     },
     "rule_w_words_2": {
         en: "The thing you ask about usually disappears from the question: Du wohnst in Berlin -> Wo wohnst du?",
@@ -121,13 +121,125 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         da: "Gentag ikke svaret i spørgsmålet: Wo wohnst du in Berlin? betyder noget mere specifikt og er ikke grundmønstret her.",
         uk: "Не повторюй відповідь усередині питання: Wo wohnst du in Berlin? має вужчий зміст і тут не є базовим шаблоном."
     },
+    "rule_w_words_4": {
+        en: "Position 1 in a W-question can be a whole question block, not just one word: Wie viele Bücher kaufst du? Welchen Apfel nimmst du? Um wie viel Uhr kommst du?",
+        de: "Position 1 in einer W-Frage kann ein ganzer Frageblock sein, nicht nur ein Wort: Wie viele Bücher kaufst du? Welchen Apfel nimmst du? Um wie viel Uhr kommst du?",
+        cs: "Pozice 1 ve W-otázce může být celý tázací blok, nejen jedno slovo: Wie viele Bücher kaufst du? Welchen Apfel nimmst du? Um wie viel Uhr kommst du?",
+        pl: "Pozycja 1 w pytaniu W może być całym blokiem pytającym, nie tylko jednym słowem: Wie viele Bücher kaufst du? Welchen Apfel nimmst du? Um wie viel Uhr kommst du?",
+        da: "Position 1 i et W-spørgsmål kan være en hel spørgeblok, ikke kun ét ord: Wie viele Bücher kaufst du? Welchen Apfel nimmst du? Um wie viel Uhr kommst du?",
+        uk: "Позиція 1 у W-питанні може бути не одним словом, а цілим питальним блоком: Wie viele Bücher kaufst du? Welchen Apfel nimmst du? Um wie viel Uhr kommst du?"
+    },
     "rule_w_words_note": {
-        en: "In this trainer, the second phase usually asks for the missing block: Was isst du? Wann arbeitest du im Büro? Wen besuchst du?",
-        de: "In diesem Trainer fragt die zweite Phase meistens nach dem fehlenden Block: Was isst du? Wann arbeitest du im Büro? Wen besuchst du?",
-        cs: "V tomto trenažéru se druhá fáze většinou ptá na chybějící blok: Was isst du? Wann arbeitest du im Büro? Wen besuchst du?",
-        pl: "W tym trenerze druga faza zwykle pyta o brakujący blok: Was isst du? Wann arbeitest du im Büro? Wen besuchst du?",
-        da: "I denne træner spørger anden fase normalt efter den manglende blok: Was isst du? Wann arbeitest du im Büro? Wen besuchst du?",
-        uk: "У цьому тренажері друга фаза зазвичай питає про відсутній блок: Was isst du? Wann arbeitest du im Büro? Wen besuchst du?"
+        en: "In this trainer, the second phase usually asks for the missing block: Was isst du? Wann arbeitest du im Büro? Wen besuchst du? Wem hilfst du?",
+        de: "In diesem Trainer fragt die zweite Phase meistens nach dem fehlenden Block: Was isst du? Wann arbeitest du im Büro? Wen besuchst du? Wem hilfst du?",
+        cs: "V tomto trenažéru se druhá fáze většinou ptá na chybějící blok: Was isst du? Wann arbeitest du im Büro? Wen besuchst du? Wem hilfst du?",
+        pl: "W tym trenerze druga faza zwykle pyta o brakujący blok: Was isst du? Wann arbeitest du im Büro? Wen besuchst du? Wem hilfst du?",
+        da: "I denne træner spørger anden fase normalt efter den manglende blok: Was isst du? Wann arbeitest du im Büro? Wen besuchst du? Wem hilfst du?",
+        uk: "У цьому тренажері друга фаза зазвичай питає про відсутній блок: Was isst du? Wann arbeitest du im Büro? Wen besuchst du? Wem hilfst du?"
+    },
+    "rule_object_case_title": {
+        en: "2a. Object questions: case and preposition",
+        de: "2a. Objektfragen: Kasus und Präposition",
+        cs: "2a. Otázky na předmět: pád a předložka",
+        pl: "2a. Pytania o dopełnienie: przypadek i przyimek",
+        da: "2a. Objektspørgsmål: kasus og præposition",
+        uk: "2a. Питання до додатка: відмінок і прийменник"
+    },
+    "rule_object_case_desc": {
+        en: "If the question asks for a complement, keep the case or preposition required by the verb. This is not just a new question word/block; it is the grammar pattern of the verb.",
+        de: "Wenn die Frage nach einer Ergänzung fragt, behalte den Kasus oder die Präposition, die das Verb verlangt. Das ist nicht nur ein neues Fragewort/ein neuer Frageblock, sondern das Muster des Verbs.",
+        cs: "Když se otázka ptá na doplnění, zachovej pád nebo předložku, kterou vyžaduje sloveso. Není to jen nové tázací slovo/blok, ale vzor slovesa.",
+        pl: "Jeśli pytanie dotyczy dopełnienia, zachowaj przypadek albo przyimek wymagany przez czasownik. To nie jest tylko nowe słowo/blok pytający, ale wzór czasownika.",
+        da: "Hvis spørgsmålet spørger efter et led, skal du beholde den kasus eller præposition, som verbet kræver. Det er ikke bare et nyt W-ord/en ny spørgeblok, men verbets mønster.",
+        uk: "Якщо питання ставиться до додатка, зберігай відмінок або прийменник, якого вимагає дієслово. Це не просто нове W-слово або питальний блок, а граматичний шаблон дієслова."
+    },
+    "rule_object_case_1": {
+        en: "Was asks for a thing/object in the basic direct-object pattern: Was kaufst du?",
+        de: "Was fragt nach einer Sache/einem Objekt im einfachen direkten Objekt: Was kaufst du?",
+        cs: "Was se ptá na věc/předmět v základním přímém předmětu: Was kaufst du?",
+        pl: "Was pyta o rzecz/dopełnienie w prostym wzorze dopełnienia bliższego: Was kaufst du?",
+        da: "Was spørger efter en ting/et objekt i det enkle direkte objektmønster: Was kaufst du?",
+        uk: "Was питає про річ/додаток у базовому шаблоні прямого додатка: Was kaufst du?"
+    },
+    "rule_object_case_2": {
+        en: "Wen asks for a person in Akkusativ: Wen besuchst du?",
+        de: "Wen fragt nach einer Person im Akkusativ: Wen besuchst du?",
+        cs: "Wen se ptá na osobu v akuzativu: Wen besuchst du?",
+        pl: "Wen pyta o osobę w Akkusativie: Wen besuchst du?",
+        da: "Wen spørger efter en person i akkusativ: Wen besuchst du?",
+        uk: "Wen питає про людину в Akkusativ: Wen besuchst du?"
+    },
+    "rule_object_case_3": {
+        en: "Wem asks for a Dativ object, often 'to whom?': Wem hilfst du? Wem gibst du das Buch?",
+        de: "Wem fragt nach einem Dativobjekt, oft 'wem?': Wem hilfst du? Wem gibst du das Buch?",
+        cs: "Wem se ptá na dativní předmět, často 'komu?': Wem hilfst du? Wem gibst du das Buch?",
+        pl: "Wem pyta o dopełnienie w Dativie, często 'komu?': Wem hilfst du? Wem gibst du das Buch?",
+        da: "Wem spørger efter et dativobjekt, ofte 'til hvem?': Wem hilfst du? Wem gibst du das Buch?",
+        uk: "Wem питає про Dativ-додаток, часто 'кому?': Wem hilfst du? Wem gibst du das Buch?"
+    },
+    "rule_object_case_4": {
+        en: "If the verb needs a preposition, keep the preposition in the question: mit wem, auf wen, worauf.",
+        de: "Wenn das Verb eine Präposition braucht, behalte die Präposition in der Frage: mit wem, auf wen, worauf.",
+        cs: "Když sloveso potřebuje předložku, zachovej ji v otázce: mit wem, auf wen, worauf.",
+        pl: "Jeśli czasownik wymaga przyimka, zachowaj przyimek w pytaniu: mit wem, auf wen, worauf.",
+        da: "Hvis verbet kræver en præposition, skal du beholde præpositionen i spørgsmålet: mit wem, auf wen, worauf.",
+        uk: "Якщо дієслово потребує прийменника, зберігай прийменник у питанні: mit wem, auf wen, worauf."
+    },
+    "object_logic_was": {
+        en: "thing/object, usually Akkusativ",
+        de: "Sache/Objekt, meistens Akkusativ",
+        cs: "věc/předmět, většinou akuzativ",
+        pl: "rzecz/dopełnienie, zwykle Akkusativ",
+        da: "ting/objekt, normalt akkusativ",
+        uk: "річ/додаток, зазвичай Akkusativ"
+    },
+    "object_logic_wen": {
+        en: "person as direct object, Akkusativ",
+        de: "Person als direktes Objekt, Akkusativ",
+        cs: "osoba jako přímý předmět, akuzativ",
+        pl: "osoba jako dopełnienie bliższe, Akkusativ",
+        da: "person som direkte objekt, akkusativ",
+        uk: "людина як прямий додаток, Akkusativ"
+    },
+    "object_logic_wem": {
+        en: "person as Dativ object",
+        de: "Person als Dativobjekt",
+        cs: "osoba jako dativní předmět",
+        pl: "osoba jako dopełnienie w Dativie",
+        da: "person som dativobjekt",
+        uk: "людина як Dativ-додаток"
+    },
+    "object_logic_give": {
+        en: "the Dativ person is asked for; das Buch stays",
+        de: "Nach der Dativperson wird gefragt; das Buch bleibt",
+        cs: "ptáme se na osobu v dativu; das Buch zůstává",
+        pl: "pytamy o osobę w Dativie; das Buch zostaje",
+        da: "der spørges efter dativpersonen; das Buch bliver",
+        uk: "питаємо про людину в Dativ; das Buch залишається"
+    },
+    "object_logic_mit_wem": {
+        en: "mit requires Dativ, so use wem",
+        de: "mit verlangt Dativ, darum wem",
+        cs: "mit vyžaduje dativ, proto wem",
+        pl: "mit wymaga Dativu, dlatego wem",
+        da: "mit kræver dativ, derfor wem",
+        uk: "mit вимагає Dativ, тому wem"
+    },
+    "object_logic_worauf": {
+        en: "auf + person -> auf wen; auf + thing/event -> worauf",
+        de: "auf + Person -> auf wen; auf + Sache/Ereignis -> worauf",
+        cs: "auf + osoba -> auf wen; auf + věc/událost -> worauf",
+        pl: "auf + osoba -> auf wen; auf + rzecz/zdarzenie -> worauf",
+        da: "auf + person -> auf wen; auf + ting/begivenhed -> worauf",
+        uk: "auf + людина -> auf wen; auf + річ/подія -> worauf"
+    },
+    "rule_object_case_note": {
+        en: "Mini-rule: ask with the same case or preposition that the answer would use. Ich warte auf den Bus -> Worauf wartest du? Ich spreche mit Anna -> Mit wem sprichst du?",
+        de: "Mini-Regel: Frage mit demselben Kasus oder derselben Präposition, die auch in der Antwort steht. Ich warte auf den Bus -> Worauf wartest du? Ich spreche mit Anna -> Mit wem sprichst du?",
+        cs: "Mini pravidlo: ptej se stejným pádem nebo stejnou předložkou, kterou má odpověď. Ich warte auf den Bus -> Worauf wartest du? Ich spreche mit Anna -> Mit wem sprichst du?",
+        pl: "Mini-zasada: pytaj tym samym przypadkiem albo tym samym przyimkiem, którego używa odpowiedź. Ich warte auf den Bus -> Worauf wartest du? Ich spreche mit Anna -> Mit wem sprichst du?",
+        da: "Miniregel: spørg med samme kasus eller præposition, som svaret bruger. Ich warte auf den Bus -> Worauf wartest du? Ich spreche mit Anna -> Mit wem sprichst du?",
+        uk: "Міні-правило: питай з тим самим відмінком або прийменником, який був би у відповіді. Ich warte auf den Bus -> Worauf wartest du? Ich spreche mit Anna -> Mit wem sprichst du?"
     },
     "rule_time_place_title": {
         en: "3. Time and place in questions",
@@ -146,28 +258,68 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         uk: "У питанні так/ні спочатку дієслово, потім підмет, потім решта: Sitzt ihr um 8 Uhr im Café?"
     },
     "rule_time_place_2": {
-        en: "If the W-word asks for time, the time block disappears: Um 8 Uhr -> Wann sitzt ihr im Café?",
-        de: "Wenn das W-Wort nach der Zeit fragt, verschwindet der Zeitblock: Um 8 Uhr -> Wann sitzt ihr im Café?",
-        cs: "Když se W-slovo ptá na čas, časový blok zmizí: Um 8 Uhr -> Wann sitzt ihr im Café?",
-        pl: "Jeśli słowo W pyta o czas, blok czasu znika: Um 8 Uhr -> Wann sitzt ihr im Café?",
-        da: "Hvis W-ordet spørger efter tid, forsvinder tidsblokken: Um 8 Uhr -> Wann sitzt ihr im Café?",
-        uk: "Якщо W-слово питає про час, блок часу зникає: Um 8 Uhr -> Wann sitzt ihr im Café?"
+        en: "If the W-word/question block asks for time, the time block disappears: Um 8 Uhr -> Wann sitzt ihr im Café?",
+        de: "Wenn das W-Wort/der Frageblock nach der Zeit fragt, verschwindet der Zeitblock: Um 8 Uhr -> Wann sitzt ihr im Café?",
+        cs: "Když se W-slovo/tázací blok ptá na čas, časový blok zmizí: Um 8 Uhr -> Wann sitzt ihr im Café?",
+        pl: "Jeśli słowo W / blok pytający pyta o czas, blok czasu znika: Um 8 Uhr -> Wann sitzt ihr im Café?",
+        da: "Hvis W-ordet/spørgeblokken spørger efter tid, forsvinder tidsblokken: Um 8 Uhr -> Wann sitzt ihr im Café?",
+        uk: "Якщо W-слово або питальний блок питає про час, блок часу зникає: Um 8 Uhr -> Wann sitzt ihr im Café?"
     },
     "rule_time_place_3": {
-        en: "If the W-word asks for place, the place block disappears: im Café -> Wo sitzt ihr um 8 Uhr?",
-        de: "Wenn das W-Wort nach dem Ort fragt, verschwindet der Ortsblock: im Café -> Wo sitzt ihr um 8 Uhr?",
-        cs: "Když se W-slovo ptá na místo, blok místa zmizí: im Café -> Wo sitzt ihr um 8 Uhr?",
-        pl: "Jeśli słowo W pyta o miejsce, blok miejsca znika: im Café -> Wo sitzt ihr um 8 Uhr?",
-        da: "Hvis W-ordet spørger efter sted, forsvinder stedsblokken: im Café -> Wo sitzt ihr um 8 Uhr?",
-        uk: "Якщо W-слово питає про місце, блок місця зникає: im Café -> Wo sitzt ihr um 8 Uhr?"
+        en: "If the W-word/question block asks for place, the place block disappears: im Café -> Wo sitzt ihr um 8 Uhr?",
+        de: "Wenn das W-Wort/der Frageblock nach dem Ort fragt, verschwindet der Ortsblock: im Café -> Wo sitzt ihr um 8 Uhr?",
+        cs: "Když se W-slovo/tázací blok ptá na místo, blok místa zmizí: im Café -> Wo sitzt ihr um 8 Uhr?",
+        pl: "Jeśli słowo W / blok pytający pyta o miejsce, blok miejsca znika: im Café -> Wo sitzt ihr um 8 Uhr?",
+        da: "Hvis W-ordet/spørgeblokken spørger efter sted, forsvinder stedsblokken: im Café -> Wo sitzt ihr um 8 Uhr?",
+        uk: "Якщо W-слово або питальний блок питає про місце, блок місця зникає: im Café -> Wo sitzt ihr um 8 Uhr?"
+    },
+    "rule_tekomolo_title": {
+        en: "4. TeKaMoLo inside questions",
+        de: "4. TeKaMoLo in Fragen",
+        uk: "4. TeKaMoLo всередині питань"
+    },
+    "rule_tekomolo_desc": {
+        en: "Questions still use the same middle-field order as statements. The only difference is the beginning: yes/no starts with the conjugated verb; W-questions start with the question word/block and then the conjugated verb.",
+        de: "Fragen benutzen im Mittelfeld dieselbe Reihenfolge wie Aussagesätze. Nur der Anfang ändert sich: Ja/Nein-Fragen beginnen mit dem konjugierten Verb; W-Fragen beginnen mit dem Fragewort/Frageblock und danach dem konjugierten Verb.",
+        uk: "Питання використовують той самий порядок середини речення, що й твердження. Змінюється лише початок: питання так/ні починається з відмінюваного дієслова; W-питання починається з W-слова або питального блока, а потім іде відмінюване дієслово."
+    },
+    "rule_tekomolo_1": {
+        en: "Yes/no frame: conjugated verb + subject + time + reason + manner + place + final verb/prefix.",
+        de: "Ja/Nein-Rahmen: konjugiertes Verb + Subjekt + Zeit + Grund + Art und Weise + Ort + letztes Verb/Präfix.",
+        uk: "Рамка так/ні: відмінюване дієслово + підмет + час + причина + спосіб + місце + кінцеве дієслово/префікс."
+    },
+    "rule_tekomolo_2": {
+        en: "W-question frame: W-word/question block + conjugated verb + subject + the remaining TeKaMoLo blocks.",
+        de: "W-Frage-Rahmen: W-Wort/Frageblock + konjugiertes Verb + Subjekt + die übrigen TeKaMoLo-Blöcke.",
+        uk: "Рамка W-питання: W-слово або питальний блок + відмінюване дієслово + підмет + решта блоків TeKaMoLo."
+    },
+    "rule_tekomolo_3": {
+        en: "When a W-word/question block asks for one block, that block usually disappears: Wann ...? removes the time; Wo ...? removes the place; Wie ...? removes the manner.",
+        de: "Wenn ein W-Wort/Frageblock nach einem Block fragt, verschwindet dieser Block meistens: Wann ...? entfernt die Zeit; Wo ...? entfernt den Ort; Wie ...? entfernt die Art und Weise.",
+        uk: "Коли W-слово або питальний блок питає про один блок, цей блок зазвичай зникає: Wann ...? прибирає час; Wo ...? прибирає місце; Wie ...? прибирає спосіб."
+    },
+    "rule_tekomolo_4": {
+        en: "If several time blocks appear together, use bigger to smaller: year, month, day, hour. For nested places, use smaller to bigger.",
+        de: "Wenn mehrere Zeitblöcke zusammenstehen, gehe von groß nach klein: Jahr, Monat, Tag, Uhrzeit. Bei verschachtelten Orten: klein nach groß.",
+        uk: "Якщо кілька блоків часу стоять разом, іди від більшого до меншого: рік, місяць, день, година. Для вкладених місць: від меншого до більшого."
+    },
+    "rule_tekomolo_5": {
+        en: "No negation is covered here: this module avoids nicht/kein so the word-order patterns stay clean.",
+        de: "Negation behandeln wir hier nicht: Dieses Modul vermeidet nicht/kein, damit die Wortstellung klar bleibt.",
+        uk: "Заперечення тут не розглядаємо: цей модуль уникає nicht/kein, щоб порядок слів залишався чистим."
+    },
+    "rule_tekomolo_note": {
+        en: "Beginner shortcut: first fix the question opening, then place the rest like a statement. Verb first for yes/no; W-word/question block first and verb second for W-questions.",
+        de: "Anfängertrick: zuerst den Frageanfang bauen, danach den Rest wie im Aussagesatz setzen. Verb zuerst bei Ja/Nein; W-Wort/Frageblock zuerst und Verb zweitens bei W-Fragen.",
+        uk: "Підказка для початківця: спочатку збери початок питання, потім став решту як у твердженні. Дієслово перше для так/ні; W-слово або питальний блок перше і дієслово друге для W-питань."
     },
     "rule_modal_title": {
-        en: "4. Modal verbs in questions",
-        de: "4. Modalverben in Fragen",
-        cs: "4. Modální slovesa v otázkách",
-        pl: "4. Czasowniki modalne w pytaniach",
-        da: "4. Modalverber i spørgsmål",
-        uk: "4. Модальні дієслова в питаннях"
+        en: "5. Modal verbs in questions",
+        de: "5. Modalverben in Fragen",
+        cs: "5. Modální slovesa v otázkách",
+        pl: "5. Czasowniki modalne w pytaniach",
+        da: "5. Modalverber i spørgsmål",
+        uk: "5. Модальні дієслова в питаннях"
     },
     "rule_modal_1": {
         en: "With a modal verb, the modal is the conjugated verb: kannst, musst, möchtest, willst, darfst.",
@@ -186,12 +338,12 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         uk: "Основна дія залишається інфінітивом у кінці: Kannst du Deutsch lernen?"
     },
     "rule_modal_3": {
-        en: "In a W-question, the W-word is first, the modal is second, and the infinitive still stays at the end.",
-        de: "In der W-Frage steht das W-Wort zuerst, das Modalverb an zweiter Stelle, und der Infinitiv bleibt am Ende.",
-        cs: "Ve W-otázce je W-slovo první, modální sloveso druhé a infinitiv zůstává na konci.",
-        pl: "W pytaniu W słowo W jest pierwsze, modalny czasownik drugi, a bezokolicznik nadal zostaje na końcu.",
-        da: "I et W-spørgsmål står W-ordet først, modalverbet nummer to, og infinitiven bliver stadig til sidst.",
-        uk: "У W-питанні W-слово перше, модальне дієслово друге, а інфінітив усе одно залишається в кінці."
+        en: "In a W-question, the W-word/question block is first, the modal is second, and the infinitive still stays at the end.",
+        de: "In der W-Frage steht das W-Wort/der Frageblock zuerst, das Modalverb an zweiter Stelle, und der Infinitiv bleibt am Ende.",
+        cs: "Ve W-otázce je W-slovo/tázací blok první, modální sloveso druhé a infinitiv zůstává na konci.",
+        pl: "W pytaniu W słowo W / blok pytający jest pierwszy, modalny czasownik drugi, a bezokolicznik nadal zostaje na końcu.",
+        da: "I et W-spørgsmål står W-ordet/spørgeblokken først, modalverbet nummer to, og infinitiven bliver stadig til sidst.",
+        uk: "У W-питанні W-слово або питальний блок перше, модальне дієслово друге, а інфінітив усе одно залишається в кінці."
     },
     "rule_modal_note": {
         en: "Notice the difference: Kannst du Deutsch lernen? asks yes/no. Was kannst du lernen? asks for the object, so Deutsch disappears.",
@@ -202,12 +354,12 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         uk: "Зверни увагу на різницю: Kannst du Deutsch lernen? питає так/ні. Was kannst du lernen? питає про додаток, тому Deutsch зникає."
     },
     "rule_separable_complex_title": {
-        en: "5. Separable verbs and und/aber",
-        de: "5. Trennbare Verben und und/aber",
-        cs: "5. Odlučitelná slovesa a und/aber",
-        pl: "5. Czasowniki rozdzielne i und/aber",
-        da: "5. Adskillelige verber og und/aber",
-        uk: "5. Відокремлювані дієслова та und/aber"
+        en: "6. Separable verbs and und/aber",
+        de: "6. Trennbare Verben und und/aber",
+        cs: "6. Odlučitelná slovesa a und/aber",
+        pl: "6. Czasowniki rozdzielne i und/aber",
+        da: "6. Adskillelige verber og und/aber",
+        uk: "6. Відокремлювані дієслова та und/aber"
     },
     "rule_separable_1": {
         en: "A separable verb has two parts: a conjugated verb part and a prefix. Without a modal verb, the prefix goes to the very end.",
@@ -226,12 +378,12 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         uk: "У питанні так/ні відмінювана частина дієслова стоїть першою: Stehst du um 7 Uhr auf? Тут steh- перше, auf останнє."
     },
     "rule_separable_3": {
-        en: "In a W-question, the W-word is first, the conjugated verb part is second, and the prefix still stays last: Wann stehst du auf?",
-        de: "In der W-Frage steht das W-Wort zuerst, der konjugierte Verbteil an zweiter Stelle, und das Präfix bleibt am Ende: Wann stehst du auf?",
-        cs: "Ve W-otázce je W-slovo první, časovaná část slovesa druhá a předpona stále zůstává poslední: Wann stehst du auf?",
-        pl: "W pytaniu W słowo W jest pierwsze, odmieniona część czasownika druga, a przedrostek nadal zostaje ostatni: Wann stehst du auf?",
-        da: "I et W-spørgsmål står W-ordet først, den bøjede verbdel nummer to, og præfikset bliver stadig sidst: Wann stehst du auf?",
-        uk: "У W-питанні W-слово перше, відмінювана частина дієслова друга, а префікс усе одно залишається останнім: Wann stehst du auf?"
+        en: "In a W-question, the W-word/question block is first, the conjugated verb part is second, and the prefix still stays last: Wann stehst du auf?",
+        de: "In der W-Frage steht das W-Wort/der Frageblock zuerst, der konjugierte Verbteil an zweiter Stelle, und das Präfix bleibt am Ende: Wann stehst du auf?",
+        cs: "Ve W-otázce je W-slovo/tázací blok první, časovaná část slovesa druhá a předpona stále zůstává poslední: Wann stehst du auf?",
+        pl: "W pytaniu W słowo W / blok pytający jest pierwszy, odmieniona część czasownika druga, a przedrostek nadal zostaje ostatni: Wann stehst du auf?",
+        da: "I et W-spørgsmål står W-ordet/spørgeblokken først, den bøjede verbdel nummer to, og præfikset bliver stadig sidst: Wann stehst du auf?",
+        uk: "У W-питанні W-слово або питальний блок перше, відмінювана частина дієслова друга, а префікс усе одно залишається останнім: Wann stehst du auf?"
     },
     "rule_separable_4": {
         en: "With a modal verb, the separable verb does not split: Musst du um 7 Uhr aufstehen? The modal is conjugated, and aufstehen stays together at the end.",
@@ -289,7 +441,7 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         en: "Rest", de: "Rest", cs: "Zbytek", pl: "Reszta", da: "Rest", uk: "Решта"
     },
     "table_question_word": {
-        en: "Question word", de: "Fragewort", cs: "Tázací slovo", pl: "Słowo pytające", da: "Spørgeord", uk: "Питальне слово"
+        en: "Question word/block", de: "Fragewort/-block", cs: "Tázací slovo/blok", pl: "Słowo/blok pytający", da: "Spørgeord/-blok", uk: "Питальне слово/блок"
     },
     "table_asks_for": {
         en: "Asks for", de: "Fragt nach", cs: "Ptá se na", pl: "Pyta o", da: "Spørger efter", uk: "Питає про"
@@ -303,8 +455,29 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
     "table_end": {
         en: "End", de: "Ende", cs: "Konec", pl: "Koniec", da: "Slutning", uk: "Кінець"
     },
+    "table_frame_start": {
+        en: "Question start", de: "Frageanfang", uk: "Початок питання"
+    },
+    "table_subject": {
+        en: "Subject", de: "Subjekt", uk: "Підмет"
+    },
+    "table_te": {
+        en: "Te: time", de: "Te: Zeit", uk: "Te: час"
+    },
+    "table_ka": {
+        en: "Ka: reason", de: "Ka: Grund", uk: "Ka: причина"
+    },
+    "table_mo": {
+        en: "Mo: manner", de: "Mo: Art und Weise", uk: "Mo: спосіб"
+    },
+    "table_lo": {
+        en: "Lo: place", de: "Lo: Ort", uk: "Lo: місце"
+    },
     "table_pattern": {
         en: "Pattern", de: "Muster", cs: "Vzor", pl: "Wzór", da: "Mønster", uk: "Шаблон"
+    },
+    "table_question": {
+        en: "Question", de: "Frage", cs: "Otázka", pl: "Pytanie", da: "Spørgsmål", uk: "Питання"
     },
     "table_logic": {
         en: "Logic", de: "Logik", cs: "Logika", pl: "Logika", da: "Logik", uk: "Логіка"
@@ -327,6 +500,9 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
     "asks_person": {
         en: "person", de: "Person", cs: "osoba", pl: "osoba", da: "person", uk: "людина"
     },
+    "asks_dative_person": {
+        en: "person in Dativ / to whom", de: "Person im Dativ / wem", cs: "osoba v dativu / komu", pl: "osoba w Dativie / komu", da: "person i dativ / til hvem", uk: "людина в Dativ / кому"
+    },
     "separable_example_label": {
         en: "Separable verb", de: "Trennbares Verb", cs: "Odlučitelné sloveso", pl: "Czasownik rozdzielny", da: "Adskilleligt verbum", uk: "Відокремлюване дієслово"
     },
@@ -345,12 +521,12 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         en: "Separable W-question", de: "Trennbar: W-Frage", cs: "Odlučitelná W-otázka", pl: "Rozdzielne pytanie W", da: "Adskilleligt W-spørgsmål", uk: "Відокремлюване W-питання"
     },
     "separable_w_logic": {
-        en: "W-word first, conjugated part second, prefix last",
-        de: "W-Wort zuerst, konjugierter Teil zweitens, Präfix zuletzt",
-        cs: "W-slovo první, časovaná část druhá, předpona poslední",
-        pl: "słowo W pierwsze, odmieniona część druga, przedrostek ostatni",
-        da: "W-ord først, bøjet del nummer to, præfiks sidst",
-        uk: "W-слово перше, відмінювана частина друга, префікс останній"
+        en: "W-word/question block first, conjugated part second, prefix last",
+        de: "W-Wort/Frageblock zuerst, konjugierter Teil zweitens, Präfix zuletzt",
+        cs: "W-slovo/tázací blok první, časovaná část druhá, předpona poslední",
+        pl: "słowo W / blok pytający pierwsze, odmieniona część druga, przedrostek ostatni",
+        da: "W-ord/spørgeblok først, bøjet del nummer to, præfiks sidst",
+        uk: "W-слово або питальний блок перше, відмінювана частина друга, префікс останній"
     },
     "separable_modal_label": {
         en: "With modal", de: "Mit Modalverb", cs: "S modálním slovesem", pl: "Z czasownikiem modalnym", da: "Med modalverbum", uk: "З модальним"
@@ -416,6 +592,163 @@ Niveauerne træner først simple spørgsmål, derefter adskillelige præfikser o
         pl: "po und zaczyna się kolejny wzór pytania",
         da: "efter und starter næste spørgemønster igen",
         uk: "після und наступний шаблон питання починається заново"
+    },
+    "rule_variants_title": {
+        en: "7. Question variations without negation",
+        de: "7. Fragevarianten ohne Negation",
+        uk: "7. Варіанти питань без заперечення"
+    },
+    "rule_variants_desc": {
+        en: "These are the main patterns you can meet in A1.1/A1 questions. This section intentionally does not cover nicht/kein.",
+        de: "Das sind die wichtigsten Muster für A1.1/A1-Fragen. Dieser Abschnitt behandelt bewusst nicht/kein nicht.",
+        uk: "Це основні шаблони питань для A1.1/A1. Цей розділ навмисно не розглядає nicht/kein."
+    },
+    "variant_yes_no_name": {
+        en: "Yes/no question.", de: "Ja/Nein-Frage.", uk: "Питання так/ні."
+    },
+    "variant_yes_no_pattern": {
+        en: "Pattern: conjugated verb + subject + rest.",
+        de: "Muster: konjugiertes Verb + Subjekt + Rest.",
+        uk: "Шаблон: відмінюване дієслово + підмет + решта."
+    },
+    "variant_w_name": {
+        en: "W-question for time/place/reason/manner.", de: "W-Frage nach Zeit/Ort/Grund/Art und Weise.", uk: "W-питання про час/місце/причину/спосіб."
+    },
+    "variant_w_pattern": {
+        en: "Pattern: W-word/question block + conjugated verb + subject + rest; the asked block disappears.",
+        de: "Muster: W-Wort/Frageblock + konjugiertes Verb + Subjekt + Rest; der erfragte Block verschwindet.",
+        uk: "Шаблон: W-слово або питальний блок + відмінюване дієслово + підмет + решта; блок, про який питаємо, зникає."
+    },
+    "variant_subject_name": {
+        en: "Subject question.", de: "Subjektfrage.", uk: "Питання до підмета."
+    },
+    "variant_subject_pattern": {
+        en: "Wer/Was is the subject itself. Do not add another subject after the verb.",
+        de: "Wer/Was ist selbst das Subjekt. Danach kommt kein zusätzliches Subjekt.",
+        uk: "Wer/Was саме є підметом. Не додавай ще один підмет після дієслова."
+    },
+    "variant_object_name": {
+        en: "Object/complement question.",
+        de: "Objekt-/Ergänzungsfrage.",
+        cs: "Otázka na předmět/doplnění.",
+        pl: "Pytanie o dopełnienie.",
+        da: "Objekt-/ledspørgsmål.",
+        uk: "Питання до додатка/доповнення."
+    },
+    "variant_object_pattern": {
+        en: "Use Was/Wen/Wem by case. If the verb requires a preposition, keep it: Mit wem...? Worauf...?",
+        de: "Nutze Was/Wen/Wem je nach Kasus. Wenn das Verb eine Präposition verlangt, bleibt sie: Mit wem...? Worauf...?",
+        cs: "Použij Was/Wen/Wem podle pádu. Když sloveso vyžaduje předložku, zachovej ji: Mit wem...? Worauf...?",
+        pl: "Użyj Was/Wen/Wem zależnie od przypadku. Jeśli czasownik wymaga przyimka, zachowaj go: Mit wem...? Worauf...?",
+        da: "Brug Was/Wen/Wem efter kasus. Hvis verbet kræver en præposition, bliver den: Mit wem...? Worauf...?",
+        uk: "Використовуй Was/Wen/Wem за відмінком. Якщо дієслово вимагає прийменник, зберігай його: Mit wem...? Worauf...?"
+    },
+    "variant_teka_name": {
+        en: "Long question with TeKaMoLo.", de: "Lange Frage mit TeKaMoLo.", uk: "Довге питання з TeKaMoLo."
+    },
+    "variant_teka_pattern": {
+        en: "After the question opening, keep time -> reason -> manner -> place.",
+        de: "Nach dem Frageanfang bleibt: Zeit -> Grund -> Art und Weise -> Ort.",
+        uk: "Після початку питання тримай: час -> причина -> спосіб -> місце."
+    },
+    "variant_modal_name": {
+        en: "Question with modal verb.", de: "Frage mit Modalverb.", uk: "Питання з модальним дієсловом."
+    },
+    "variant_modal_pattern": {
+        en: "The modal is conjugated; the main verb stays at the end.",
+        de: "Das Modalverb wird konjugiert; das Hauptverb bleibt am Ende.",
+        uk: "Модальне дієслово відмінюється; основне дієслово залишається в кінці."
+    },
+    "variant_separable_name": {
+        en: "Question with separable verb.", de: "Frage mit trennbarem Verb.", uk: "Питання з відокремлюваним дієсловом."
+    },
+    "variant_separable_pattern": {
+        en: "Without a modal, the prefix goes to the end; with a modal, the full infinitive stays together.",
+        de: "Ohne Modalverb steht das Präfix am Ende; mit Modalverb bleibt der ganze Infinitiv zusammen.",
+        uk: "Без модального дієслова префікс іде в кінець; з модальним повний інфінітив залишається разом."
+    },
+    "variant_choice_name": {
+        en: "Choice question with oder.", de: "Auswahlfrage mit oder.", uk: "Питання вибору з oder."
+    },
+    "variant_choice_pattern": {
+        en: "Use question order first, then add the choices.",
+        de: "Zuerst kommt die Frageordnung, danach die Auswahl.",
+        uk: "Спочатку порядок питання, потім варіанти вибору."
+    },
+    "variant_compound_name": {
+        en: "Two-part question with und/aber.", de: "Zweiteilige Frage mit und/aber.", uk: "Питання з двох частин з und/aber."
+    },
+    "variant_compound_pattern": {
+        en: "Each part keeps its own question order; und/aber does not count as position 1.",
+        de: "Jeder Teil behält seine eigene Frageordnung; und/aber zählt nicht als Position 1.",
+        uk: "Кожна частина має свій порядок питання; und/aber не рахується як позиція 1."
+    },
+    "variant_echo_name": {
+        en: "Echo/intonation question.", de: "Echo-/Intonationsfrage.", uk: "Ехо-питання / питання інтонацією."
+    },
+    "variant_echo_pattern": {
+        en: "Spoken language can keep statement order and ask by intonation. For training, prefer the normal question order.",
+        de: "In der gesprochenen Sprache kann die Aussage-Reihenfolge bleiben und die Intonation macht die Frage. Im Training ist die normale Frageordnung besser.",
+        uk: "У розмовній мові можна залишити порядок твердження і зробити питання інтонацією. У тренуванні краще використовувати нормальний порядок питання."
+    },
+    "rule_variants_note": {
+        en: "This module focuses on non-negative questions. Later, negation adds another decision: nicht or kein and its position.",
+        de: "Dieses Modul konzentriert sich auf Fragen ohne Negation. Später kommt bei Negation eine neue Entscheidung dazu: nicht oder kein und seine Position.",
+        uk: "Цей модуль фокусується на питаннях без заперечення. Пізніше заперечення додасть новий вибір: nicht або kein і його позиція."
+    },
+    "rule_checklist_title": {
+        en: "8. Quick checklist",
+        de: "8. Kurze Checkliste",
+        uk: "8. Швидкий чеклист"
+    },
+    "rule_checklist_1": {
+        en: "Decide the type: yes/no, W-question, subject question, choice question, or two-part question.",
+        de: "Bestimme den Typ: Ja/Nein, W-Frage, Subjektfrage, Auswahlfrage oder zweiteilige Frage.",
+        uk: "Визнач тип: так/ні, W-питання, питання до підмета, питання вибору або питання з двох частин."
+    },
+    "rule_checklist_2": {
+        en: "Find the conjugated verb. It is the anchor of the question.",
+        de: "Finde das konjugierte Verb. Es ist der Anker der Frage.",
+        uk: "Знайди відмінюване дієслово. Це опора питання."
+    },
+    "rule_checklist_3": {
+        en: "For yes/no questions, put the conjugated verb first. For W-questions, put the W-word/question block first and the verb second.",
+        de: "Bei Ja/Nein-Fragen steht das konjugierte Verb zuerst. Bei W-Fragen steht das W-Wort/der Frageblock zuerst und das Verb zweitens.",
+        uk: "Для питань так/ні постав відмінюване дієслово першим. Для W-питань постав W-слово або питальний блок першим, а дієслово другим."
+    },
+    "rule_checklist_4": {
+        en: "Put the subject after the verb, unless the W-word/question block itself is the subject: Wer kommt? Wie viele Bücher liegen hier?",
+        de: "Setze das Subjekt nach dem Verb, außer das W-Wort/der Frageblock ist selbst das Subjekt: Wer kommt? Wie viele Bücher liegen hier?",
+        uk: "Постав підмет після дієслова, крім випадку, коли W-слово або питальний блок сам є підметом: Wer kommt? Wie viele Bücher liegen hier?"
+    },
+    "rule_checklist_5": {
+        en: "If the question asks for an object/complement, keep the required case or preposition: Wen, Wem, Mit wem, Worauf.",
+        de: "Wenn die Frage nach einem Objekt/einer Ergänzung fragt, behalte den nötigen Kasus oder die Präposition: Wen, Wem, Mit wem, Worauf.",
+        cs: "Když se otázka ptá na předmět/doplnění, zachovej potřebný pád nebo předložku: Wen, Wem, Mit wem, Worauf.",
+        pl: "Jeśli pytanie dotyczy dopełnienia, zachowaj wymagany przypadek albo przyimek: Wen, Wem, Mit wem, Worauf.",
+        da: "Hvis spørgsmålet spørger efter et objekt/led, behold den krævede kasus eller præposition: Wen, Wem, Mit wem, Worauf.",
+        uk: "Якщо питання ставиться до додатка/доповнення, зберігай потрібний відмінок або прийменник: Wen, Wem, Mit wem, Worauf."
+    },
+    "rule_checklist_6": {
+        en: "Place the remaining blocks with TeKaMoLo: time, reason, manner, place.",
+        de: "Setze die restlichen Blöcke mit TeKaMoLo: Zeit, Grund, Art und Weise, Ort.",
+        cs: "Uspořádej zbylé bloky podle TeKaMoLo: čas, důvod, způsob, místo.",
+        pl: "Ustaw pozostałe bloki według TeKaMoLo: czas, powód, sposób, miejsce.",
+        da: "Sæt de resterende blokke med TeKaMoLo: tid, grund, måde, sted.",
+        uk: "Постав решту блоків за TeKaMoLo: час, причина, спосіб, місце."
+    },
+    "rule_checklist_7": {
+        en: "Put infinitives and separable prefixes at the end. Do not add negation in this module.",
+        de: "Setze Infinitive und trennbare Präfixe ans Ende. Füge in diesem Modul keine Negation hinzu.",
+        cs: "Infinitivy a odlučitelné předpony dej na konec. V tomto modulu nepřidávej zápor.",
+        pl: "Postaw bezokoliczniki i przedrostki rozdzielne na końcu. W tym module nie dodawaj negacji.",
+        da: "Sæt infinitiver og adskillelige præfikser til sidst. Tilføj ikke negation i dette modul.",
+        uk: "Постав інфінітиви та відокремлювані префікси в кінець. У цьому модулі не додавай заперечення."
+    },
+    "rule_checklist_note": {
+        en: "If something feels confusing, reduce the sentence to its skeleton: question opener + conjugated verb + subject + rest.",
+        de: "Wenn etwas verwirrend wirkt, reduziere den Satz auf sein Gerüst: Frageanfang + konjugiertes Verb + Subjekt + Rest.",
+        uk: "Якщо щось плутає, зведи речення до каркаса: початок питання + відмінюване дієслово + підмет + решта."
     },
     "standard_order": {
         en: "Yes/No Question", de: "Ja/Nein-Frage", cs: "Otázka Ano/Ne", pl: "Pytanie Tak/Nie", da: "Ja/Nej-spørgsmål", uk: "Питання Так/Ні"

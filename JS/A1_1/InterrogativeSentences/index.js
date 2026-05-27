@@ -104,6 +104,17 @@ styleElement.textContent = `
     .pos-1 { color: #3b82f6; font-weight: bold; }
     .pos-2 { color: var(--accent-red); font-weight: bold; text-decoration: underline; }
     .pos-3 { color: var(--accent-green); font-weight: bold; }
+    .variant-list { list-style-position: outside; padding-left: 1.6rem; }
+    .variant-list li { margin-bottom: 0.8rem; line-height: 1.55; }
+    .variant-name { color: var(--accent-gold); font-weight: 800; }
+    .variant-pattern { color: var(--text-secondary); font-weight: 700; }
+    .variant-example { display: block; margin-top: 0.25rem; color: var(--text-primary); }
+    .variant-example span { font-weight: 800; }
+    .variant-note {
+        background: var(--content-bg); border: 1px solid var(--border-color);
+        border-radius: 0.5rem; padding: 0.75rem 0.9rem; margin-top: 0.5rem;
+        line-height: 1.55; font-size: 0.95rem;
+    }
 
     /* Pill Selection */
     .section-title { font-size: 1.05rem; font-weight: 600; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: left; }
@@ -1179,16 +1190,18 @@ function buildConnectorSentence(includeSeparable = false) {
     const clause2 = includeSeparable
         ? buildConnectorSeparableClause("2", subj2, secondVerb, time2)
         : buildConnectorSimpleClause("2", subj2, secondVerb, time2);
+    const connectorText = connector.de === "aber" ? ", aber" : connector.de;
+    const connectorPhrase = connector.de === "aber" ? ", aber" : ` ${connector.de}`;
 
     return {
         blocks: [
             ...clause1.blocks,
-            { id: "c", text: connector.de, trans: connector.uk, type: "connector" },
+            { id: "c", text: connectorText, trans: connector.uk, type: "connector" },
             ...clause2.blocks
         ],
         prompt: `${clause1.prompt} [${connector.uk}] ${clause2.prompt}`,
-        standardStr: `${clause1.standardStr} ${connector.de} ${clause2.standardStr}?`,
-        invertedStr: `${clause1.invertedStr} ${connector.de} ${clause2.invertedStr}?`,
+        standardStr: `${clause1.standardStr}${connectorPhrase} ${clause2.standardStr}?`,
+        invertedStr: `${clause1.invertedStr}${connectorPhrase} ${clause2.invertedStr}?`,
         standardIds: [...clause1.standardIds, "c", ...clause2.standardIds],
         invertedIds: [...clause1.invertedIds, "c", ...clause2.invertedIds]
     };
@@ -1372,6 +1385,7 @@ rulesCard.innerHTML = `
         <li>${t("interrogative", "rule_w_words_1")}</li>
         <li>${t("interrogative", "rule_w_words_2")}</li>
         <li>${t("interrogative", "rule_w_words_3")}</li>
+        <li>${t("interrogative", "rule_w_words_4")}</li>
     </ul>
     <table class="example-table">
         <thead>
@@ -1387,9 +1401,37 @@ rulesCard.innerHTML = `
             <tr><td>Was?</td><td>${t("interrogative", "asks_object")}</td><td>Was isst du?</td></tr>
             <tr><td>Woher?</td><td>${t("interrogative", "asks_origin")}</td><td>Woher kommst du?</td></tr>
             <tr><td>Wen?</td><td>${t("interrogative", "asks_person")}</td><td>Wen besuchst du?</td></tr>
+            <tr><td>Wem?</td><td>${t("interrogative", "asks_dative_person")}</td><td>Wem hilfst du?</td></tr>
         </tbody>
     </table>
     <div class="rule-note">${t("interrogative", "rule_w_words_note")}</div>
+
+    <div class="rule-subtitle">${t("interrogative", "rule_object_case_title")}</div>
+    <div class="rule-desc">${t("interrogative", "rule_object_case_desc")}</div>
+    <ul class="rule-list">
+        <li>${t("interrogative", "rule_object_case_1")}</li>
+        <li>${t("interrogative", "rule_object_case_2")}</li>
+        <li>${t("interrogative", "rule_object_case_3")}</li>
+        <li>${t("interrogative", "rule_object_case_4")}</li>
+    </ul>
+    <table class="example-table">
+        <thead>
+            <tr>
+                <th>${t("interrogative", "table_pattern")}</th>
+                <th>${t("interrogative", "table_question")}</th>
+                <th>${t("interrogative", "table_logic")}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>kaufen + Akk.</td><td>Was kaufst du?</td><td>${t("interrogative", "object_logic_was")}</td></tr>
+            <tr><td>besuchen + Akk.</td><td>Wen besuchst du?</td><td>${t("interrogative", "object_logic_wen")}</td></tr>
+            <tr><td>helfen + Dat.</td><td>Wem hilfst du?</td><td>${t("interrogative", "object_logic_wem")}</td></tr>
+            <tr><td>geben + Dat. + Akk.</td><td>Wem gibst du das Buch?</td><td>${t("interrogative", "object_logic_give")}</td></tr>
+            <tr><td>sprechen mit + Dat.</td><td>Mit wem sprichst du?</td><td>${t("interrogative", "object_logic_mit_wem")}</td></tr>
+            <tr><td>warten auf + Akk.</td><td>Auf wen wartest du? / Worauf wartest du?</td><td>${t("interrogative", "object_logic_worauf")}</td></tr>
+        </tbody>
+    </table>
+    <div class="rule-note">${t("interrogative", "rule_object_case_note")}</div>
 
     <div class="rule-subtitle">${t("interrogative", "rule_time_place_title")}</div>
     <ul class="rule-list">
@@ -1431,6 +1473,63 @@ rulesCard.innerHTML = `
             </tr>
         </tbody>
     </table>
+
+    <div class="rule-subtitle">${t("interrogative", "rule_tekomolo_title")}</div>
+    <div class="rule-desc">${t("interrogative", "rule_tekomolo_desc")}</div>
+    <ul class="rule-list">
+        <li>${t("interrogative", "rule_tekomolo_1")}</li>
+        <li>${t("interrogative", "rule_tekomolo_2")}</li>
+        <li>${t("interrogative", "rule_tekomolo_3")}</li>
+        <li>${t("interrogative", "rule_tekomolo_4")}</li>
+        <li>${t("interrogative", "rule_tekomolo_5")}</li>
+    </ul>
+    <table class="example-table">
+        <thead>
+            <tr>
+                <th>${t("interrogative", "table_type")}</th>
+                <th>${t("interrogative", "table_frame_start")}</th>
+                <th>${t("interrogative", "table_subject")}</th>
+                <th>${t("interrogative", "table_te")}</th>
+                <th>${t("interrogative", "table_ka")}</th>
+                <th>${t("interrogative", "table_mo")}</th>
+                <th>${t("interrogative", "table_lo")}</th>
+                <th>${t("interrogative", "table_end")}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>${t("interrogative", "statement_example")}</td>
+                <td class="pos-1">Anna <span class="pos-2">kauft</span></td>
+                <td>-</td>
+                <td>am Montag um 8 Uhr</td>
+                <td>wegen des Tests</td>
+                <td>mit viel Glück</td>
+                <td>im Supermarkt</td>
+                <td class="pos-3">ein.</td>
+            </tr>
+            <tr>
+                <td>${t("interrogative", "standard_order")}</td>
+                <td class="pos-2">Kauft</td>
+                <td class="pos-1">Anna</td>
+                <td>am Montag um 8 Uhr</td>
+                <td>wegen des Tests</td>
+                <td>ohne Probleme</td>
+                <td>im Supermarkt</td>
+                <td class="pos-3">ein?</td>
+            </tr>
+            <tr>
+                <td>${t("interrogative", "inverted_order")}</td>
+                <td><span class="pos-3">Wann</span> <span class="pos-2">kauft</span></td>
+                <td class="pos-1">Anna</td>
+                <td>-</td>
+                <td>wegen des Tests</td>
+                <td>ohne Probleme</td>
+                <td>im Supermarkt</td>
+                <td class="pos-3">ein?</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="rule-note">${t("interrogative", "rule_tekomolo_note")}</div>
 
     <div class="rule-subtitle">${t("interrogative", "rule_modal_title")}</div>
     <ul class="rule-list">
@@ -1509,7 +1608,7 @@ rulesCard.innerHTML = `
             <tr>
                 <td>${t("interrogative", "complex_no_sep_label")}</td>
                 <td>${t("interrogative", "complex_no_sep_logic")}</td>
-                <td>Arbeitet Anna heute im Büro aber lernt Max am Abend Deutsch?</td>
+                <td>Arbeitet Anna heute im Büro, aber lernt Max am Abend Deutsch?</td>
             </tr>
             <tr>
                 <td>${t("interrogative", "complex_sep_label")}</td>
@@ -1524,6 +1623,74 @@ rulesCard.innerHTML = `
         </tbody>
     </table>
     <div class="rule-note">${t("interrogative", "rule_separable_complex_note")}</div>
+
+    <div class="rule-subtitle">${t("interrogative", "rule_variants_title")}</div>
+    <div class="rule-desc">${t("interrogative", "rule_variants_desc")}</div>
+    <ol class="variant-list">
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_yes_no_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_yes_no_pattern")}</span>
+            <span class="variant-example"><span class="pos-2">Kommst</span> <span class="pos-1">du</span> heute?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_w_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_w_pattern")}</span>
+            <span class="variant-example"><span class="pos-3">Wann</span> <span class="pos-2">kommst</span> <span class="pos-1">du</span>?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_subject_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_subject_pattern")}</span>
+            <span class="variant-example"><span class="pos-3">Wer</span> <span class="pos-2">kommt</span> heute? / <span class="pos-3">Was</span> <span class="pos-2">passiert</span>?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_object_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_object_pattern")}</span>
+            <span class="variant-example"><span class="pos-3">Was</span> <span class="pos-2">kaufst</span> <span class="pos-1">du</span>? / <span class="pos-3">Wen</span> <span class="pos-2">besuchst</span> <span class="pos-1">du</span>? / <span class="pos-3">Wem</span> <span class="pos-2">hilfst</span> <span class="pos-1">du</span>? / <span class="pos-3">Mit wem</span> <span class="pos-2">sprichst</span> <span class="pos-1">du</span>?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_teka_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_teka_pattern")}</span>
+            <span class="variant-example"><span class="pos-2">Kaufst</span> <span class="pos-1">du</span> morgen wegen der Party mit viel Freude im Supermarkt ein?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_modal_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_modal_pattern")}</span>
+            <span class="variant-example"><span class="pos-3">Was</span> <span class="pos-2">möchtest</span> <span class="pos-1">du</span> heute lernen?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_separable_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_separable_pattern")}</span>
+            <span class="variant-example"><span class="pos-2">Stehst</span> <span class="pos-1">du</span> um 7 Uhr <span class="pos-3">auf</span>? / <span class="pos-3">Wann</span> <span class="pos-2">stehst</span> <span class="pos-1">du</span> <span class="pos-3">auf</span>?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_choice_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_choice_pattern")}</span>
+            <span class="variant-example"><span class="pos-2">Trinkst</span> <span class="pos-1">du</span> Kaffee oder Tee? / <span class="pos-3">Wann</span> <span class="pos-2">kommst</span> <span class="pos-1">du</span>, heute oder morgen?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_compound_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_compound_pattern")}</span>
+            <span class="variant-example"><span class="pos-2">Wohnst</span> <span class="pos-1">du</span> in Berlin und <span class="pos-2">arbeitest</span> <span class="pos-1">du</span> im Büro?</span>
+        </li>
+        <li>
+            <span class="variant-name">${t("interrogative", "variant_echo_name")}</span>
+            <span class="variant-pattern">${t("interrogative", "variant_echo_pattern")}</span>
+            <span class="variant-example"><span class="pos-1">Du</span> <span class="pos-2">kommst</span> heute?</span>
+        </li>
+    </ol>
+    <div class="rule-note">${t("interrogative", "rule_variants_note")}</div>
+
+    <div class="rule-subtitle">${t("interrogative", "rule_checklist_title")}</div>
+    <ol class="variant-list">
+        <li>${t("interrogative", "rule_checklist_1")}</li>
+        <li>${t("interrogative", "rule_checklist_2")}</li>
+        <li>${t("interrogative", "rule_checklist_3")}</li>
+        <li>${t("interrogative", "rule_checklist_4")}</li>
+        <li>${t("interrogative", "rule_checklist_5")}</li>
+        <li>${t("interrogative", "rule_checklist_6")}</li>
+        <li>${t("interrogative", "rule_checklist_7")}</li>
+    </ol>
+    <div class="rule-note">${t("interrogative", "rule_checklist_note")}</div>
 `;
 rulesSection.appendChild(rulesCard);
 

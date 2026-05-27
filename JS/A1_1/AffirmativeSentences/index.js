@@ -105,6 +105,24 @@ styleElement.textContent = `
     .pos-1 { color: #3b82f6; font-weight: bold; }
     .pos-2 { color: var(--accent-red); font-weight: bold; text-decoration: underline; }
     .pos-3 { color: var(--accent-green); font-weight: bold; }
+    .teka-list { list-style-position: outside; padding-left: 1.6rem; }
+    .teka-list li { font-weight: 800; margin-bottom: 0.55rem; }
+    .teka-list li::marker { color: currentColor; font-weight: 800; }
+    .teka-desc { color: var(--text-primary); font-weight: 400; }
+    .teka-subject { color: #3b82f6; }
+    .teka-verb { color: var(--accent-red); }
+    .teka-time { color: #f59e0b; }
+    .teka-reason { color: #a855f7; }
+    .teka-manner { color: #10b981; }
+    .teka-place { color: #06b6d4; }
+    .teka-end { color: #f97316; }
+    .teka-example {
+        background: var(--content-bg); border: 1px solid var(--border-color);
+        border-radius: 0.5rem; padding: 0.85rem 1rem; line-height: 1.65;
+        margin-top: 0.5rem; font-size: 0.95rem;
+    }
+    .teka-example-label { display: block; color: var(--text-secondary); font-size: 0.85rem; font-weight: 800; margin-bottom: 0.35rem; }
+    .teka-example span { font-weight: 800; }
 
     /* Pill Selection */
     .section-title { font-size: 1.05rem; font-weight: 600; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: left; }
@@ -1174,6 +1192,7 @@ rulesCard.innerHTML = `
         <li>${t("affirmative", "rule_basic_1")}</li>
         <li>${t("affirmative", "rule_basic_2")}</li>
         <li>${t("affirmative", "rule_basic_3")}</li>
+        <li>${t("affirmative", "rule_basic_4")}</li>
     </ul>
     <table class="example-table">
         <thead>
@@ -1210,6 +1229,58 @@ rulesCard.innerHTML = `
         </tbody>
     </table>
     <div class="rule-note">${t("affirmative", "rule_time_place_note")}</div>
+
+    <div class="rule-subtitle">${t("affirmative", "rule_teka_title")}</div>
+    <div class="rule-desc">${t("affirmative", "rule_teka_intro")}</div>
+    <ol class="rule-list teka-list">
+        <li class="teka-subject">${t("affirmative", "teka_subject")} <span class="teka-desc">${t("affirmative", "teka_subject_desc")}</span></li>
+        <li class="teka-verb">${t("affirmative", "teka_verb")} <span class="teka-desc">${t("affirmative", "teka_verb_desc")}</span></li>
+        <li class="teka-time">${t("affirmative", "teka_time")} <span class="teka-desc">${t("affirmative", "teka_time_desc")}</span></li>
+        <li class="teka-reason">${t("affirmative", "teka_reason")} <span class="teka-desc">${t("affirmative", "teka_reason_desc")}</span></li>
+        <li class="teka-manner">${t("affirmative", "teka_manner")} <span class="teka-desc">${t("affirmative", "teka_manner_desc")}</span></li>
+        <li class="teka-place">${t("affirmative", "teka_place")} <span class="teka-desc">${t("affirmative", "teka_place_desc")}</span></li>
+        <li class="teka-end">${t("affirmative", "teka_verb_end")} <span class="teka-desc">${t("affirmative", "teka_verb_end_desc")}</span></li>
+    </ol>
+    <div class="teka-example">
+        <span class="teka-example-label">${t("affirmative", "teka_example_plain_title")}</span>
+        <span class="teka-subject">Anna</span>
+        <span class="teka-verb">möchte</span>
+        <span class="teka-time">heute Abend</span>
+        <span class="teka-reason">wegen der Prüfung</span>
+        <span class="teka-manner">mit viel Ruhe</span>
+        <span class="teka-place">in der Bibliothek</span>
+        <span class="teka-end">Deutsch lernen</span>.
+    </div>
+    <div class="teka-example">
+        <span class="teka-example-label">${t("affirmative", "teka_focus_title")}</span>
+        <div><span class="teka-time">Heute Abend</span> <span class="teka-verb">möchte</span> <span class="teka-subject">Anna</span> wegen der Prüfung mit viel Ruhe in der Bibliothek Deutsch lernen.</div>
+        <div><span class="teka-place">In der Bibliothek</span> <span class="teka-verb">möchte</span> <span class="teka-subject">Anna</span> heute Abend wegen der Prüfung mit viel Ruhe Deutsch lernen.</div>
+        <div><span class="teka-manner">Mit viel Ruhe</span> <span class="teka-verb">möchte</span> <span class="teka-subject">Anna</span> heute Abend wegen der Prüfung in der Bibliothek Deutsch lernen.</div>
+    </div>
+    <div class="rule-note">${t("affirmative", "rule_teka_focus_note")}</div>
+    <div class="rule-note">${t("affirmative", "rule_teka_note")}</div>
+
+    <div class="rule-subtitle">${t("affirmative", "rule_complements_title")}</div>
+    <div class="rule-desc">${t("affirmative", "rule_complements_desc")}</div>
+    <ul class="rule-list">
+        <li>${t("affirmative", "rule_complements_1")}</li>
+        <li>${t("affirmative", "rule_complements_2")}</li>
+        <li>${t("affirmative", "rule_complements_3")}</li>
+        <li>${t("affirmative", "rule_complements_4")}</li>
+    </ul>
+    <div class="teka-example">
+        <span class="teka-example-label">${t("affirmative", "complements_example_objects_title")}</span>
+        <div><span class="pos-1">Ich</span> <span class="pos-2">gebe</span> <span class="teka-place">dem Kind</span> <span class="teka-manner">einen Apfel</span>.</div>
+        <div><span class="pos-1">Ich</span> <span class="pos-2">gebe</span> <span class="teka-manner">ihn</span> <span class="teka-place">dem Kind</span>.</div>
+        <div><span class="pos-1">Ich</span> <span class="pos-2">gebe</span> <span class="teka-manner">ihn</span> <span class="teka-place">ihm</span>.</div>
+    </div>
+    <div class="teka-example">
+        <span class="teka-example-label">${t("affirmative", "complements_example_government_title")}</span>
+        <div><span class="pos-2">warten auf + Akk.</span> → <span class="pos-1">Ich</span> <span class="pos-2">warte</span> <span class="teka-place">auf den Bus</span>.</div>
+        <div><span class="pos-2">helfen + Dat.</span> → <span class="pos-1">Ich</span> <span class="pos-2">helfe</span> <span class="teka-place">dem Mann</span>.</div>
+        <div><span class="pos-2">sprechen über + Akk.</span> → <span class="pos-1">Wir</span> <span class="pos-2">sprechen</span> <span class="teka-place">über den Kurs</span>.</div>
+    </div>
+    <div class="rule-note">${t("affirmative", "rule_complements_note")}</div>
 
     <div class="rule-subtitle">${t("affirmative", "rule_modal_title")}</div>
     <ul class="rule-list">
@@ -1273,6 +1344,16 @@ rulesCard.innerHTML = `
             </tr>
         </tbody>
     </table>
+    <div class="rule-subtitle">${t("affirmative", "rule_checklist_title")}</div>
+    <ul class="rule-list">
+        <li>${t("affirmative", "rule_checklist_1")}</li>
+        <li>${t("affirmative", "rule_checklist_2")}</li>
+        <li>${t("affirmative", "rule_checklist_3")}</li>
+        <li>${t("affirmative", "rule_checklist_4")}</li>
+        <li>${t("affirmative", "rule_checklist_5")}</li>
+        <li>${t("affirmative", "rule_checklist_6")}</li>
+    </ul>
+    <div class="rule-note">${t("affirmative", "rule_checklist_note")}</div>
 `;
 rulesSection.appendChild(rulesCard);
 

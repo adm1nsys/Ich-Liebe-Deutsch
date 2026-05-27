@@ -135,100 +135,76 @@ const TRANSLATIONS_HOME = {
         da: "8. Nægtelse: nicht / kein",
         uk: "8. Заперечення: nicht / kein"
     },
-    "module_1_topic_9": {
-        en: "9. Negative Sentences",
-        de: "9. Negative Sätze",
-        cs: "9. Záporné věty",
-        pl: "9. Zdania przeczące",
-        da: "9. Benægtende sætninger",
-        uk: "9. Заперечні речення"
-    },
-    "module_1_topic_10": {
-        en: "10. Definite Articles",
-        de: "10. Bestimmte Artikel",
-        cs: "10. Určité členy",
-        pl: "10. Przedimki określone",
-        da: "10. Bestemte kendeord",
-        uk: "10. Означені артиклі"
-    },
-    "module_1_topic_11": {
-        en: "11. Indefinite Articles",
-        de: "11. Unbestimmte Artikel",
-        cs: "11. Neurčité členy",
-        pl: "11. Przedimki nieokreślone",
-        da: "11. Ubestemte kendeord",
-        uk: "11. Неозначені артиклі"
-    },
     "module_1_topic_12": {
-        en: "12. Nominative Case",
-        de: "12. Nominativ",
-        cs: "12. Nominativ (1. pád)",
-        pl: "12. Mianownik (Nominativ)",
-        da: "12. Nominativ",
-        uk: "12. Називний відмінок (Nominativ)"
+        en: "9. Nominative Case",
+        de: "9. Nominativ",
+        cs: "9. Nominativ (1. pád)",
+        pl: "9. Mianownik (Nominativ)",
+        da: "9. Nominativ",
+        uk: "9. Називний відмінок (Nominativ)"
     },
     "module_1_topic_13": {
-        en: "13. Accusative Case",
-        de: "13. Akkusativ",
-        cs: "13. Akuzativ (4. pád)",
-        pl: "13. Biernik (Akkusativ)",
-        da: "13. Akkusativ",
-        uk: "13. Знахідний відмінок (Akkusativ)"
+        en: "10. Accusative Case",
+        de: "10. Akkusativ",
+        cs: "10. Akuzativ (4. pád)",
+        pl: "10. Biernik (Akkusativ)",
+        da: "10. Akkusativ",
+        uk: "10. Знахідний відмінок (Akkusativ)"
     },
     "module_1_topic_14": {
-        en: "14. Plural Nouns",
-        de: "14. Plural der Substantive",
-        cs: "14. Množné číslo podstatných jmen",
-        pl: "14. Liczba mnoga rzeczowników",
-        da: "14. Navneord i flertal",
-        uk: "14. Множина іменників"
+        en: "11. Plural Nouns",
+        de: "11. Plural der Substantive",
+        cs: "11. Množné číslo podstatných jmen",
+        pl: "11. Liczba mnoga rzeczowników",
+        da: "11. Navneord i flertal",
+        uk: "11. Множина іменників"
     },
     "module_1_topic_15": {
-        en: "15. Possessive Pronouns",
-        de: "15. Possessivpronomen",
-        cs: "15. Přivlastňovací zájmena",
-        pl: "15. Zaimki dzierżawcze",
-        da: "15. Ejestedord",
-        uk: "15. Присвійні займенники"
+        en: "12. Possessive Pronouns",
+        de: "12. Possessivpronomen",
+        cs: "12. Přivlastňovací zájmena",
+        pl: "12. Zaimki dzierżawcze",
+        da: "12. Ejestedord",
+        uk: "12. Присвійні займенники"
     },
     "module_1_topic_16": {
-        en: "16. Basic Modal Verbs",
-        de: "16. Grundlegende Modalverben",
-        cs: "16. Základní modální slovesa",
-        pl: "16. Podstawowe czasowniki modalne",
-        da: "16. Grundlæggende mådesudsagnsord",
-        uk: "16. Базові модальні дієслова"
+        en: "13. Basic Modal Verbs",
+        de: "13. Grundlegende Modalverben",
+        cs: "13. Základní modální slovesa",
+        pl: "13. Podstawowe czasowniki modalne",
+        da: "13. Grundlæggende mådesudsagnsord",
+        uk: "13. Базові модальні дієслова"
     },
     "module_1_topic_17": {
-        en: "17. Separable Verbs",
-        de: "17. Trennbare Verben",
-        cs: "17. Odlučitelná slovesa",
-        pl: "17. Czasowniki rozdzielnie złożone",
-        da: "17. Løst sammensatte udsagnsord",
-        uk: "17. Відокремлювані префікси"
+        en: "14. Separable Verbs",
+        de: "14. Trennbare Verben",
+        cs: "14. Odlučitelná slovesa",
+        pl: "14. Czasowniki rozdzielnie złożone",
+        da: "14. Løst sammensatte udsagnsord",
+        uk: "14. Відокремлювані префікси"
     },
     "module_1_topic_18": {
-        en: "18. Basic Prepositions",
-        de: "18. Grundlegende Präpositionen",
-        cs: "18. Základní předložky",
-        pl: "18. Podstawowe przyimki",
-        da: "18. Grundlæggende forholdsord",
-        uk: "18. Базові прийменники"
+        en: "15. Basic Prepositions",
+        de: "15. Grundlegende Präpositionen",
+        cs: "15. Základní předložky",
+        pl: "15. Podstawowe przyimki",
+        da: "15. Grundlæggende forholdsord",
+        uk: "15. Базові прийменники"
     },
     "module_1_topic_19": {
-        en: "19. Numbers, Time & Dates",
-        de: "19. Zahlen, Zeit & Daten",
-        cs: "19. Čísla, čas a data",
-        pl: "19. Liczby, czas i daty",
-        da: "19. Tal, tid & datoer",
-        uk: "19. Числа, час та дати"
+        en: "16. Numbers, Time & Dates",
+        de: "16. Zahlen, Zeit & Daten",
+        cs: "16. Čísla, čas a data",
+        pl: "16. Liczby, czas i daty",
+        da: "16. Tal, tid & datoer",
+        uk: "16. Числа, час та дати"
     },
     "module_1_topic_20": {
-        en: "20. Basic Structures: das ist / es gibt / ich möchte / ich hätte gern",
-        de: "20. Grundstrukturen: das ist / es gibt / ich möchte / ich hätte gern",
-        cs: "20. Základní fráze: das ist / es gibt / ich möchte / ich hätte gern",
-        pl: "20. Podstawowe zwroty: das ist / es gibt / ich möchte / ich hätte gern",
-        da: "20. Grundlæggende strukturer: das ist / es gibt / ich möchte / ich hätte gern",
-        uk: "20. Базові конструкції: das ist / es gibt / ich möchte / ich hätte gern"
+        en: "17. Basic Structures: das ist / es gibt / ich möchte / ich hätte gern",
+        de: "17. Grundstrukturen: das ist / es gibt / ich möchte / ich hätte gern",
+        cs: "17. Základní fráze: das ist / es gibt / ich möchte / ich hätte gern",
+        pl: "17. Podstawowe zwroty: das ist / es gibt / ich möchte / ich hätte gern",
+        da: "17. Grundlæggende strukturer: das ist / es gibt / ich möchte / ich hätte gern",
+        uk: "17. Базові конструкції: das ist / es gibt / ich möchte / ich hätte gern"
     }
 };
