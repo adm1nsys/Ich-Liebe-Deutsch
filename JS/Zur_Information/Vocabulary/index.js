@@ -93,6 +93,42 @@ styleElement.textContent = `
     .word-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
     .word-de { color: var(--accent-gold); font-weight: 600; }
     .word-native { color: var(--text-secondary); font-size: 1rem; }
+    .word-row-tools { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; }
+
+    .personal-panel {
+        width: 100%; background: var(--surface-color); border: 1px solid var(--border-color);
+        border-radius: 1rem; padding: 1.25rem; box-sizing: border-box;
+        box-shadow: 0 4px 6px var(--shadow-color); margin-bottom: 1.25rem;
+        display: flex; flex-direction: column; gap: 1rem;
+    }
+    .personal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .personal-title { font-size: 1.15rem; font-weight: 800; color: var(--accent-gold); }
+    .personal-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.45; margin-top: 0.25rem; }
+    .personal-count { color: var(--text-secondary); font-weight: 800; white-space: nowrap; }
+    .personal-toolbar { display: grid; grid-template-columns: minmax(180px, 1fr) repeat(4, auto); gap: 0.75rem; align-items: end; }
+    .field-label { display: flex; flex-direction: column; gap: 0.35rem; color: var(--text-secondary); font-size: 0.85rem; font-weight: 800; }
+    .list-words { display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 2.25rem; align-items: center; }
+    .list-chip {
+        display: inline-flex; align-items: center; gap: 0.45rem; max-width: 100%;
+        background: var(--content-bg); border: 1px solid var(--border-color);
+        border-radius: 999px; padding: 0.45rem 0.65rem 0.45rem 0.8rem;
+        color: var(--text-primary); font-size: 0.92rem;
+    }
+    .chip-remove, .mini-action {
+        border: 1px solid var(--border-color); background: var(--surface-color); color: var(--text-primary);
+        cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .chip-remove { width: 1.45rem; height: 1.45rem; border-radius: 999px; font-weight: 800; }
+    .mini-action { width: 2rem; height: 2rem; border-radius: 0.5rem; font-size: 1.1rem; font-weight: 800; flex-shrink: 0; }
+    .chip-remove:hover, .mini-action:hover { border-color: var(--accent-gold); color: var(--accent-gold); transform: translateY(-1px); }
+    .empty-list-note { color: var(--text-secondary); font-size: 0.95rem; }
+    .modal-desc { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.45; }
+    .modal-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; margin: 1rem 0 1.5rem; }
+    .modal-input {
+        width: 100%; padding: 0.85rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color);
+        background: var(--bg-color); color: var(--text-primary); font: inherit; box-sizing: border-box; outline: none;
+    }
+    .modal-input:focus { border-color: var(--accent-gold); }
 
     .settings-row { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem; text-align: center; }
     .custom-select { background: var(--bg-color); color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; cursor: pointer; transition: border-color 0.3s; }
@@ -101,8 +137,12 @@ styleElement.textContent = `
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 2rem; }
     .btn { padding: 1rem 2rem; font-size: 1.1rem; font-weight: 600; cursor: pointer; border-radius: 0.75rem; border: none; transition: all 0.4s ease; background: var(--surface-color); color: var(--text-primary); border: 1px solid var(--border-color); box-shadow: 0 4px 6px var(--shadow-color); }
     .btn:hover { border-color: var(--accent-gold); transform: translateY(-3px); box-shadow: 0 10px 15px var(--shadow-color); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: 0 4px 6px var(--shadow-color); }
+    .btn:disabled:hover { border-color: var(--border-color); transform: none; }
     .btn.primary { background: linear-gradient(135deg, var(--accent-gold), var(--accent-red)); color: white; border: none; }
     .btn.primary:hover { filter: brightness(1.1); }
+    .btn.danger, .mini-action.danger { border-color: rgba(225, 29, 72, 0.45); color: var(--accent-red); }
+    .btn.danger:hover, .mini-action.danger:hover { border-color: var(--accent-red); color: var(--accent-red); }
 
     /* --- GAME UI --- */
     .game-container { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 60vh; text-align: center; }
@@ -139,6 +179,13 @@ styleElement.textContent = `
         50% { transform: translateX(10px); }
         75% { transform: translateX(-10px); }
     }
+
+    @media (max-width: 760px) {
+        .personal-toolbar { grid-template-columns: 1fr; }
+        .personal-header { flex-direction: column; }
+        .word-checkbox { align-items: flex-start; }
+        .word-row-tools { margin-left: 0; width: 100%; justify-content: flex-end; }
+    }
 `;
 document.head.appendChild(styleElement);
 
@@ -151,6 +198,15 @@ function createSVGIcon(pathData) {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", pathData); svg.appendChild(path);
     return svg;
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 // ==========================================
@@ -1876,6 +1932,104 @@ const VOCABULARY = [
     ] }
 ];
 
+const PERSONAL_VOCABULARY_STORAGE_KEY = "vocabulary_personal_state_v1";
+const DEFAULT_PERSONAL_LISTS = [
+    { id: "to_learn", type: "default", titleKey: "list_to_learn", wordKeys: [] },
+    { id: "learned", type: "default", titleKey: "list_learned", wordKeys: [] }
+];
+
+function uniqueValues(values) {
+    return [...new Set((values || []).filter(Boolean))];
+}
+
+function loadPersonalState() {
+    let parsed = {};
+    try {
+        parsed = JSON.parse(localStorage.getItem(PERSONAL_VOCABULARY_STORAGE_KEY) || "{}");
+    } catch (error) {
+        parsed = {};
+    }
+
+    const savedLists = Array.isArray(parsed.lists) ? parsed.lists : [];
+    const lists = DEFAULT_PERSONAL_LISTS.map(defaultList => {
+        const saved = savedLists.find(list => list.id === defaultList.id);
+        return {
+            ...defaultList,
+            wordKeys: uniqueValues(saved ? saved.wordKeys : [])
+        };
+    });
+
+    savedLists
+        .filter(list => list && list.type === "custom" && list.id && list.name)
+        .forEach(list => {
+            if (!lists.some(existing => existing.id === list.id)) {
+                lists.push({
+                    id: list.id,
+                    type: "custom",
+                    name: String(list.name).trim(),
+                    wordKeys: uniqueValues(list.wordKeys)
+                });
+            }
+        });
+
+    const customWords = Array.isArray(parsed.customWords)
+        ? parsed.customWords
+            .filter(word => word && word.key && word.de && word.native)
+            .map(word => ({
+                key: String(word.key),
+                de: String(word.de).trim(),
+                native: String(word.native).trim()
+            }))
+        : [];
+
+    return { lists, customWords };
+}
+
+function savePersonalState() {
+    localStorage.setItem(PERSONAL_VOCABULARY_STORAGE_KEY, JSON.stringify(personalState));
+}
+
+function getCustomVocabularyGroup() {
+    if (personalState.customWords.length === 0) return null;
+    return {
+        catKey: "cat_custom_words",
+        words: personalState.customWords.map(word => ({ ...word, isCustom: true }))
+    };
+}
+
+function getVocabularyGroups() {
+    const customGroup = getCustomVocabularyGroup();
+    return customGroup ? [...VOCABULARY, customGroup] : VOCABULARY;
+}
+
+function getAllWords() {
+    return getVocabularyGroups().flatMap(category => category.words);
+}
+
+function getWordByKey(key) {
+    return getAllWords().find(word => word.key === key);
+}
+
+function getWordNative(wordOrKey) {
+    const word = typeof wordOrKey === "string" ? getWordByKey(wordOrKey) : wordOrKey;
+    if (!word) return "";
+    return word.native || t("vocabulary", word.key);
+}
+
+function getPersonalListLabel(list) {
+    return list.titleKey ? t("vocabulary", list.titleKey) : list.name;
+}
+
+function getActivePersonalList() {
+    return personalState.lists.find(list => list.id === activePersonalListId) || personalState.lists[0];
+}
+
+function createCustomId(prefix) {
+    return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+let personalState = loadPersonalState();
+let activePersonalListId = personalState.lists[0].id;
 
 let gameState = 'RULES'; 
 let mode = 'ASSISTED'; 
@@ -1886,6 +2040,7 @@ let attemptsLeft = 2;
 let isAnimating = false;
 let repeatCount = 10;
 let currentPhase = 1; 
+let statsRunId = null;
 
 // ==========================================
 // 3. UI ЭЛЕМЕНТЫ
@@ -1920,6 +2075,74 @@ searchInput.placeholder = t("vocabulary", "search_placeholder");
 searchContainer.appendChild(searchInput);
 rulesSection.appendChild(searchContainer);
 
+const personalPanel = document.createElement("div");
+personalPanel.classList.add("personal-panel");
+
+const personalHeader = document.createElement("div");
+personalHeader.classList.add("personal-header");
+const personalHeaderText = document.createElement("div");
+const personalTitle = document.createElement("div");
+personalTitle.classList.add("personal-title");
+personalTitle.textContent = t("vocabulary", "personal_lists_title");
+const personalDesc = document.createElement("div");
+personalDesc.classList.add("personal-desc");
+personalDesc.textContent = t("vocabulary", "personal_lists_desc");
+personalHeaderText.appendChild(personalTitle);
+personalHeaderText.appendChild(personalDesc);
+const personalListCount = document.createElement("div");
+personalListCount.classList.add("personal-count");
+personalHeader.appendChild(personalHeaderText);
+personalHeader.appendChild(personalListCount);
+
+const personalToolbar = document.createElement("div");
+personalToolbar.classList.add("personal-toolbar");
+const personalListLabel = document.createElement("label");
+personalListLabel.classList.add("field-label");
+const personalListLabelText = document.createElement("span");
+personalListLabelText.textContent = t("vocabulary", "active_list");
+const personalListSelect = document.createElement("select");
+personalListSelect.classList.add("custom-select");
+personalListSelect.addEventListener("change", event => {
+    activePersonalListId = event.target.value;
+    renderPersonalListsUI();
+});
+personalListLabel.appendChild(personalListLabelText);
+personalListLabel.appendChild(personalListSelect);
+
+const createListBtn = document.createElement("button");
+createListBtn.classList.add("btn", "small");
+createListBtn.textContent = t("vocabulary", "new_list");
+createListBtn.addEventListener("click", () => showCreateListModal());
+
+const addCustomWordBtn = document.createElement("button");
+addCustomWordBtn.classList.add("btn", "small");
+addCustomWordBtn.textContent = t("vocabulary", "add_custom_word");
+addCustomWordBtn.addEventListener("click", () => showAddCustomWordModal());
+
+const selectListWordsBtn = document.createElement("button");
+selectListWordsBtn.classList.add("btn", "small");
+selectListWordsBtn.textContent = t("vocabulary", "select_list_words");
+selectListWordsBtn.addEventListener("click", () => selectActiveListWords());
+
+const deleteListBtn = document.createElement("button");
+deleteListBtn.classList.add("btn", "small", "danger");
+deleteListBtn.textContent = t("vocabulary", "delete_list");
+deleteListBtn.addEventListener("click", () => confirmDeleteActiveList());
+
+personalToolbar.appendChild(personalListLabel);
+personalToolbar.appendChild(createListBtn);
+personalToolbar.appendChild(addCustomWordBtn);
+personalToolbar.appendChild(selectListWordsBtn);
+personalToolbar.appendChild(deleteListBtn);
+
+const personalListWords = document.createElement("div");
+personalListWords.classList.add("list-words");
+
+personalPanel.appendChild(personalHeader);
+personalPanel.appendChild(personalToolbar);
+personalPanel.appendChild(personalListWords);
+rulesSection.appendChild(personalPanel);
+
 const rulesContainer = document.createElement("div");
 rulesContainer.classList.add("rules-container");
 
@@ -1943,7 +2166,7 @@ rulesContainer.appendChild(selectActions);
 // Accordions and Search Logic structure
 const categoryDOMNodes = [];
 
-VOCABULARY.forEach(cat => {
+getVocabularyGroups().forEach(cat => {
     const accordion = document.createElement("div");
     accordion.classList.add("accordion");
 
@@ -1962,26 +2185,60 @@ VOCABULARY.forEach(cat => {
     const wordDOMNodes = [];
 
     cat.words.forEach(w => {
+        const nativeWordText = getWordNative(w);
         const label = document.createElement("label");
         label.classList.add("word-checkbox");
+        label.dataset.wordKey = w.key;
         
         const cb = document.createElement("input");
         cb.type = "checkbox";
         cb.value = w.key;
         cb.checked = true; // default checked
         cb.dataset.de = w.de;
+        cb.dataset.native = nativeWordText;
         
         const wordInfo = document.createElement("div");
         wordInfo.classList.add("word-label");
-        wordInfo.innerHTML = `<span class="word-de">${w.de}</span> <span class="word-native">— ${t("vocabulary", w.key)}</span>`;
+        wordInfo.innerHTML = `<span class="word-de">${escapeHtml(w.de)}</span> <span class="word-native">— ${escapeHtml(nativeWordText)}</span>`;
+
+        const wordTools = document.createElement("div");
+        wordTools.classList.add("word-row-tools");
+        const addToListBtn = document.createElement("button");
+        addToListBtn.type = "button";
+        addToListBtn.classList.add("mini-action");
+        addToListBtn.textContent = "+";
+        addToListBtn.title = t("vocabulary", "add_to_selected_list");
+        addToListBtn.setAttribute("aria-label", t("vocabulary", "add_to_selected_list"));
+        addToListBtn.addEventListener("click", event => {
+            event.preventDefault();
+            event.stopPropagation();
+            addWordToActiveList(w.key);
+        });
+        wordTools.appendChild(addToListBtn);
+
+        if (w.isCustom) {
+            const deleteCustomWordBtn = document.createElement("button");
+            deleteCustomWordBtn.type = "button";
+            deleteCustomWordBtn.classList.add("mini-action", "danger");
+            deleteCustomWordBtn.textContent = "×";
+            deleteCustomWordBtn.title = t("vocabulary", "delete_custom_word");
+            deleteCustomWordBtn.setAttribute("aria-label", t("vocabulary", "delete_custom_word"));
+            deleteCustomWordBtn.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+                confirmDeleteCustomWord(w.key);
+            });
+            wordTools.appendChild(deleteCustomWordBtn);
+        }
         
         label.appendChild(cb);
         label.appendChild(wordInfo);
+        label.appendChild(wordTools);
         content.appendChild(label);
 
         wordDOMNodes.push({
             deText: w.de.toLowerCase(),
-            nativeText: t("vocabulary", w.key).toLowerCase(),
+            nativeText: nativeWordText.toLowerCase(),
             domElement: label
         });
     });
@@ -2119,7 +2376,8 @@ modalOverlay.classList.add("modal-overlay");
 const modalContent = document.createElement("div");
 modalContent.classList.add("modal-content");
 const modalTitle = document.createElement("h2");
-const modalDesc = document.createElement("p");
+const modalDesc = document.createElement("div");
+modalDesc.classList.add("modal-desc");
 const modalBtnGroup = document.createElement("div");
 modalBtnGroup.classList.add("btn-group");
 
@@ -2156,6 +2414,7 @@ function showModal(title, desc, btns) {
         const btn = document.createElement("button");
         btn.classList.add("btn");
         if (b.primary) btn.classList.add("primary");
+        if (b.danger) btn.classList.add("danger");
         btn.textContent = b.text;
         btn.addEventListener('click', b.action);
         modalBtnGroup.appendChild(btn);
@@ -2163,12 +2422,243 @@ function showModal(title, desc, btns) {
     modalOverlay.classList.add("active");
 }
 
+function hideModal() {
+    modalOverlay.classList.remove("active");
+}
+
+function showFormModal(title, fields, onSubmit) {
+    modalTitle.textContent = title;
+    modalDesc.innerHTML = "";
+    modalBtnGroup.innerHTML = "";
+
+    const form = document.createElement("form");
+    form.classList.add("modal-form");
+    const inputs = {};
+
+    fields.forEach(field => {
+        const label = document.createElement("label");
+        label.classList.add("field-label");
+        const labelText = document.createElement("span");
+        labelText.textContent = field.label;
+        const input = document.createElement("input");
+        input.classList.add("modal-input");
+        input.type = "text";
+        input.placeholder = field.placeholder || "";
+        input.autocomplete = "off";
+        label.appendChild(labelText);
+        label.appendChild(input);
+        form.appendChild(label);
+        inputs[field.id] = input;
+    });
+
+    const submitBtn = document.createElement("button");
+    submitBtn.classList.add("btn", "primary");
+    submitBtn.type = "button";
+    submitBtn.textContent = t("vocabulary", "save");
+    submitBtn.addEventListener("click", () => form.requestSubmit());
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.classList.add("btn");
+    cancelBtn.type = "button";
+    cancelBtn.textContent = t("vocabulary", "cancel");
+    cancelBtn.addEventListener("click", hideModal);
+
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        const values = {};
+        Object.keys(inputs).forEach(id => values[id] = inputs[id].value.trim());
+        onSubmit(values);
+    });
+
+    modalDesc.appendChild(form);
+    modalBtnGroup.appendChild(submitBtn);
+    modalBtnGroup.appendChild(cancelBtn);
+    modalOverlay.classList.add("active");
+    fields[0] && inputs[fields[0].id].focus();
+}
+
+function renderPersonalListsUI() {
+    personalListSelect.innerHTML = "";
+    personalState.lists.forEach(list => {
+        const option = document.createElement("option");
+        option.value = list.id;
+        option.textContent = getPersonalListLabel(list);
+        if (list.id === activePersonalListId) option.selected = true;
+        personalListSelect.appendChild(option);
+    });
+
+    const activeList = getActivePersonalList();
+    activePersonalListId = activeList.id;
+    const knownKeys = new Set(getAllWords().map(word => word.key));
+    activeList.wordKeys = activeList.wordKeys.filter(key => knownKeys.has(key));
+    personalListCount.textContent = `${activeList.wordKeys.length}`;
+    deleteListBtn.disabled = activeList.type !== "custom";
+    deleteListBtn.title = activeList.type === "custom"
+        ? t("vocabulary", "delete_list")
+        : t("vocabulary", "delete_default_list_disabled");
+    personalListWords.innerHTML = "";
+
+    if (activeList.wordKeys.length === 0) {
+        const emptyNote = document.createElement("div");
+        emptyNote.classList.add("empty-list-note");
+        emptyNote.textContent = t("vocabulary", "no_list_words");
+        personalListWords.appendChild(emptyNote);
+        savePersonalState();
+        return;
+    }
+
+    activeList.wordKeys.forEach(key => {
+        const word = getWordByKey(key);
+        if (!word) return;
+
+        const chip = document.createElement("span");
+        chip.classList.add("list-chip");
+        chip.dataset.wordKey = key;
+        const chipText = document.createElement("span");
+        chipText.textContent = `${word.de} — ${getWordNative(word)}`;
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.classList.add("chip-remove");
+        removeBtn.textContent = "×";
+        removeBtn.title = t("vocabulary", "remove_from_list");
+        removeBtn.setAttribute("aria-label", t("vocabulary", "remove_from_list"));
+        removeBtn.addEventListener("click", () => removeWordFromActiveList(key));
+        chip.appendChild(chipText);
+        chip.appendChild(removeBtn);
+        personalListWords.appendChild(chip);
+    });
+
+    savePersonalState();
+}
+
+function addWordToActiveList(wordKey) {
+    const activeList = getActivePersonalList();
+    if (!activeList.wordKeys.includes(wordKey)) {
+        activeList.wordKeys.push(wordKey);
+        savePersonalState();
+    }
+    renderPersonalListsUI();
+}
+
+function removeWordFromActiveList(wordKey) {
+    const activeList = getActivePersonalList();
+    activeList.wordKeys = activeList.wordKeys.filter(key => key !== wordKey);
+    savePersonalState();
+    renderPersonalListsUI();
+}
+
+function selectActiveListWords() {
+    const activeList = getActivePersonalList();
+    const keys = new Set(activeList.wordKeys);
+    document.querySelectorAll(".word-checkbox input").forEach(cb => {
+        cb.checked = keys.has(cb.value);
+    });
+}
+
+function showCreateListModal() {
+    showFormModal(
+        t("vocabulary", "new_list"),
+        [{ id: "name", label: t("vocabulary", "custom_list_name"), placeholder: t("vocabulary", "custom_list_name") }],
+        values => {
+            const name = values.name;
+            if (!name) return;
+            const exists = personalState.lists.some(list => getPersonalListLabel(list).toLowerCase() === name.toLowerCase());
+            if (exists) {
+                showModal(t("vocabulary", "new_list"), t("vocabulary", "list_exists"), [{ text: "OK", primary: true, action: hideModal }]);
+                return;
+            }
+            const newList = { id: createCustomId("list"), type: "custom", name, wordKeys: [] };
+            personalState.lists.push(newList);
+            activePersonalListId = newList.id;
+            savePersonalState();
+            renderPersonalListsUI();
+            hideModal();
+        }
+    );
+}
+
+function confirmDeleteActiveList() {
+    const activeList = getActivePersonalList();
+    if (activeList.type !== "custom") return;
+
+    showModal(
+        t("vocabulary", "delete_list"),
+        t("vocabulary", "delete_list_confirm").replace("{list}", getPersonalListLabel(activeList)),
+        [
+            {
+                text: t("vocabulary", "delete"),
+                danger: true,
+                action: () => {
+                    personalState.lists = personalState.lists.filter(list => list.id !== activeList.id);
+                    activePersonalListId = personalState.lists[0].id;
+                    savePersonalState();
+                    renderPersonalListsUI();
+                    hideModal();
+                }
+            },
+            { text: t("vocabulary", "cancel"), action: hideModal }
+        ]
+    );
+}
+
+function showAddCustomWordModal() {
+    showFormModal(
+        t("vocabulary", "add_custom_word"),
+        [
+            { id: "de", label: t("vocabulary", "german_word"), placeholder: "der Termin" },
+            { id: "native", label: t("vocabulary", "translation"), placeholder: t("vocabulary", "translation") }
+        ],
+        values => {
+            const de = values.de;
+            const native = values.native;
+            if (!de || !native) return;
+            const exists = getAllWords().some(word => word.de.toLowerCase() === de.toLowerCase());
+            if (exists) {
+                showModal(t("vocabulary", "add_custom_word"), t("vocabulary", "word_exists"), [{ text: "OK", primary: true, action: hideModal }]);
+                return;
+            }
+            personalState.customWords.push({
+                key: createCustomId("custom_word"),
+                de,
+                native
+            });
+            savePersonalState();
+            location.reload();
+        }
+    );
+}
+
+function confirmDeleteCustomWord(wordKey) {
+    const word = personalState.customWords.find(item => item.key === wordKey);
+    if (!word) return;
+
+    showModal(
+        t("vocabulary", "delete_custom_word"),
+        t("vocabulary", "delete_custom_word_confirm").replace("{word}", word.de),
+        [
+            {
+                text: t("vocabulary", "delete"),
+                danger: true,
+                action: () => {
+                    personalState.customWords = personalState.customWords.filter(item => item.key !== wordKey);
+                    personalState.lists.forEach(list => {
+                        list.wordKeys = list.wordKeys.filter(key => key !== wordKey);
+                    });
+                    savePersonalState();
+                    location.reload();
+                }
+            },
+            { text: t("vocabulary", "cancel"), action: hideModal }
+        ]
+    );
+}
+
 let selectedWords = [];
 
 function prepareQueue() {
     selectedWords = [];
     document.querySelectorAll('.word-checkbox input:checked').forEach(cb => {
-        selectedWords.push({ key: cb.value, de: cb.dataset.de });
+        selectedWords.push({ key: cb.value, de: cb.dataset.de, native: cb.dataset.native });
     });
 
     if (selectedWords.length === 0) {
@@ -2199,6 +2689,10 @@ function nextPhase() {
 
 function startGame(selectedMode) {
     mode = selectedMode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'PLAYING';
     queue = [];
     
@@ -2206,6 +2700,19 @@ function startGame(selectedMode) {
         selectedWords.forEach(w => queue.push(w));
     }
     queue.sort(() => Math.random() - 0.5);
+
+    if (selectedMode === 'UNASSISTED' && window.AppStats) {
+        statsRunId = window.AppStats.startRun({
+            moduleId: "Vocabulary",
+            moduleName: t("home", "module_0_topic_3"),
+            mode: selectedMode,
+            params: [
+                { label: t("statistics", "questions_param"), value: queue.length },
+                { label: t("statistics", "words_param"), value: selectedWords.length },
+                { label: t("statistics", "repeats_param"), value: repeatCount }
+            ]
+        });
+    }
     
     currentIndex = 0;
     attemptsLeft = 2;
@@ -2238,7 +2745,7 @@ function renderQuestion() {
         <div>${t("vocabulary", "word_left")} <b>${thisWordLeft}</b></div>
     `;
 
-    const nativeText = t("vocabulary", currentW.key);
+    const nativeText = currentW.native || getWordNative(currentW.key);
 
     if (mode === 'ASSISTED') {
         attemptsBadge.style.display = "none";
@@ -2255,6 +2762,10 @@ function updateInputDisplay() {
 }
 
 function showEndScreen() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'END';
     rulesSection.style.display = "none";
     gameSection.style.display = "none";
@@ -2289,8 +2800,13 @@ function checkAnswer() {
                     [{ text: t("vocabulary", "back_to_selection"), primary: true, action: showRules }]
                 );
             } else {
+                if (window.AppStats) window.AppStats.recordMistake(statsRunId);
                 attemptsLeft--;
                 if (attemptsLeft < 0) {
+                    if (statsRunId && window.AppStats) {
+                        window.AppStats.cancelRun(statsRunId);
+                        statsRunId = null;
+                    }
                     showModal(
                         "Ой-ой!",
                         t("vocabulary", "failed_unassisted") + " " + t("vocabulary", "choose_action"),
@@ -2323,4 +2839,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Init
+renderPersonalListsUI();
 showRules();

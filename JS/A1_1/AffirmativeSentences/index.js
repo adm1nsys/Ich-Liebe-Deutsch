@@ -1176,6 +1176,7 @@ let currentBlocks = [];
 let userSelection = [];
 let attemptsLeft = 2; // For typing mode
 let sentenceQueue = [];
+let statsRunId = null;
 
 const rulesSection = document.createElement("div");
 rulesSection.classList.add("rules-container");
@@ -1542,8 +1543,45 @@ document.body.appendChild(modalOverlay);
 // GAME LOGIC
 function startGame(mode) {
     practiceMode = mode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     currentQuestionIndex = 0;
     sentenceQueue = buildPracticeQueue();
+    if (mode === 'UNASSISTED' && window.AppStats) {
+        const topicLabels = {
+            INTRO: t("affirmative", "topic_intro"),
+            MODALS: t("affirmative", "topic_modals"),
+            ALLTAG: t("affirmative", "topic_alltag"),
+            FOOD: t("affirmative", "topic_food"),
+            FAMILY: t("affirmative", "topic_family")
+        };
+        const formatLabels = {
+            BLOCKS: t("affirmative", "format_blocks"),
+            TYPING: t("affirmative", "format_typing")
+        };
+        const difficultyLabels = {
+            SIMPLE: t("affirmative", "diff_simple"),
+            COMPLEX: t("affirmative", "diff_complex")
+        };
+        const verbLevelLabels = {
+            BASIC: t("affirmative", "verb_level_basic"),
+            SEPARABLE: t("affirmative", "verb_level_separable")
+        };
+        statsRunId = window.AppStats.startRun({
+            moduleId: "AffirmativeSentences",
+            moduleName: t("home", "module_1_topic_5"),
+            mode,
+            params: [
+                { label: t("statistics", "questions_param"), value: practiceCount * 2 },
+                { label: t("statistics", "topic_param"), value: practiceTopics.map(topic => topicLabels[topic] || topic).join(", ") },
+                { label: t("statistics", "format_param"), value: formatLabels[practiceFormat] || practiceFormat },
+                { label: t("statistics", "difficulty_param"), value: difficultyLabels[practiceDifficulty] || practiceDifficulty },
+                { label: t("statistics", "verb_level_param"), value: verbLevelLabels[practiceVerbLevel] || practiceVerbLevel }
+            ]
+        });
+    }
     rulesSection.style.display = "none";
     gameSection.style.display = "flex";
     modalOverlay.classList.remove("active");
@@ -1759,6 +1797,7 @@ function verifyBlocks() {
             }
         };
     } else {
+        if (practiceMode === 'UNASSISTED' && window.AppStats) window.AppStats.recordMistake(statsRunId);
         feedbackMsg.textContent = t("affirmative", "incorrect_msg");
         feedbackMsg.className = "feedback-message error";
         sentenceArea.style.borderColor = "var(--accent-red)";
@@ -1800,8 +1839,13 @@ function verifyTyping() {
             feedbackMsg.textContent = t("affirmative", "incorrect_msg");
             feedbackMsg.className = "feedback-message error";
         } else {
+            if (window.AppStats) window.AppStats.recordMistake(statsRunId);
             attemptsLeft--;
             if (attemptsLeft < 0) {
+                if (statsRunId && window.AppStats) {
+                    window.AppStats.cancelRun(statsRunId);
+                    statsRunId = null;
+                }
                 let actual = targetAnswer.charAt(0).toUpperCase() + targetAnswer.slice(1) + ".";
                 showModal(
                     t("affirmative", "modal_error_title"),
@@ -1847,6 +1891,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 function showGameOver() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     const finishScreen = document.createElement("div");
     finishScreen.classList.add("finish-screen");
     

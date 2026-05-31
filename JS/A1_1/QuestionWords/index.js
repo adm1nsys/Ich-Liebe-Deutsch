@@ -916,6 +916,7 @@ let currentQueue = [];
 let selectedAnswer = "";
 let attemptsLeft = 2;
 let answerLocked = false;
+let statsRunId = null;
 
 createSettingGroup("settings_format", [
     { val: "BLOCKS", labelKey: "format_blocks" },
@@ -1016,8 +1017,27 @@ document.body.appendChild(main);
 // ==========================================
 function startGame(mode) {
     practiceMode = mode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     currentIndex = 0;
     currentQueue = buildPracticeQueue();
+    if (mode === "UNASSISTED" && window.AppStats) {
+        const formatLabels = {
+            BLOCKS: t("question_words", "format_blocks"),
+            TYPING: t("question_words", "format_typing")
+        };
+        statsRunId = window.AppStats.startRun({
+            moduleId: "QuestionWords",
+            moduleName: t("home", "module_1_topic_7"),
+            mode,
+            params: [
+                { label: t("statistics", "questions_param"), value: currentQueue.length },
+                { label: t("statistics", "format_param"), value: formatLabels[practiceFormat] || practiceFormat }
+            ]
+        });
+    }
     rulesSection.style.display = "none";
     gameSection.style.display = "flex";
     nextQuestion();
@@ -1116,6 +1136,7 @@ function markCorrect() {
 }
 
 function markWrong() {
+    if (practiceMode === "UNASSISTED" && window.AppStats) window.AppStats.recordMistake(statsRunId);
     typingInput.classList.add("wrong");
     setTimeout(() => typingInput.classList.remove("wrong"), 400);
     Array.from(answerOptions.children).forEach(btn => {
@@ -1145,6 +1166,10 @@ document.addEventListener("keydown", event => {
 });
 
 function showGameOver() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     const finishScreen = document.createElement("div");
     finishScreen.classList.add("finish-screen");
     finishScreen.innerHTML = `

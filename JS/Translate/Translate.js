@@ -13,7 +13,9 @@ const TRANSLATIONS = {
     affirmative: TRANSLATIONS_AFFIRMATIVE,
     interrogative: TRANSLATIONS_INTERROGATIVE,
     question_words: TRANSLATIONS_QUESTION_WORDS,
-    negation: TRANSLATIONS_NEGATION
+    negation: TRANSLATIONS_NEGATION,
+    possessive_pronouns: TRANSLATIONS_POSSESSIVE_PRONOUNS,
+    statistics: TRANSLATIONS_STATISTICS
 };
 
 // Функция для получения текущего языка из памяти

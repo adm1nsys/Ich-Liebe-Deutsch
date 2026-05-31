@@ -125,6 +125,49 @@ styleElement.textContent = `
         color: var(--text-primary);
     }
 
+    .settings-sub-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .settings-control-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .theme-extra-controls {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .accent-swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(2.6rem, 1fr));
+        gap: 0.6rem;
+    }
+
+    .accent-swatch {
+        min-height: 2.6rem;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        background: linear-gradient(135deg, var(--swatch-main), var(--swatch-second));
+        cursor: pointer;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .accent-swatch:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent-gold);
+    }
+
+    .accent-swatch.active {
+        border-color: var(--accent-gold);
+        box-shadow: 0 0 0 3px rgba(245, 175, 25, 0.22);
+    }
+
     .custom-select {
         width: 100%;
         padding: 1rem;
@@ -145,6 +188,23 @@ styleElement.textContent = `
     }
 
     .custom-select:focus {
+        border-color: var(--accent-gold);
+        box-shadow: 0 0 0 2px rgba(245, 175, 25, 0.2);
+    }
+
+    .custom-color-input {
+        width: 100%;
+        min-height: 3.4rem;
+        padding: 0.45rem;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        background: var(--content-bg);
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .custom-color-input:focus {
         border-color: var(--accent-gold);
         box-shadow: 0 0 0 2px rgba(245, 175, 25, 0.2);
     }
@@ -254,6 +314,165 @@ langSelect.addEventListener('change', (e) => {
 
 settingsBlock.appendChild(langLabel);
 settingsBlock.appendChild(langSelect);
+
+// --- Design selector ---
+const themeSettings = window.AppTheme ? window.AppTheme.getSettings() : {
+    mode: "classic",
+    accent: "current",
+    customColor: "#f5af19"
+};
+
+const designLabel = document.createElement("label");
+designLabel.classList.add("settings-label");
+designLabel.textContent = t("settings", "design_label");
+
+const themeModeRow = document.createElement("div");
+themeModeRow.classList.add("settings-control-row");
+
+const themeModeLabel = document.createElement("span");
+themeModeLabel.classList.add("settings-sub-label");
+themeModeLabel.textContent = t("settings", "design_mode_label");
+
+const themeModeSelect = document.createElement("select");
+themeModeSelect.id = "themeModeSelect";
+themeModeSelect.classList.add("custom-select");
+
+[
+    { value: "classic", label: "design_classic" },
+    { value: "mono", label: "design_mono" },
+    { value: "accent", label: "design_accent" },
+    { value: "custom", label: "design_custom" }
+].forEach((optionData) => {
+    const option = document.createElement("option");
+    option.value = optionData.value;
+    option.textContent = t("settings", optionData.label);
+    if (themeSettings.mode === optionData.value) {
+        option.selected = true;
+    }
+    themeModeSelect.appendChild(option);
+});
+
+themeModeRow.appendChild(themeModeLabel);
+themeModeRow.appendChild(themeModeSelect);
+
+const themeExtraControls = document.createElement("div");
+themeExtraControls.classList.add("theme-extra-controls");
+
+const accentRow = document.createElement("div");
+accentRow.classList.add("settings-control-row");
+
+const accentLabel = document.createElement("span");
+accentLabel.classList.add("settings-sub-label");
+accentLabel.textContent = t("settings", "accent_color_label");
+
+const accentSelect = document.createElement("select");
+accentSelect.id = "themeAccentSelect";
+accentSelect.classList.add("custom-select");
+
+const accentOptions = [
+    { value: "current", label: "accent_current" },
+    { value: "blue", label: "accent_blue" },
+    { value: "green", label: "accent_green" },
+    { value: "purple", label: "accent_purple" },
+    { value: "rose", label: "accent_rose" },
+    { value: "cyan", label: "accent_cyan" }
+];
+
+accentOptions.forEach((optionData) => {
+    const option = document.createElement("option");
+    option.value = optionData.value;
+    option.textContent = t("settings", optionData.label);
+    if (themeSettings.accent === optionData.value) {
+        option.selected = true;
+    }
+    accentSelect.appendChild(option);
+});
+
+const accentSwatchGrid = document.createElement("div");
+accentSwatchGrid.classList.add("accent-swatch-grid");
+
+function updateAccentSwatches() {
+    accentSwatchGrid.querySelectorAll(".accent-swatch").forEach((button) => {
+        button.classList.toggle("active", button.dataset.accent === accentSelect.value);
+    });
+}
+
+accentOptions.forEach((optionData) => {
+    const palette = window.AppTheme && window.AppTheme.palettes
+        ? window.AppTheme.palettes[optionData.value]
+        : null;
+    const swatchButton = document.createElement("button");
+    swatchButton.type = "button";
+    swatchButton.classList.add("accent-swatch");
+    swatchButton.dataset.accent = optionData.value;
+    swatchButton.title = t("settings", optionData.label);
+    swatchButton.setAttribute("aria-label", t("settings", optionData.label));
+    swatchButton.style.setProperty("--swatch-main", palette ? palette.gold : "#f5af19");
+    swatchButton.style.setProperty("--swatch-second", palette ? palette.red : "#ff4b2b");
+    swatchButton.addEventListener("click", () => {
+        accentSelect.value = optionData.value;
+        if (window.AppTheme) {
+            window.AppTheme.setAccent(optionData.value);
+        }
+        updateAccentSwatches();
+    });
+    accentSwatchGrid.appendChild(swatchButton);
+});
+
+accentRow.appendChild(accentLabel);
+accentRow.appendChild(accentSelect);
+accentRow.appendChild(accentSwatchGrid);
+
+const customColorRow = document.createElement("div");
+customColorRow.classList.add("settings-control-row");
+
+const customColorLabel = document.createElement("span");
+customColorLabel.classList.add("settings-sub-label");
+customColorLabel.textContent = t("settings", "custom_color_label");
+
+const customColorInput = document.createElement("input");
+customColorInput.id = "themeCustomColorInput";
+customColorInput.classList.add("custom-color-input");
+customColorInput.type = "color";
+customColorInput.value = themeSettings.customColor;
+
+customColorRow.appendChild(customColorLabel);
+customColorRow.appendChild(customColorInput);
+
+themeExtraControls.appendChild(accentRow);
+themeExtraControls.appendChild(customColorRow);
+
+function updateThemeControls() {
+    accentRow.style.display = themeModeSelect.value === "accent" ? "grid" : "none";
+    customColorRow.style.display = themeModeSelect.value === "custom" ? "grid" : "none";
+}
+
+themeModeSelect.addEventListener("change", (event) => {
+    if (window.AppTheme) {
+        window.AppTheme.setMode(event.target.value);
+    }
+    updateThemeControls();
+});
+
+accentSelect.addEventListener("change", (event) => {
+    if (window.AppTheme) {
+        window.AppTheme.setAccent(event.target.value);
+    }
+    updateAccentSwatches();
+});
+
+customColorInput.addEventListener("input", (event) => {
+    if (window.AppTheme) {
+        window.AppTheme.setCustomColor(event.target.value);
+    }
+});
+
+updateThemeControls();
+updateAccentSwatches();
+
+settingsBlock.appendChild(designLabel);
+settingsBlock.appendChild(themeModeRow);
+settingsBlock.appendChild(themeExtraControls);
 
 // --- Reset data button ---
 const clearDataBtn = document.createElement("button");

@@ -13,7 +13,11 @@ sync_load('JS/Translate/Dict_AffirmativeSentences.js');
 sync_load('JS/Translate/Dict_InterrogativeSentences.js');
 sync_load('JS/Translate/Dict_QuestionWords.js');
 sync_load('JS/Translate/Dict_Negation.js');
+sync_load('JS/Translate/Dict_PossessivePronouns.js');
+sync_load('JS/Translate/Dict_Statistics.js');
 sync_load('JS/Translate/Translate.js');
+sync_load('JS/Universal/theme.js');
+sync_load('JS/Universal/statistics.js');
 
 // Load Page
 switch (PAGE_NAME) {
@@ -22,6 +26,9 @@ switch (PAGE_NAME) {
         break;
     case "Settings":
         sync_load('JS/Settings/settings.js');
+        break;
+    case "Statistics":
+        sync_load('JS/Statistics/index.js');
         break;
     case "Alphabet":
         sync_load('JS/Zur_Information/Alphabet/index.js');
@@ -55,6 +62,9 @@ switch (PAGE_NAME) {
         break;
     case "Negation":
         sync_load('JS/A1_1/Negation/index.js');
+        break;
+    case "PossessivePronouns":
+        sync_load('JS/A1_1/PossessivePronouns/index.js');
         break;
     default:
         sync_load('JS/Home/index.js');

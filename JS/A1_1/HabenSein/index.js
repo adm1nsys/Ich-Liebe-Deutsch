@@ -287,6 +287,7 @@ let isAnimating = false;
 let pronounRepeatCount = 5; 
 
 let currentPhase = 1; // 1 = ASSISTED, 2 = UNASSISTED
+let statsRunId = null;
 
 // ==========================================
 // 3. UI ЭЛЕМЕНТЫ
@@ -579,6 +580,10 @@ function nextPhase() {
 
 function startGame(selectedMode) {
     mode = selectedMode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'PLAYING';
     queue = [];
     
@@ -616,6 +621,20 @@ function startGame(selectedMode) {
     for (let i = queue.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [queue[i], queue[j]] = [queue[j], queue[i]];
+    }
+
+    if (selectedMode === 'UNASSISTED' && window.AppStats) {
+        const activeMode = modes.find(item => item.code === practiceVerbMode);
+        statsRunId = window.AppStats.startRun({
+            moduleId: "HabenSein",
+            moduleName: t("home", "module_1_topic_3"),
+            mode: selectedMode,
+            params: [
+                { label: t("statistics", "questions_param"), value: queue.length },
+                { label: t("statistics", "topic_param"), value: activeMode ? t("haben_sein", activeMode.labelKey) : practiceVerbMode },
+                { label: t("statistics", "repeats_param"), value: pronounRepeatCount }
+            ]
+        });
     }
 
     currentIndex = 0;
@@ -666,6 +685,10 @@ function updateInputDisplay() {
 }
 
 function showEndScreen() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'END';
     rulesSection.style.display = "none";
     gameSection.style.display = "none";
@@ -716,8 +739,13 @@ function checkAnswer() {
                     [{ text: t("haben_sein", "back_to_rules"), primary: true, action: showRules }]
                 );
             } else {
+                if (window.AppStats) window.AppStats.recordMistake(statsRunId);
                 attemptsLeft--;
                 if (attemptsLeft < 0) {
+                    if (statsRunId && window.AppStats) {
+                        window.AppStats.cancelRun(statsRunId);
+                        statsRunId = null;
+                    }
                     showModal(
                         "Ой-ой!",
                         t("haben_sein", "failed_unassisted") + " " + t("haben_sein", "choose_action"),

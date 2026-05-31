@@ -199,9 +199,10 @@ let currentIndex = 0;
 let currentInputStr = "";
 let attemptsLeft = 2;
 let isAnimating = false;
-let repeatCount = 10;
+let repeatCount = 10; 
 
 let currentPhase = 1; // 1 = ASSISTED, 2 = UNASSISTED
+let statsRunId = null;
 
 // ==========================================
 // 3. UI ЭЛЕМЕНТЫ
@@ -372,6 +373,10 @@ function nextPhase() {
 
 function startGame(selectedMode) {
     mode = selectedMode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'PLAYING';
     queue = [];
     
@@ -379,6 +384,18 @@ function startGame(selectedMode) {
         PRONOUNS.forEach(p => queue.push(p));
     }
     queue.sort(() => Math.random() - 0.5);
+
+    if (selectedMode === 'UNASSISTED' && window.AppStats) {
+        statsRunId = window.AppStats.startRun({
+            moduleId: "Pronouns",
+            moduleName: t("home", "module_1_topic_1"),
+            mode: selectedMode,
+            params: [
+                { label: t("statistics", "questions_param"), value: queue.length },
+                { label: t("statistics", "repeats_param"), value: repeatCount }
+            ]
+        });
+    }
 
     currentIndex = 0;
     attemptsLeft = 2;
@@ -428,6 +445,10 @@ function updateInputDisplay() {
 }
 
 function showEndScreen() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'END';
     rulesSection.style.display = "none";
     gameSection.style.display = "none";
@@ -479,8 +500,13 @@ function checkAnswer() {
                 );
             } else {
                 // Без помощника
+                if (window.AppStats) window.AppStats.recordMistake(statsRunId);
                 attemptsLeft--;
                 if (attemptsLeft < 0) {
+                    if (statsRunId && window.AppStats) {
+                        window.AppStats.cancelRun(statsRunId);
+                        statsRunId = null;
+                    }
                     showModal(
                         "Ой-ой!",
                         t("pronouns", "failed_unassisted") + " " + t("pronouns", "choose_action"),

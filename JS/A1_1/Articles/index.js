@@ -548,6 +548,7 @@ let selectedCases = [...CASES];
 let selectedArticleType = "both";
 let repeatCount = 10;
 let queue = [];
+let statsRunId = null;
 let currentIndex = 0;
 let currentInputStr = "";
 let attemptsLeft = 2;
@@ -932,8 +933,28 @@ function createQuestionQueue() {
 
 function startGame(selectedMode) {
     mode = selectedMode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = "PLAYING";
     queue = createQuestionQueue();
+
+    if (selectedMode === "UNASSISTED" && window.AppStats) {
+        const articleTypeLabel = selectedArticleType === "both"
+            ? t("articles", "both_articles")
+            : t("articles", ARTICLE_TYPE_LABEL_KEYS[selectedArticleType]);
+        statsRunId = window.AppStats.startRun({
+            moduleId: "Articles",
+            moduleName: t("home", "module_1_topic_4"),
+            mode: selectedMode,
+            params: [
+                { label: t("statistics", "questions_param"), value: queue.length },
+                { label: t("statistics", "cases_param"), value: selectedCases.map(caseName => t("articles", caseName)).join(", ") },
+                { label: t("statistics", "article_type_param"), value: articleTypeLabel }
+            ]
+        });
+    }
     currentIndex = 0;
     attemptsLeft = 2;
     currentInputStr = "";
@@ -981,6 +1002,10 @@ function updateInputDisplay() {
 }
 
 function showEndScreen() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = "END";
     rulesSection.style.display = "none";
     gameSection.style.display = "none";
@@ -1037,7 +1062,12 @@ function checkAnswer() {
         }
 
         attemptsLeft--;
+        if (window.AppStats) window.AppStats.recordMistake(statsRunId);
         if (attemptsLeft < 0) {
+            if (statsRunId && window.AppStats) {
+                window.AppStats.cancelRun(statsRunId);
+                statsRunId = null;
+            }
             showModal(
                 t("articles", "mistake_title"),
                 `${t("articles", "failed_unassisted")}\n\n${t("articles", "expected")} ${question.answer}\n\n${t("articles", "choose_action")}`,

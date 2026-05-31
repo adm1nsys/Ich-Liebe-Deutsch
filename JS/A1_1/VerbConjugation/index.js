@@ -339,6 +339,7 @@ let attemptsLeft = 2;
 let isAnimating = false;
 let repeatCount = 10; // Number of questions selected by user
 let selectedVerbTopic = "basic_regular";
+let statsRunId = null;
 
 let currentPhase = 1; // 1 = ASSISTED, 2 = UNASSISTED
 
@@ -705,6 +706,10 @@ function getSelectedVerbKeys() {
 
 function startGame(selectedMode) {
     mode = selectedMode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'PLAYING';
     queue = [];
     const activeVerbKeys = getSelectedVerbKeys();
@@ -734,6 +739,19 @@ function startGame(selectedMode) {
             pronounKey: randPronoun.key,
             translation: trans,
             answer: ans
+        });
+    }
+
+    if (selectedMode === 'UNASSISTED' && window.AppStats) {
+        const activeTopic = topicOptions.find(option => option.value === selectedVerbTopic);
+        statsRunId = window.AppStats.startRun({
+            moduleId: "VerbConjugation",
+            moduleName: t("home", "module_1_topic_2"),
+            mode: selectedMode,
+            params: [
+                { label: t("statistics", "questions_param"), value: queue.length },
+                { label: t("statistics", "topic_param"), value: activeTopic ? t("verb_conjugation", activeTopic.labelKey) : selectedVerbTopic }
+            ]
         });
     }
 
@@ -786,6 +804,10 @@ function updateInputDisplay() {
 }
 
 function showEndScreen() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     gameState = 'END';
     rulesSection.style.display = "none";
     gameSection.style.display = "none";
@@ -841,8 +863,13 @@ function checkAnswer() {
                     [{ text: t("verb_conjugation", "back_to_rules"), primary: true, action: showRules }]
                 );
             } else {
+                if (window.AppStats) window.AppStats.recordMistake(statsRunId);
                 attemptsLeft--;
                 if (attemptsLeft < 0) {
+                    if (statsRunId && window.AppStats) {
+                        window.AppStats.cancelRun(statsRunId);
+                        statsRunId = null;
+                    }
                     showModal(
                         "Ой-ой!",
                         t("verb_conjugation", "failed_unassisted") + `\n\nПравильна відповідь була: ${q.answer}\n\n` + t("verb_conjugation", "choose_action"),

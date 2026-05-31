@@ -318,6 +318,9 @@ const statBtn = document.createElement("button");
 statBtn.classList.add("icon-btn");
 statBtn.title = t("home", "stat_btn");
 statBtn.appendChild(createSVGIcon("M18 20V10M12 20V4M6 20v-6"));
+statBtn.addEventListener('click', () => {
+    window.location.href = "index.html?page=Statistics";
+});
 
 const settingsBtn = document.createElement("button");
 settingsBtn.classList.add("icon-btn");
@@ -434,6 +437,12 @@ COURSE_MODULES.forEach(module => {
         if (topicText === t("home", "module_1_topic_8")) {
             btn.addEventListener('click', () => {
                 window.location.href = "index.html?page=Negation";
+            });
+        }
+
+        if (topicText === t("home", "module_1_topic_15")) {
+            btn.addEventListener('click', () => {
+                window.location.href = "index.html?page=PossessivePronouns";
             });
         }
 

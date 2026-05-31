@@ -1327,6 +1327,7 @@ let currentPhase = 'JA_NEIN'; // STANDARD or INVERTED
 let currentBlocks = [];
 let userSelection = [];
 let attemptsLeft = 2; // For typing mode
+let statsRunId = null;
 
 const rulesSection = document.createElement("div");
 rulesSection.classList.add("rules-container");
@@ -1876,8 +1877,42 @@ document.body.appendChild(modalOverlay);
 // GAME LOGIC
 function startGame(mode) {
     practiceMode = mode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     currentQuestionIndex = 0;
     sentenceQueue = buildPracticeQueue();
+    if (mode === 'UNASSISTED' && window.AppStats) {
+        const topicLabels = {
+            INTRO: t("interrogative", "topic_intro"),
+            MODALS: t("interrogative", "topic_modals"),
+            ALLTAG: t("interrogative", "topic_alltag"),
+            FOOD: t("interrogative", "topic_food"),
+            FAMILY: t("interrogative", "topic_family")
+        };
+        const formatLabels = {
+            BLOCKS: t("interrogative", "format_blocks"),
+            TYPING: t("interrogative", "format_typing")
+        };
+        const verbLevelLabels = {
+            BASIC: t("interrogative", "verb_level_basic"),
+            SEPARABLE: t("interrogative", "verb_level_separable"),
+            CONNECTORS: t("interrogative", "verb_level_connectors"),
+            CONNECTORS_SEPARABLE: t("interrogative", "verb_level_connectors_separable")
+        };
+        statsRunId = window.AppStats.startRun({
+            moduleId: "InterrogativeSentences",
+            moduleName: t("home", "module_1_topic_6"),
+            mode,
+            params: [
+                { label: t("statistics", "questions_param"), value: practiceCount * 2 },
+                { label: t("statistics", "topic_param"), value: practiceTopics.map(topic => topicLabels[topic] || topic).join(", ") },
+                { label: t("statistics", "format_param"), value: formatLabels[practiceFormat] || practiceFormat },
+                { label: t("statistics", "verb_level_param"), value: verbLevelLabels[practiceVerbLevel] || practiceVerbLevel }
+            ]
+        });
+    }
     rulesSection.style.display = "none";
     gameSection.style.display = "flex";
     modalOverlay.classList.remove("active");
@@ -2083,6 +2118,7 @@ function verifyBlocks() {
             }
         };
     } else {
+        if (practiceMode === 'UNASSISTED' && window.AppStats) window.AppStats.recordMistake(statsRunId);
         feedbackMsg.textContent = t("interrogative", "incorrect_msg");
         feedbackMsg.className = "feedback-message error";
         sentenceArea.style.borderColor = "var(--accent-red)";
@@ -2124,8 +2160,13 @@ function verifyTyping() {
             feedbackMsg.textContent = t("interrogative", "incorrect_msg");
             feedbackMsg.className = "feedback-message error";
         } else {
+            if (window.AppStats) window.AppStats.recordMistake(statsRunId);
             attemptsLeft--;
             if (attemptsLeft < 0) {
+                if (statsRunId && window.AppStats) {
+                    window.AppStats.cancelRun(statsRunId);
+                    statsRunId = null;
+                }
                 let actual = targetAnswer.charAt(0).toUpperCase() + targetAnswer.slice(1) + "?";
                 showModal(
                     t("interrogative", "modal_error_title"),
@@ -2171,6 +2212,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 function showGameOver() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
     const finishScreen = document.createElement("div");
     finishScreen.classList.add("finish-screen");
     

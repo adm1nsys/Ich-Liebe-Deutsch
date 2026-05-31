@@ -160,12 +160,12 @@ const TRANSLATIONS_HOME = {
         uk: "11. Множина іменників"
     },
     "module_1_topic_15": {
-        en: "12. Possessive Pronouns",
-        de: "12. Possessivpronomen",
-        cs: "12. Přivlastňovací zájmena",
-        pl: "12. Zaimki dzierżawcze",
-        da: "12. Ejestedord",
-        uk: "12. Присвійні займенники"
+        en: "12. Possessive & Case Pronouns",
+        de: "12. Possessiv- und Kasuspronomen",
+        cs: "12. Přivlastňovací a pádová zájmena",
+        pl: "12. Zaimki dzierżawcze i przypadki",
+        da: "12. Ejestedord og kasus-stedord",
+        uk: "12. Присвійні та відмінкові займенники"
     },
     "module_1_topic_16": {
         en: "13. Basic Modal Verbs",
