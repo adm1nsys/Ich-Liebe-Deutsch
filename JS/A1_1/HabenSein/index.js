@@ -279,6 +279,7 @@ const CONJUGATION_MAP = {
 let gameState = 'RULES'; 
 let mode = 'ASSISTED'; 
 let practiceVerbMode = 'MIXED'; // MIXED, HABEN, SEIN
+let practiceFormat = "BLOCKS"; // BLOCKS, TYPING
 let queue = [];
 let currentIndex = 0;
 let currentInputStr = "";
@@ -424,33 +425,23 @@ modes.forEach(m => {
     if (m.code === practiceVerbMode) pill.classList.add("active");
     pill.textContent = t("haben_sein", m.labelKey);
     pill.addEventListener('click', () => {
-        document.querySelectorAll('.pill-btn').forEach(p => p.classList.remove('active'));
+        Array.from(pillGroup.children).forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
         practiceVerbMode = m.code;
     });
     pillGroup.appendChild(pill);
 });
 rulesSection.appendChild(pillGroup);
+rulesSection.appendChild(AppPracticeModes.createFormatSelector(practiceFormat, value => {
+    practiceFormat = value;
+}));
 
 // Repeat Word Count Settings
-const settingsRow = document.createElement("div");
-settingsRow.classList.add("settings-row");
-const repeatInfo = document.createElement("div");
-repeatInfo.textContent = t("haben_sein", "repeat_info");
-const repeatSelect = document.createElement("select");
-repeatSelect.classList.add("custom-select");
-[5, 10, 15, 20].forEach(val => {
-    const opt = document.createElement("option");
-    opt.value = val; opt.textContent = val;
-    if (val === 5) opt.selected = true;
-    repeatSelect.appendChild(opt);
-});
-repeatSelect.addEventListener('change', (e) => {
-    pronounRepeatCount = parseInt(e.target.value);
-});
-settingsRow.appendChild(repeatInfo);
-settingsRow.appendChild(repeatSelect);
-rulesSection.appendChild(settingsRow);
+rulesSection.appendChild(AppPracticeModes.createCountSelector(
+    t("haben_sein", "repeat_info"),
+    pronounRepeatCount,
+    value => pronounRepeatCount = value
+));
 
 const rulesBtnGroup = document.createElement("div");
 rulesBtnGroup.classList.add("btn-group");
@@ -500,6 +491,8 @@ promptBox.appendChild(promptPronounWrap);
 const inputBox = document.createElement("div");
 inputBox.classList.add("input-box");
 inputBox.dataset.placeholder = t("haben_sein", "type_here");
+const answerBlocks = document.createElement("div");
+answerBlocks.classList.add("legacy-answer-blocks");
 const gameHints = document.createElement("div");
 gameHints.classList.add("game-hints");
 gameHints.textContent = t("haben_sein", "press_enter");
@@ -508,6 +501,7 @@ gameSection.appendChild(gameCounters);
 gameSection.appendChild(attemptsBadge);
 gameSection.appendChild(promptBox);
 gameSection.appendChild(inputBox);
+gameSection.appendChild(answerBlocks);
 gameSection.appendChild(gameHints);
 
 // END UI
@@ -578,6 +572,22 @@ function nextPhase() {
     }
 }
 
+function getActiveVerbs() {
+    if (practiceVerbMode === 'HABEN') return ['haben'];
+    if (practiceVerbMode === 'SEIN') return ['sein'];
+    return ['haben', 'sein'];
+}
+
+function getHabenSeinAnswerPool() {
+    const answers = [];
+    getActiveVerbs().forEach(verb => {
+        PRONOUNS.forEach(pronounData => {
+            answers.push(CONJUGATION_MAP[verb][pronounData.key]);
+        });
+    });
+    return answers;
+}
+
 function startGame(selectedMode) {
     mode = selectedMode;
     if (statsRunId && window.AppStats) {
@@ -588,14 +598,7 @@ function startGame(selectedMode) {
     queue = [];
     
     // Choose list of available verbs based on pill selection
-    let activeVerbs = [];
-    if (practiceVerbMode === 'HABEN') {
-        activeVerbs = ['haben'];
-    } else if (practiceVerbMode === 'SEIN') {
-        activeVerbs = ['sein'];
-    } else {
-        activeVerbs = ['haben', 'sein'];
-    }
+    let activeVerbs = getActiveVerbs();
 
     // Generate a structured queue: each pronoun is practiced exactly pronounRepeatCount times for each active verb
     for (let p of PRONOUNS) {
@@ -632,7 +635,8 @@ function startGame(selectedMode) {
             params: [
                 { label: t("statistics", "questions_param"), value: queue.length },
                 { label: t("statistics", "topic_param"), value: activeMode ? t("haben_sein", activeMode.labelKey) : practiceVerbMode },
-                { label: t("statistics", "repeats_param"), value: pronounRepeatCount }
+                { label: t("statistics", "repeats_param"), value: pronounRepeatCount },
+                { label: t("statistics", "format_param"), value: AppPracticeModes.text(practiceFormat === "BLOCKS" ? "blocks" : "typing") }
             ]
         });
     }
@@ -678,10 +682,35 @@ function renderQuestion() {
         attemptsBadge.textContent = t("haben_sein", "attempts_left") + attemptsLeft;
         gameHints.textContent = t("haben_sein", "press_enter");
     }
+
+    renderAnswerMode(q.answer);
 }
 
 function updateInputDisplay() {
     inputBox.textContent = currentInputStr;
+}
+
+function renderAnswerMode(correctAnswer) {
+    if (practiceFormat === "BLOCKS") {
+        inputBox.style.display = "none";
+        answerBlocks.style.display = "flex";
+        gameHints.innerHTML = mode === "ASSISTED"
+            ? `${AppPracticeModes.text("choose_block")} | <span style="color: var(--accent-gold); font-weight:600;">Hint: ${correctAnswer}</span>`
+            : AppPracticeModes.text("choose_block");
+        AppPracticeModes.renderAnswerBlocks(
+            answerBlocks,
+            AppPracticeModes.buildAnswerOptions(correctAnswer, getHabenSeinAnswerPool(), 6),
+            (answer, button) => {
+                currentInputStr = answer;
+                checkAnswer(button);
+            }
+        );
+        return;
+    }
+
+    inputBox.style.display = "flex";
+    answerBlocks.style.display = "none";
+    answerBlocks.innerHTML = "";
 }
 
 function showEndScreen() {
@@ -710,7 +739,7 @@ function showModal(title, desc, btns) {
     modalOverlay.classList.add("active");
 }
 
-function checkAnswer() {
+function checkAnswer(answerButton = null) {
     if (currentInputStr.trim() === "") return;
     isAnimating = true;
 
@@ -720,6 +749,7 @@ function checkAnswer() {
 
     if (cleanInput === cleanAnswer) {
         inputBox.classList.add("correct");
+        if (answerButton) answerButton.classList.add("correct");
         setTimeout(() => {
             currentIndex++;
             attemptsLeft = 2;
@@ -728,6 +758,7 @@ function checkAnswer() {
         }, 500);
     } else {
         inputBox.classList.add("wrong");
+        if (answerButton) answerButton.classList.add("wrong");
         setTimeout(() => {
             inputBox.classList.remove("wrong");
             isAnimating = false;
@@ -764,7 +795,7 @@ function checkAnswer() {
 
 // Global Keyboard Listener
 document.addEventListener('keydown', (e) => {
-    if (gameState !== 'PLAYING' || isAnimating || modalOverlay.classList.contains("active")) return;
+    if (gameState !== 'PLAYING' || practiceFormat !== "TYPING" || isAnimating || modalOverlay.classList.contains("active")) return;
 
     if (e.key === 'Backspace') {
         currentInputStr = currentInputStr.slice(0, -1);

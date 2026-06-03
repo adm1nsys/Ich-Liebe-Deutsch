@@ -16,6 +16,7 @@ sync_load('JS/Translate/Dict_Negation.js');
 sync_load('JS/Translate/Dict_PossessivePronouns.js');
 sync_load('JS/Translate/Dict_Statistics.js');
 sync_load('JS/Translate/Translate.js');
+sync_load('JS/Universal/practice_modes.js');
 sync_load('JS/Universal/theme.js');
 sync_load('JS/Universal/statistics.js');
 

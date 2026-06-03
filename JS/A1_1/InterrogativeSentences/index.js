@@ -1770,13 +1770,11 @@ createSettingGroup("settings_verb_level", [
     { val: "CONNECTORS_SEPARABLE", labelKey: "verb_level_connectors_separable" }
 ], practiceVerbLevel, (val) => practiceVerbLevel = val);
 
-createSettingGroup("settings_count", [
-    { val: 5, label: "5" },
-    { val: 10, label: "10" },
-    { val: 15, label: "15" },
-    { val: 20, label: "20" },
-    { val: 50, label: "50" }
-], practiceCount, (val) => practiceCount = val);
+rulesSection.appendChild(AppPracticeModes.createCountSelector(
+    t("interrogative", "settings_count"),
+    practiceCount,
+    value => practiceCount = value
+));
 
 const actionGroup = document.createElement("div");
 actionGroup.classList.add("action-group");

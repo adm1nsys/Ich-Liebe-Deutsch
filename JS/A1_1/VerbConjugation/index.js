@@ -332,6 +332,7 @@ const IRREGULAR_VERBS = {
 
 let gameState = 'RULES'; // RULES, PLAYING, END
 let mode = 'ASSISTED'; // ASSISTED, UNASSISTED
+let practiceFormat = "BLOCKS"; // BLOCKS, TYPING
 let queue = [];
 let currentIndex = 0;
 let currentInputStr = "";
@@ -555,24 +556,17 @@ topicOptions.forEach(optionData => {
     topicGroup.appendChild(btn);
 });
 
-const repeatInfo = document.createElement("div");
-repeatInfo.textContent = t("verb_conjugation", "repeat_info");
-const repeatSelect = document.createElement("select");
-repeatSelect.classList.add("custom-select");
-[5, 10, 15, 20, 30, 50].forEach(val => {
-    const opt = document.createElement("option");
-    opt.value = val; opt.textContent = val;
-    if (val === 10) opt.selected = true;
-    repeatSelect.appendChild(opt);
-});
-repeatSelect.addEventListener('change', (e) => {
-    repeatCount = parseInt(e.target.value);
-});
 settingsRow.appendChild(topicInfo);
 settingsRow.appendChild(topicGroup);
-settingsRow.appendChild(repeatInfo);
-settingsRow.appendChild(repeatSelect);
 rulesSection.appendChild(settingsRow);
+rulesSection.appendChild(AppPracticeModes.createCountSelector(
+    t("verb_conjugation", "repeat_info"),
+    repeatCount,
+    value => repeatCount = value
+));
+rulesSection.appendChild(AppPracticeModes.createFormatSelector(practiceFormat, value => {
+    practiceFormat = value;
+}));
 
 const rulesBtnGroup = document.createElement("div");
 rulesBtnGroup.classList.add("btn-group");
@@ -622,6 +616,8 @@ promptBox.appendChild(promptPronounWrap);
 const inputBox = document.createElement("div");
 inputBox.classList.add("input-box");
 inputBox.dataset.placeholder = t("verb_conjugation", "type_here");
+const answerBlocks = document.createElement("div");
+answerBlocks.classList.add("legacy-answer-blocks");
 const gameHints = document.createElement("div");
 gameHints.classList.add("game-hints");
 gameHints.textContent = t("verb_conjugation", "press_enter");
@@ -630,6 +626,7 @@ gameSection.appendChild(gameCounters);
 gameSection.appendChild(attemptsBadge);
 gameSection.appendChild(promptBox);
 gameSection.appendChild(inputBox);
+gameSection.appendChild(answerBlocks);
 gameSection.appendChild(gameHints);
 
 // END UI
@@ -704,6 +701,24 @@ function getSelectedVerbKeys() {
     return VERB_TOPIC_KEYS[selectedVerbTopic] || VERB_TOPIC_KEYS.basic_regular;
 }
 
+function getPronounCode(pronounData) {
+    if (pronounData.key === "p_sie_pl") return "sie_pl";
+    if (pronounData.key === "p_sie_form") return "sie_form";
+    return pronounData.de;
+}
+
+function getConjugationAnswerPool() {
+    const answers = [];
+    getSelectedVerbKeys().forEach(verbKey => {
+        const vocabularyEntry = TRANSLATIONS_VOCABULARY[verbKey];
+        if (!vocabularyEntry || !vocabularyEntry.de) return;
+        PRONOUNS.forEach(pronounData => {
+            answers.push(conjugate(vocabularyEntry.de, getPronounCode(pronounData)));
+        });
+    });
+    return answers;
+}
+
 function startGame(selectedMode) {
     mode = selectedMode;
     if (statsRunId && window.AppStats) {
@@ -723,12 +738,7 @@ function startGame(selectedMode) {
         let trans = t("vocabulary", randVerbKey);
         
         // Handle pronoun variant (e.g. sie plural or Sie formal)
-        let pronounStr = randPronoun.de;
-        if (randPronoun.key === "p_sie_pl") {
-            pronounStr = "sie_pl";
-        } else if (randPronoun.key === "p_sie_form") {
-            pronounStr = "sie_form";
-        }
+        let pronounStr = getPronounCode(randPronoun);
 
         let ans = conjugate(inf, pronounStr);
         
@@ -750,7 +760,8 @@ function startGame(selectedMode) {
             mode: selectedMode,
             params: [
                 { label: t("statistics", "questions_param"), value: queue.length },
-                { label: t("statistics", "topic_param"), value: activeTopic ? t("verb_conjugation", activeTopic.labelKey) : selectedVerbTopic }
+                { label: t("statistics", "topic_param"), value: activeTopic ? t("verb_conjugation", activeTopic.labelKey) : selectedVerbTopic },
+                { label: t("statistics", "format_param"), value: AppPracticeModes.text(practiceFormat === "BLOCKS" ? "blocks" : "typing") }
             ]
         });
     }
@@ -797,10 +808,35 @@ function renderQuestion() {
         attemptsBadge.textContent = t("verb_conjugation", "attempts_left") + attemptsLeft;
         gameHints.textContent = t("verb_conjugation", "press_enter");
     }
+
+    renderAnswerMode(q.answer);
 }
 
 function updateInputDisplay() {
     inputBox.textContent = currentInputStr;
+}
+
+function renderAnswerMode(correctAnswer) {
+    if (practiceFormat === "BLOCKS") {
+        inputBox.style.display = "none";
+        answerBlocks.style.display = "flex";
+        gameHints.innerHTML = mode === "ASSISTED"
+            ? `${AppPracticeModes.text("choose_block")} | <span style="color: var(--accent-gold); font-weight:600;">Hint: ${correctAnswer}</span>`
+            : AppPracticeModes.text("choose_block");
+        AppPracticeModes.renderAnswerBlocks(
+            answerBlocks,
+            AppPracticeModes.buildAnswerOptions(correctAnswer, getConjugationAnswerPool(), 6),
+            (answer, button) => {
+                currentInputStr = answer;
+                checkAnswer(button);
+            }
+        );
+        return;
+    }
+
+    inputBox.style.display = "flex";
+    answerBlocks.style.display = "none";
+    answerBlocks.innerHTML = "";
 }
 
 function showEndScreen() {
@@ -829,7 +865,7 @@ function showModal(title, desc, btns) {
     modalOverlay.classList.add("active");
 }
 
-function checkAnswer() {
+function checkAnswer(answerButton = null) {
     if (currentInputStr.trim() === "") return;
     isAnimating = true;
 
@@ -844,6 +880,7 @@ function checkAnswer() {
 
     if (cleanInput === cleanAnswer || normalizedInput === cleanAnswer) {
         inputBox.classList.add("correct");
+        if (answerButton) answerButton.classList.add("correct");
         setTimeout(() => {
             currentIndex++;
             attemptsLeft = 2;
@@ -852,6 +889,7 @@ function checkAnswer() {
         }, 500);
     } else {
         inputBox.classList.add("wrong");
+        if (answerButton) answerButton.classList.add("wrong");
         setTimeout(() => {
             inputBox.classList.remove("wrong");
             isAnimating = false;
@@ -888,7 +926,7 @@ function checkAnswer() {
 
 // Global Keyboard Listener
 document.addEventListener('keydown', (e) => {
-    if (gameState !== 'PLAYING' || isAnimating || modalOverlay.classList.contains("active")) return;
+    if (gameState !== 'PLAYING' || practiceFormat !== "TYPING" || isAnimating || modalOverlay.classList.contains("active")) return;
 
     if (e.key === 'Backspace') {
         currentInputStr = currentInputStr.slice(0, -1);

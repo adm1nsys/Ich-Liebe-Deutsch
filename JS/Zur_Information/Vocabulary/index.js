@@ -2033,6 +2033,7 @@ let activePersonalListId = personalState.lists[0].id;
 
 let gameState = 'RULES'; 
 let mode = 'ASSISTED'; 
+let practiceFormat = "BLOCKS"; // BLOCKS, TYPING
 let queue = [];
 let currentIndex = 0;
 let currentInputStr = "";
@@ -2289,24 +2290,14 @@ searchInput.addEventListener('input', (e) => {
 });
 
 // Settings (Repeat count)
-const settingsRow = document.createElement("div");
-settingsRow.classList.add("settings-row");
-const repeatInfo = document.createElement("div");
-repeatInfo.textContent = t("vocabulary", "repeat_info");
-const repeatSelect = document.createElement("select");
-repeatSelect.classList.add("custom-select");
-[5, 10, 15, 20].forEach(val => {
-    const opt = document.createElement("option");
-    opt.value = val; opt.textContent = val;
-    if (val === 10) opt.selected = true;
-    repeatSelect.appendChild(opt);
-});
-repeatSelect.addEventListener('change', (e) => {
-    repeatCount = parseInt(e.target.value);
-});
-settingsRow.appendChild(repeatInfo);
-settingsRow.appendChild(repeatSelect);
-rulesSection.appendChild(settingsRow);
+rulesSection.appendChild(AppPracticeModes.createCountSelector(
+    t("vocabulary", "repeat_info"),
+    repeatCount,
+    value => repeatCount = value
+));
+rulesSection.appendChild(AppPracticeModes.createFormatSelector(practiceFormat, value => {
+    practiceFormat = value;
+}));
 
 // Play Buttons
 const rulesBtnGroup = document.createElement("div");
@@ -2342,6 +2333,8 @@ questionBox.classList.add("question-box");
 const inputBox = document.createElement("div");
 inputBox.classList.add("input-box");
 inputBox.dataset.placeholder = t("vocabulary", "type_here");
+const answerBlocks = document.createElement("div");
+answerBlocks.classList.add("legacy-answer-blocks");
 const gameHints = document.createElement("div");
 gameHints.classList.add("game-hints");
 gameHints.textContent = t("vocabulary", "press_enter");
@@ -2350,6 +2343,7 @@ gameSection.appendChild(gameCounters);
 gameSection.appendChild(attemptsBadge);
 gameSection.appendChild(questionBox);
 gameSection.appendChild(inputBox);
+gameSection.appendChild(answerBlocks);
 gameSection.appendChild(gameHints);
 
 // --- END UI ---
@@ -2655,6 +2649,13 @@ function confirmDeleteCustomWord(wordKey) {
 
 let selectedWords = [];
 
+function getVocabularyAnswerPool() {
+    return [
+        ...selectedWords.map(word => word.de),
+        ...getAllWords().map(word => word.de)
+    ];
+}
+
 function prepareQueue() {
     selectedWords = [];
     document.querySelectorAll('.word-checkbox input:checked').forEach(cb => {
@@ -2709,7 +2710,8 @@ function startGame(selectedMode) {
             params: [
                 { label: t("statistics", "questions_param"), value: queue.length },
                 { label: t("statistics", "words_param"), value: selectedWords.length },
-                { label: t("statistics", "repeats_param"), value: repeatCount }
+                { label: t("statistics", "repeats_param"), value: repeatCount },
+                { label: t("statistics", "format_param"), value: AppPracticeModes.text(practiceFormat === "BLOCKS" ? "blocks" : "typing") }
             ]
         });
     }
@@ -2755,10 +2757,36 @@ function renderQuestion() {
         attemptsBadge.textContent = t("vocabulary", "attempts_left") + attemptsLeft;
         questionBox.innerHTML = nativeText;
     }
+
+    renderAnswerMode(currentW.de);
 }
 
 function updateInputDisplay() {
     inputBox.textContent = currentInputStr;
+}
+
+function renderAnswerMode(correctAnswer) {
+    if (practiceFormat === "BLOCKS") {
+        inputBox.style.display = "none";
+        answerBlocks.style.display = "flex";
+        gameHints.innerHTML = mode === "ASSISTED"
+            ? `${AppPracticeModes.text("choose_block")} | <span style="color: var(--accent-gold); font-weight:600;">Hint: ${correctAnswer}</span>`
+            : AppPracticeModes.text("choose_block");
+        AppPracticeModes.renderAnswerBlocks(
+            answerBlocks,
+            AppPracticeModes.buildAnswerOptions(correctAnswer, getVocabularyAnswerPool(), 6),
+            (answer, button) => {
+                currentInputStr = answer;
+                checkAnswer(button);
+            }
+        );
+        return;
+    }
+
+    inputBox.style.display = "flex";
+    answerBlocks.style.display = "none";
+    answerBlocks.innerHTML = "";
+    gameHints.textContent = t("vocabulary", "press_enter");
 }
 
 function showEndScreen() {
@@ -2772,7 +2800,7 @@ function showEndScreen() {
     endSection.style.display = "flex";
 }
 
-function checkAnswer() {
+function checkAnswer(answerButton = null) {
     if (currentInputStr === "") return;
     isAnimating = true;
 
@@ -2780,6 +2808,7 @@ function checkAnswer() {
     if (currentInputStr.trim() === currentW.de) {
         // Correct
         inputBox.classList.add("correct");
+        if (answerButton) answerButton.classList.add("correct");
         setTimeout(() => {
             currentIndex++;
             attemptsLeft = 2; 
@@ -2789,6 +2818,7 @@ function checkAnswer() {
     } else {
         // Incorrect
         inputBox.classList.add("wrong");
+        if (answerButton) answerButton.classList.add("wrong");
         setTimeout(() => {
             inputBox.classList.remove("wrong");
             isAnimating = false;
@@ -2825,7 +2855,7 @@ function checkAnswer() {
 
 // Global Keyboard Listener
 document.addEventListener('keydown', (e) => {
-    if (gameState !== 'PLAYING' || isAnimating || modalOverlay.classList.contains("active")) return;
+    if (gameState !== 'PLAYING' || practiceFormat !== "TYPING" || isAnimating || modalOverlay.classList.contains("active")) return;
 
     if (e.key === 'Backspace') {
         currentInputStr = currentInputStr.slice(0, -1);

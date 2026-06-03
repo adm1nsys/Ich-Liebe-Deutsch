@@ -31,6 +31,38 @@ const TRANSLATIONS_HOME = {
         da: "Andre sprog",
         uk: "Інші мови"
     },
+    "search_placeholder": {
+        en: "Search modules, rules, words...",
+        de: "Module, Regeln, Wörter suchen...",
+        cs: "Hledat moduly, pravidla, slova...",
+        pl: "Szukaj modułów, zasad, słów...",
+        da: "Søg moduler, regler, ord...",
+        uk: "Пошук модулів, правил, слів..."
+    },
+    "search_clear": {
+        en: "Clear search",
+        de: "Suche löschen",
+        cs: "Vymazat hledání",
+        pl: "Wyczyść wyszukiwanie",
+        da: "Ryd søgning",
+        uk: "Очистити пошук"
+    },
+    "search_no_results": {
+        en: "Nothing found",
+        de: "Nichts gefunden",
+        cs: "Nic nenalezeno",
+        pl: "Nic nie znaleziono",
+        da: "Intet fundet",
+        uk: "Нічого не знайдено"
+    },
+    "topic_soon": {
+        en: "Soon",
+        de: "Bald",
+        cs: "Brzy",
+        pl: "Wkrótce",
+        da: "Snart",
+        uk: "Скоро"
+    },
     "module_0_title": {
         en: "0. Zur Information",
         de: "0. Zur Information",
@@ -64,12 +96,28 @@ const TRANSLATIONS_HOME = {
         uk: "Повний список слів"
     },
     "module_1_title": {
-        en: "Module A1.1",
-        de: "Modul A1.1",
-        cs: "Modul A1.1",
-        pl: "Moduł A1.1",
-        da: "Modul A1.1",
-        uk: "Модуль A1.1"
+        en: "A1.1 Foundation",
+        de: "A1.1 Grundlage",
+        cs: "A1.1 základ",
+        pl: "A1.1 podstawa",
+        da: "A1.1 basis",
+        uk: "A1.1 база"
+    },
+    "module_2_title": {
+        en: "Sentence Builder (A1-B1+)",
+        de: "Satzbau (A1-B1+)",
+        cs: "Stavba vět (A1-B1+)",
+        pl: "Budowanie zdań (A1-B1+)",
+        da: "Sætningsbygning (A1-B1+)",
+        uk: "Побудова речень (A1-B1+)"
+    },
+    "module_3_title": {
+        en: "Articles, Cases & Pronouns (A1-B1+)",
+        de: "Artikel, Fälle & Pronomen (A1-B1+)",
+        cs: "Členy, pády a zájmena (A1-B1+)",
+        pl: "Rodzajniki, przypadki i zaimki (A1-B1+)",
+        da: "Artikler, kasus og stedord (A1-B1+)",
+        uk: "Артиклі, відмінки та займенники (A1-B1+)"
     },
     "module_1_topic_1": {
         en: "1. Pronouns",

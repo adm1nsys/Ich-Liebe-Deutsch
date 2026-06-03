@@ -543,6 +543,7 @@ const GENDER_LABEL_KEYS = {
 
 let gameState = "RULES";
 let mode = "ASSISTED";
+let practiceFormat = "BLOCKS"; // BLOCKS, TYPING
 let currentPhase = 1;
 let selectedCases = [...CASES];
 let selectedArticleType = "both";
@@ -745,26 +746,15 @@ typeSettingsRow.appendChild(typeInfo);
 typeSettingsRow.appendChild(typeGroup);
 settingsCard.appendChild(typeSettingsRow);
 
-const repeatSettingsRow = document.createElement("div");
-repeatSettingsRow.classList.add("settings-row");
-const repeatInfo = document.createElement("div");
-repeatInfo.textContent = t("articles", "count_label");
-const repeatSelect = document.createElement("select");
-repeatSelect.classList.add("custom-select");
-[5, 10, 15, 20, 30, 50].forEach(value => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = value;
-    if (value === repeatCount) option.selected = true;
-    repeatSelect.appendChild(option);
-});
-repeatSelect.addEventListener("change", (event) => {
-    repeatCount = parseInt(event.target.value);
-});
+settingsCard.appendChild(AppPracticeModes.createFormatSelector(practiceFormat, value => {
+    practiceFormat = value;
+}));
 
-repeatSettingsRow.appendChild(repeatInfo);
-repeatSettingsRow.appendChild(repeatSelect);
-settingsCard.appendChild(repeatSettingsRow);
+settingsCard.appendChild(AppPracticeModes.createCountSelector(
+    t("articles", "count_label"),
+    repeatCount,
+    value => repeatCount = value
+));
 
 const rulesBtnGroup = document.createElement("div");
 rulesBtnGroup.classList.add("btn-group");
@@ -817,6 +807,8 @@ promptBox.appendChild(promptNote);
 const inputBox = document.createElement("div");
 inputBox.classList.add("input-box");
 inputBox.dataset.placeholder = t("articles", "type_here");
+const answerBlocks = document.createElement("div");
+answerBlocks.classList.add("legacy-answer-blocks");
 
 const gameHints = document.createElement("div");
 gameHints.classList.add("game-hints");
@@ -825,6 +817,7 @@ gameSection.appendChild(gameCounters);
 gameSection.appendChild(attemptsBadge);
 gameSection.appendChild(promptBox);
 gameSection.appendChild(inputBox);
+gameSection.appendChild(answerBlocks);
 gameSection.appendChild(gameHints);
 
 const endSection = document.createElement("div");
@@ -951,7 +944,8 @@ function startGame(selectedMode) {
             params: [
                 { label: t("statistics", "questions_param"), value: queue.length },
                 { label: t("statistics", "cases_param"), value: selectedCases.map(caseName => t("articles", caseName)).join(", ") },
-                { label: t("statistics", "article_type_param"), value: articleTypeLabel }
+                { label: t("statistics", "article_type_param"), value: articleTypeLabel },
+                { label: t("statistics", "format_param"), value: AppPracticeModes.text(practiceFormat === "BLOCKS" ? "blocks" : "typing") }
             ]
         });
     }
@@ -995,10 +989,35 @@ function renderQuestion() {
         attemptsBadge.textContent = t("articles", "attempts_left") + attemptsLeft;
         gameHints.textContent = t("articles", "press_enter");
     }
+
+    renderAnswerMode(question.answer);
 }
 
 function updateInputDisplay() {
     inputBox.textContent = currentInputStr;
+}
+
+function renderAnswerMode(correctAnswer) {
+    if (practiceFormat === "BLOCKS") {
+        inputBox.style.display = "none";
+        answerBlocks.style.display = "flex";
+        gameHints.innerHTML = mode === "ASSISTED"
+            ? `${AppPracticeModes.text("choose_block")} | <span style="color: var(--accent-gold); font-weight:800;">${t("articles", "hint_label")} ${correctAnswer}</span>`
+            : AppPracticeModes.text("choose_block");
+        AppPracticeModes.renderAnswerBlocks(
+            answerBlocks,
+            AppPracticeModes.buildAnswerOptions(correctAnswer, buildQuestionPool().map(item => item.answer), 6),
+            (answer, button) => {
+                currentInputStr = answer;
+                checkAnswer(button);
+            }
+        );
+        return;
+    }
+
+    inputBox.style.display = "flex";
+    answerBlocks.style.display = "none";
+    answerBlocks.innerHTML = "";
 }
 
 function showEndScreen() {
@@ -1029,7 +1048,7 @@ function showModal(title, desc, buttons) {
     modalOverlay.classList.add("active");
 }
 
-function checkAnswer() {
+function checkAnswer(answerButton = null) {
     if (currentInputStr.trim() === "" || isAnimating) return;
 
     isAnimating = true;
@@ -1037,6 +1056,7 @@ function checkAnswer() {
 
     if (isCorrectAnswer(currentInputStr, question.answer)) {
         inputBox.classList.add("correct");
+        if (answerButton) answerButton.classList.add("correct");
         setTimeout(() => {
             currentIndex++;
             attemptsLeft = 2;
@@ -1047,6 +1067,7 @@ function checkAnswer() {
     }
 
     inputBox.classList.add("wrong");
+    if (answerButton) answerButton.classList.add("wrong");
 
     setTimeout(() => {
         inputBox.classList.remove("wrong");
@@ -1080,7 +1101,7 @@ function checkAnswer() {
 }
 
 document.addEventListener("keydown", (event) => {
-    if (gameState !== "PLAYING" || isAnimating || modalOverlay.classList.contains("active")) return;
+    if (gameState !== "PLAYING" || practiceFormat !== "TYPING" || isAnimating || modalOverlay.classList.contains("active")) return;
 
     if (event.key === "Backspace") {
         currentInputStr = currentInputStr.slice(0, -1);

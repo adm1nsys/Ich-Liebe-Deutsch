@@ -1,36 +1,92 @@
-// Constants with themes and lessons (Easy to edit)
+// Constants with groups and lessons (Easy to edit)
 const COURSE_MODULES = [
     {
-        level: t("home", "module_0_title"),
+        levelKey: "module_0_title",
         topics: [
-            t("home", "module_0_topic_1"),
-            t("home", "module_0_topic_2"),
-            t("home", "module_0_topic_3")
+            "module_0_topic_1",
+            "module_0_topic_2",
+            "module_0_topic_3"
         ]
     },
     {
-        level: t("home", "module_1_title"),
+        levelKey: "module_1_title",
         topics: [
-            t("home", "module_1_topic_1"),
-            t("home", "module_1_topic_2"),
-            t("home", "module_1_topic_3"),
-            t("home", "module_1_topic_4"),
-            t("home", "module_1_topic_5"),
-            t("home", "module_1_topic_6"),
-            t("home", "module_1_topic_7"),
-            t("home", "module_1_topic_8"),
-            t("home", "module_1_topic_12"),
-            t("home", "module_1_topic_13"),
-            t("home", "module_1_topic_14"),
-            t("home", "module_1_topic_15"),
-            t("home", "module_1_topic_16"),
-            t("home", "module_1_topic_17"),
-            t("home", "module_1_topic_18"),
-            t("home", "module_1_topic_19"),
-            t("home", "module_1_topic_20")
+            "module_1_topic_1",
+            "module_1_topic_2",
+            "module_1_topic_3",
+            "module_1_topic_19",
+            "module_1_topic_20"
+        ]
+    },
+    {
+        levelKey: "module_2_title",
+        topics: [
+            "module_1_topic_5",
+            "module_1_topic_6",
+            "module_1_topic_7",
+            "module_1_topic_8",
+            "module_1_topic_16",
+            "module_1_topic_17",
+            "module_1_topic_18"
+        ]
+    },
+    {
+        levelKey: "module_3_title",
+        topics: [
+            "module_1_topic_4",
+            "module_1_topic_15",
+            "module_1_topic_12",
+            "module_1_topic_13",
+            "module_1_topic_14"
         ]
     }
 ];
+
+const TOPIC_ROUTES = {
+    module_0_topic_1: "Alphabet",
+    module_0_topic_2: "Pronunciation",
+    module_0_topic_3: "Vocabulary",
+    module_1_topic_1: "Pronouns",
+    module_1_topic_2: "VerbConjugation",
+    module_1_topic_3: "HabenSein",
+    module_1_topic_4: "Articles",
+    module_1_topic_5: "AffirmativeSentences",
+    module_1_topic_6: "InterrogativeSentences",
+    module_1_topic_7: "QuestionWords",
+    module_1_topic_8: "Negation",
+    module_1_topic_15: "PossessivePronouns"
+};
+
+const TOPIC_SEARCH_TERMS = {
+    module_0_topic_1: "alphabet abc buchstaben алфавіт буквы літери",
+    module_0_topic_2: "pronunciation aussprache вимова произношение sound звуки",
+    module_0_topic_3: "vocabulary words wortschatz словник словарь слова lernen learned lists",
+    module_1_topic_1: "pronouns займенники местоимения ich mich mir du dich dir nominativ akkusativ dativ",
+    module_1_topic_2: "verb conjugation prasens präsens відмінювання спряжение gehen sitzen sollen mussen müssen konnen können wollen mochten möchten durfen dürfen",
+    module_1_topic_3: "haben sein ist bist bin war hat verbs дієслова глаголы",
+    module_1_topic_4: "articles artikel артиклі артикли der die das ein eine kein nominativ akkusativ dativ genitiv",
+    module_1_topic_5: "affirmative statements речення предложения tekamolo te-ka-mo-lo word order modal verbs und aber separable prefixes trennbare",
+    module_1_topic_6: "questions fragen питальні вопросы ja nein w wort word order und aber separable prefixes",
+    module_1_topic_7: "question words w words fragewort wer was wann wo wohin woher warum wieso weshalb wie viele welcher welche um wie viel",
+    module_1_topic_8: "negation заперечення отрицание nicht kein keine negative questions",
+    module_1_topic_12: "nominative nominativ називний именительный subject wer was der die das",
+    module_1_topic_13: "accusative akkusativ знахідний винительный wen was den einen",
+    module_1_topic_14: "plural множина множественное число nouns substantive die",
+    module_1_topic_15: "possessive case pronouns присвійні відмінкові mein meine dein deine unser euer ihr mich mir dich dir",
+    module_1_topic_16: "modal verbs модальні модальные sollen mussen müssen konnen können wollen mochten möchten durfen dürfen",
+    module_1_topic_17: "separable verbs trennbare відокремлювані отделяемые prefixes приставки aufstehen einkaufen",
+    module_1_topic_18: "prepositions прийменники предлоги bei mit auf in an um dativ akkusativ",
+    module_1_topic_19: "numbers time dates zahlen uhr zeit datum числа час даты год месяц день",
+    module_1_topic_20: "basic structures das ist es gibt ich mochte möchte ich hatte hätte gern phrases"
+};
+
+function normalizeSearchText(value) {
+    return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase()
+        .trim();
+}
 
 // ==========================================
 // 1. ADDING STYLES (CSS)
@@ -124,7 +180,7 @@ styleElement.textContent = `
         flex: 1;
         margin-top: 80px; 
         padding: 2rem;
-        max-width: 800px;
+        max-width: 900px;
         width: 100%;
         margin-left: auto;
         margin-right: auto;
@@ -132,14 +188,91 @@ styleElement.textContent = `
     }
 
     h1 {
-        font-size: 3.5rem;
+        font-size: clamp(2.05rem, 9vw, 3.5rem);
         font-weight: 800;
         text-align: center;
         margin-bottom: 3rem;
         background: linear-gradient(135deg, var(--accent-gold), var(--accent-red));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: -1px;
+        letter-spacing: 0;
+    }
+
+    .home-search {
+        margin: -1.2rem 0 2rem;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.85rem 1rem;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        color: var(--text-secondary);
+        box-shadow: 0 4px 6px var(--shadow-color);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .search-box:focus-within {
+        border-color: var(--accent-gold);
+        box-shadow: 0 8px 18px var(--shadow-color);
+    }
+
+    .search-box svg {
+        flex: 0 0 auto;
+    }
+
+    .search-input {
+        width: 100%;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text-primary);
+        font: inherit;
+        font-size: 1rem;
+    }
+
+    .search-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    .search-clear {
+        flex: 0 0 auto;
+        width: 2.2rem;
+        height: 2.2rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.65rem;
+        background: var(--hover-bg);
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .search-clear:hover {
+        background: var(--hover-bg-strong);
+        color: var(--text-primary);
+    }
+
+    .search-empty {
+        margin-top: 1rem;
+        color: var(--text-secondary);
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .search-clear[hidden],
+    .search-empty[hidden],
+    .accordion[hidden],
+    .topic-btn[hidden] {
+        display: none !important;
     }
 
     .accordion {
@@ -159,7 +292,7 @@ styleElement.textContent = `
 
     .accordion-header {
         padding: 1.5rem;
-        font-size: 1.25rem;
+        font-size: clamp(1rem, 4vw, 1.25rem);
         font-weight: 600;
         cursor: pointer;
         display: flex;
@@ -222,15 +355,18 @@ styleElement.textContent = `
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
     }
 
     .topic-btn::before {
         content: '';
+        flex: 0 0 auto;
         width: 8px;
         height: 8px;
         background: var(--text-secondary);
         border-radius: 50%;
-        margin-right: 1rem;
+        margin-right: 0;
         transition: background 0.4s ease;
     }
 
@@ -242,6 +378,111 @@ styleElement.textContent = `
 
     .topic-btn:hover::before {
         background: var(--accent-gold);
+    }
+
+    .topic-label {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .topic-badge {
+        flex: 0 0 auto;
+        padding: 0.25rem 0.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .topic-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.62;
+    }
+
+    .topic-btn:disabled:hover {
+        transform: none;
+        border-color: var(--border-color);
+        background: var(--hover-bg);
+    }
+
+    .topic-btn:disabled:hover::before {
+        background: var(--text-secondary);
+    }
+
+    @media (max-width: 760px) {
+        header {
+            padding: 0.75rem 1rem;
+            gap: 0.75rem;
+        }
+
+        main {
+            margin-top: 64px;
+            padding: 1rem;
+            max-width: 100%;
+        }
+
+        h1 {
+            margin: 0.75rem 0 1.5rem;
+            line-height: 1.08;
+            overflow-wrap: anywhere;
+        }
+
+        .home-search {
+            margin: 0 0 1rem;
+        }
+
+        .search-box {
+            padding: 0.7rem 0.8rem;
+            gap: 0.65rem;
+        }
+
+        .search-input {
+            font-size: 0.95rem;
+        }
+
+        .accordion {
+            border-radius: 0.75rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .accordion-header {
+            padding: 1rem;
+            line-height: 1.25;
+            gap: 0.75rem;
+        }
+
+        .accordion-header::after {
+            flex: 0 0 auto;
+            font-size: 1.45rem;
+        }
+
+        .topic-list-inner {
+            padding: 1rem;
+            gap: 0.55rem;
+        }
+
+        .topic-btn {
+            padding: 0.9rem;
+            border-radius: 0.65rem;
+            font-size: 0.95rem;
+            line-height: 1.25;
+            align-items: flex-start;
+        }
+
+        .topic-btn:hover {
+            transform: none;
+        }
+
+        .topic-label {
+            overflow-wrap: anywhere;
+        }
+
+        .topic-badge {
+            font-size: 0.68rem;
+        }
+
     }
 
     footer {
@@ -277,6 +518,18 @@ styleElement.textContent = `
 
     .footer-links a:hover {
         color: var(--text-primary);
+    }
+
+    @media (max-width: 760px) {
+        footer {
+            margin-top: 2rem;
+            padding: 1.5rem 1rem;
+        }
+
+        .footer-links {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
     }
 `;
 document.head.appendChild(styleElement);
@@ -343,14 +596,50 @@ const titleH1 = document.createElement("h1");
 titleH1.textContent = "Ich Liebe Deutsch";
 mainElement.appendChild(titleH1);
 
+const searchSection = document.createElement("section");
+searchSection.classList.add("home-search");
+
+const searchBox = document.createElement("div");
+searchBox.classList.add("search-box");
+searchBox.appendChild(createSVGIcon("M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15"));
+
+const searchInput = document.createElement("input");
+searchInput.classList.add("search-input");
+searchInput.type = "search";
+searchInput.placeholder = t("home", "search_placeholder");
+searchInput.setAttribute("aria-label", t("home", "search_placeholder"));
+
+const clearSearchBtn = document.createElement("button");
+clearSearchBtn.classList.add("search-clear");
+clearSearchBtn.type = "button";
+clearSearchBtn.title = t("home", "search_clear");
+clearSearchBtn.setAttribute("aria-label", t("home", "search_clear"));
+clearSearchBtn.hidden = true;
+clearSearchBtn.appendChild(createSVGIcon("M18 6 6 18M6 6l12 12"));
+
+searchBox.appendChild(searchInput);
+searchBox.appendChild(clearSearchBtn);
+searchSection.appendChild(searchBox);
+
+const searchEmpty = document.createElement("div");
+searchEmpty.classList.add("search-empty");
+searchEmpty.textContent = t("home", "search_no_results");
+searchEmpty.setAttribute("aria-live", "polite");
+searchEmpty.hidden = true;
+searchSection.appendChild(searchEmpty);
+mainElement.appendChild(searchSection);
+
+const renderedModules = [];
+
 // Loop over our constant to create lists
 COURSE_MODULES.forEach(module => {
+    const moduleTitle = t("home", module.levelKey);
     const accordionDiv = document.createElement("div");
     accordionDiv.classList.add("accordion");
 
     const headerDiv = document.createElement("div");
     headerDiv.classList.add("accordion-header");
-    headerDiv.textContent = module.level;
+    headerDiv.textContent = moduleTitle;
 
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("accordion-content");
@@ -361,92 +650,43 @@ COURSE_MODULES.forEach(module => {
     const topicListInnerDiv = document.createElement("div");
     topicListInnerDiv.classList.add("topic-list-inner");
 
-    module.topics.forEach(topicText => {
+    const renderedTopics = [];
+
+    module.topics.forEach(topicKey => {
+        const topicText = t("home", topicKey);
+        const route = TOPIC_ROUTES[topicKey];
         const btn = document.createElement("button");
         btn.classList.add("topic-btn");
-        btn.textContent = topicText;
+        btn.type = "button";
 
-        // Bind click for Alphabet topic
-        if (topicText === t("home", "module_0_topic_1")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=Alphabet";
-            });
-        }
+        const labelSpan = document.createElement("span");
+        labelSpan.classList.add("topic-label");
+        labelSpan.textContent = topicText;
+        btn.appendChild(labelSpan);
 
-        // Bind click for Pronunciation topic
-        if (topicText === t("home", "module_0_topic_2")) {
+        if (route) {
             btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=Pronunciation";
+                window.location.href = `index.html?page=${route}`;
             });
-        }
-
-        // Bind click for Full word list topic
-        if (topicText === t("home", "module_0_topic_3")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=Vocabulary";
-            });
-        }
-
-        // Bind click for topic 1. Pronouns
-        if (topicText === t("home", "module_1_topic_1")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=Pronouns";
-            });
-        }
-
-        // Bind click for topic 2. Verb Conjugation
-        if (topicText === t("home", "module_1_topic_2")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=VerbConjugation";
-            });
-        }
-
-        // Bind click for topic 3. Verbs haben & sein
-        if (topicText === t("home", "module_1_topic_3")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=HabenSein";
-            });
-        }
-
-        // Bind click for topic 4. Articles
-        if (topicText === t("home", "module_1_topic_4")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=Articles";
-            });
-        }
-
-        // Bind click for topic 5. Affirmative Sentences
-        if (topicText === t("home", "module_1_topic_5")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=AffirmativeSentences";
-            });
-        }
-        
-        if (topicText === t("home", "module_1_topic_6")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=InterrogativeSentences";
-            });
-        }
-
-        if (topicText === t("home", "module_1_topic_7")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=QuestionWords";
-            });
-        }
-
-        if (topicText === t("home", "module_1_topic_8")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=Negation";
-            });
-        }
-
-        if (topicText === t("home", "module_1_topic_15")) {
-            btn.addEventListener('click', () => {
-                window.location.href = "index.html?page=PossessivePronouns";
-            });
+        } else {
+            btn.disabled = true;
+            btn.title = t("home", "topic_soon");
+            const badgeSpan = document.createElement("span");
+            badgeSpan.classList.add("topic-badge");
+            badgeSpan.textContent = t("home", "topic_soon");
+            btn.appendChild(badgeSpan);
         }
 
         topicListInnerDiv.appendChild(btn);
+        renderedTopics.push({
+            button: btn,
+            searchText: normalizeSearchText([
+                moduleTitle,
+                topicText,
+                route || "",
+                TOPIC_SEARCH_TERMS[topicKey] || ""
+            ].join(" "))
+        });
     });
 
     topicListDiv.appendChild(topicListInnerDiv);
@@ -460,6 +700,42 @@ COURSE_MODULES.forEach(module => {
     });
 
     mainElement.appendChild(accordionDiv);
+    renderedModules.push({
+        accordion: accordionDiv,
+        topics: renderedTopics
+    });
+});
+
+function applyHomeSearch() {
+    const query = normalizeSearchText(searchInput.value);
+    let visibleTopicsCount = 0;
+
+    renderedModules.forEach(moduleView => {
+        let hasVisibleTopic = false;
+
+        moduleView.topics.forEach(topicView => {
+            const isMatch = !query || topicView.searchText.includes(query);
+            topicView.button.hidden = !isMatch;
+            hasVisibleTopic = hasVisibleTopic || isMatch;
+            if (isMatch) visibleTopicsCount += 1;
+        });
+
+        moduleView.accordion.hidden = !hasVisibleTopic;
+
+        if (query) {
+            moduleView.accordion.classList.toggle("open", hasVisibleTopic);
+        }
+    });
+
+    clearSearchBtn.hidden = !query;
+    searchEmpty.hidden = !query || visibleTopicsCount > 0;
+}
+
+searchInput.addEventListener("input", applyHomeSearch);
+clearSearchBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    applyHomeSearch();
+    searchInput.focus();
 });
 
 // ==========================================

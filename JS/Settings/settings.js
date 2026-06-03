@@ -143,29 +143,105 @@ styleElement.textContent = `
         gap: 0.85rem;
     }
 
-    .accent-swatch-grid {
+    .theme-color-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(2.6rem, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
+    }
+
+    .theme-panel {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .theme-preset-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.6rem;
     }
 
-    .accent-swatch {
-        min-height: 2.6rem;
+    .theme-preset-btn,
+    .theme-apply-btn {
+        background: var(--content-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.75rem 0.9rem;
+        border-radius: 0.75rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.92rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .theme-preset-btn:hover,
+    .theme-apply-btn:hover {
+        background: var(--accent-gold);
+        border-color: var(--accent-gold);
+        color: var(--accent-contrast, #000000);
+        transform: translateY(-2px);
+    }
+
+    .theme-code-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .theme-code-input,
+    .theme-code-area {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.8rem 0.9rem;
         border-radius: 0.75rem;
         border: 1px solid var(--border-color);
-        background: linear-gradient(135deg, var(--swatch-main), var(--swatch-second));
-        cursor: pointer;
-        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        background: var(--content-bg);
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .accent-swatch:hover {
-        transform: translateY(-2px);
-        border-color: var(--accent-gold);
+    .theme-code-area {
+        min-height: 8rem;
+        resize: vertical;
+        line-height: 1.45;
     }
 
-    .accent-swatch.active {
+    .theme-code-input:focus,
+    .theme-code-area:focus {
         border-color: var(--accent-gold);
-        box-shadow: 0 0 0 3px rgba(245, 175, 25, 0.22);
+        box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+
+    @media (max-width: 640px) {
+        main {
+            margin-top: 64px;
+            padding: 1rem;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 8vw, 2.4rem);
+            line-height: 1.12;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0;
+        }
+
+        .settings-block {
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+
+        .theme-color-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .theme-preset-grid {
+            grid-template-columns: 1fr;
+        }
     }
 
     .custom-select {
@@ -189,7 +265,7 @@ styleElement.textContent = `
 
     .custom-select:focus {
         border-color: var(--accent-gold);
-        box-shadow: 0 0 0 2px rgba(245, 175, 25, 0.2);
+        box-shadow: 0 0 0 2px var(--accent-soft);
     }
 
     .custom-color-input {
@@ -206,7 +282,7 @@ styleElement.textContent = `
 
     .custom-color-input:focus {
         border-color: var(--accent-gold);
-        box-shadow: 0 0 0 2px rgba(245, 175, 25, 0.2);
+        box-shadow: 0 0 0 2px var(--accent-soft);
     }
 
     .danger-btn {
@@ -317,9 +393,29 @@ settingsBlock.appendChild(langSelect);
 
 // --- Design selector ---
 const themeSettings = window.AppTheme ? window.AppTheme.getSettings() : {
-    mode: "classic",
-    accent: "current",
-    customColor: "#f5af19"
+    mode: "oled",
+    customColor: "#f5af19",
+    colorTheme: {
+        bg: "#101827",
+        surface: "#172033",
+        text: "#f8fafc",
+        accent: "#38bdf8"
+    },
+    customTheme: {
+        bg: "#000000",
+        surface: "#080808",
+        text: "#ffffff",
+        secondary: "#d4d4d4",
+        accent: "#ffffff",
+        accent2: "#cfcfcf",
+        green: "#f5f5f5",
+        border: "rgba(255, 255, 255, 0.26)",
+        header: "rgba(0, 0, 0, 0.92)",
+        hover: "rgba(255, 255, 255, 0.12)",
+        content: "rgba(255, 255, 255, 0.055)"
+    },
+    customCss: "",
+    customJs: ""
 };
 
 const designLabel = document.createElement("label");
@@ -338,9 +434,9 @@ themeModeSelect.id = "themeModeSelect";
 themeModeSelect.classList.add("custom-select");
 
 [
-    { value: "classic", label: "design_classic" },
-    { value: "mono", label: "design_mono" },
-    { value: "accent", label: "design_accent" },
+    { value: "oled", label: "design_oled" },
+    { value: "color", label: "design_color" },
+    { value: "reui", label: "design_reui" },
     { value: "custom", label: "design_custom" }
 ].forEach((optionData) => {
     const option = document.createElement("option");
@@ -358,93 +454,218 @@ themeModeRow.appendChild(themeModeSelect);
 const themeExtraControls = document.createElement("div");
 themeExtraControls.classList.add("theme-extra-controls");
 
-const accentRow = document.createElement("div");
-accentRow.classList.add("settings-control-row");
+function createPresetGroup(labelKey, presets, onSelect) {
+    const panel = document.createElement("div");
+    panel.classList.add("settings-control-row");
 
-const accentLabel = document.createElement("span");
-accentLabel.classList.add("settings-sub-label");
-accentLabel.textContent = t("settings", "accent_color_label");
+    const label = document.createElement("span");
+    label.classList.add("settings-sub-label");
+    label.textContent = t("settings", labelKey);
 
-const accentSelect = document.createElement("select");
-accentSelect.id = "themeAccentSelect";
-accentSelect.classList.add("custom-select");
+    const grid = document.createElement("div");
+    grid.classList.add("theme-preset-grid");
 
-const accentOptions = [
-    { value: "current", label: "accent_current" },
-    { value: "blue", label: "accent_blue" },
-    { value: "green", label: "accent_green" },
-    { value: "purple", label: "accent_purple" },
-    { value: "rose", label: "accent_rose" },
-    { value: "cyan", label: "accent_cyan" }
-];
+    Object.entries(presets || {}).forEach(([key, preset]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add("theme-preset-btn");
+        button.textContent = preset.label || key;
+        button.addEventListener("click", () => onSelect(key, preset));
+        grid.appendChild(button);
+    });
 
-accentOptions.forEach((optionData) => {
-    const option = document.createElement("option");
-    option.value = optionData.value;
-    option.textContent = t("settings", optionData.label);
-    if (themeSettings.accent === optionData.value) {
-        option.selected = true;
+    panel.appendChild(label);
+    panel.appendChild(grid);
+    return panel;
+}
+
+function createColorField(labelKey, value, onInput) {
+    const field = document.createElement("label");
+    field.classList.add("settings-control-row");
+
+    const fieldLabel = document.createElement("span");
+    fieldLabel.classList.add("settings-sub-label");
+    fieldLabel.textContent = t("settings", labelKey);
+
+    const input = document.createElement("input");
+    input.classList.add("custom-color-input");
+    input.type = "color";
+    input.value = value;
+    input.addEventListener("input", (event) => {
+        onInput(event.target.value, input);
+    });
+
+    field.appendChild(fieldLabel);
+    field.appendChild(input);
+
+    return { field, input };
+}
+
+function createCodeField(labelKey, value, onChange, isArea = false) {
+    const field = document.createElement("label");
+    field.classList.add("settings-control-row");
+
+    const fieldLabel = document.createElement("span");
+    fieldLabel.classList.add("settings-sub-label");
+    fieldLabel.textContent = t("settings", labelKey);
+
+    const input = isArea ? document.createElement("textarea") : document.createElement("input");
+    input.classList.add(isArea ? "theme-code-area" : "theme-code-input");
+    if (!isArea) input.type = "text";
+    input.value = value || "";
+    input.spellcheck = false;
+    input.placeholder = isArea ? "" : "#000000 / rgba(...) / linear-gradient(...)";
+    input.addEventListener("change", (event) => onChange(event.target.value, input));
+
+    field.appendChild(fieldLabel);
+    field.appendChild(input);
+    return { field, input };
+}
+
+const colorThemeValues = {
+    ...(window.AppTheme ? window.AppTheme.defaultColorTheme : themeSettings.colorTheme),
+    ...themeSettings.colorTheme
+};
+const colorPanel = document.createElement("div");
+colorPanel.classList.add("theme-panel");
+const colorInputs = {};
+const colorThemeGrid = document.createElement("div");
+colorThemeGrid.classList.add("theme-color-grid");
+
+function setColorThemeValue(key, value) {
+    colorThemeValues[key] = value;
+    if (window.AppTheme) {
+        window.AppTheme.setColorTheme(colorThemeValues);
     }
-    accentSelect.appendChild(option);
-});
+}
 
-const accentSwatchGrid = document.createElement("div");
-accentSwatchGrid.classList.add("accent-swatch-grid");
-
-function updateAccentSwatches() {
-    accentSwatchGrid.querySelectorAll(".accent-swatch").forEach((button) => {
-        button.classList.toggle("active", button.dataset.accent === accentSelect.value);
+function syncColorInputs() {
+    Object.entries(colorInputs).forEach(([key, input]) => {
+        input.value = colorThemeValues[key];
     });
 }
 
-accentOptions.forEach((optionData) => {
-    const palette = window.AppTheme && window.AppTheme.palettes
-        ? window.AppTheme.palettes[optionData.value]
-        : null;
-    const swatchButton = document.createElement("button");
-    swatchButton.type = "button";
-    swatchButton.classList.add("accent-swatch");
-    swatchButton.dataset.accent = optionData.value;
-    swatchButton.title = t("settings", optionData.label);
-    swatchButton.setAttribute("aria-label", t("settings", optionData.label));
-    swatchButton.style.setProperty("--swatch-main", palette ? palette.gold : "#f5af19");
-    swatchButton.style.setProperty("--swatch-second", palette ? palette.red : "#ff4b2b");
-    swatchButton.addEventListener("click", () => {
-        accentSelect.value = optionData.value;
-        if (window.AppTheme) {
-            window.AppTheme.setAccent(optionData.value);
-        }
-        updateAccentSwatches();
+[
+    { key: "bg", label: "color_bg_label" },
+    { key: "surface", label: "color_surface_label" },
+    { key: "text", label: "color_text_label" },
+    { key: "accent", label: "accent_color_label" }
+].forEach((item) => {
+    const control = createColorField(item.label, colorThemeValues[item.key], (value) => {
+        setColorThemeValue(item.key, value);
     });
-    accentSwatchGrid.appendChild(swatchButton);
+    colorInputs[item.key] = control.input;
+    colorThemeGrid.appendChild(control.field);
 });
 
-accentRow.appendChild(accentLabel);
-accentRow.appendChild(accentSelect);
-accentRow.appendChild(accentSwatchGrid);
+const colorPresetGroup = createPresetGroup(
+    "color_presets_label",
+    window.AppTheme ? window.AppTheme.colorPresets : {},
+    (key, preset) => {
+        Object.assign(colorThemeValues, preset.values);
+        syncColorInputs();
+        if (window.AppTheme) {
+            window.AppTheme.setColorPreset(key);
+        }
+    }
+);
 
-const customColorRow = document.createElement("div");
-customColorRow.classList.add("settings-control-row");
+colorPanel.appendChild(colorPresetGroup);
+colorPanel.appendChild(colorThemeGrid);
 
-const customColorLabel = document.createElement("span");
-customColorLabel.classList.add("settings-sub-label");
-customColorLabel.textContent = t("settings", "custom_color_label");
+const reUiAccentControl = createColorField("reui_accent_label", themeSettings.customColor, (value) => {
+    if (window.AppTheme) {
+        window.AppTheme.setCustomColor(value);
+    }
+});
 
-const customColorInput = document.createElement("input");
-customColorInput.id = "themeCustomColorInput";
-customColorInput.classList.add("custom-color-input");
-customColorInput.type = "color";
-customColorInput.value = themeSettings.customColor;
+const customThemeValues = {
+    ...(window.AppTheme ? window.AppTheme.defaultCustomTheme : themeSettings.customTheme),
+    ...themeSettings.customTheme
+};
+const customPanel = document.createElement("div");
+customPanel.classList.add("theme-panel");
+const customInputs = {};
+const customThemeGrid = document.createElement("div");
+customThemeGrid.classList.add("theme-code-grid");
 
-customColorRow.appendChild(customColorLabel);
-customColorRow.appendChild(customColorInput);
+function setCustomThemeValue(key, value) {
+    customThemeValues[key] = value;
+    if (window.AppTheme) {
+        window.AppTheme.setCustomTheme(customThemeValues);
+    }
+}
 
-themeExtraControls.appendChild(accentRow);
-themeExtraControls.appendChild(customColorRow);
+function syncCustomInputs() {
+    Object.entries(customInputs).forEach(([key, input]) => {
+        input.value = customThemeValues[key];
+    });
+}
+
+[
+    { key: "bg", label: "color_bg_label" },
+    { key: "surface", label: "color_surface_label" },
+    { key: "text", label: "color_text_label" },
+    { key: "secondary", label: "custom_text_secondary_label" },
+    { key: "accent", label: "accent_color_label" },
+    { key: "accent2", label: "custom_accent2_label" },
+    { key: "green", label: "custom_green_label" },
+    { key: "border", label: "custom_border_label" },
+    { key: "header", label: "custom_header_label" },
+    { key: "hover", label: "custom_hover_label" },
+    { key: "content", label: "custom_content_label" }
+].forEach((item) => {
+    const control = createCodeField(item.label, customThemeValues[item.key], (value) => {
+        setCustomThemeValue(item.key, value);
+    });
+    customInputs[item.key] = control.input;
+    customThemeGrid.appendChild(control.field);
+});
+
+const customPresetGroup = createPresetGroup(
+    "custom_presets_label",
+    window.AppTheme ? window.AppTheme.customPresets : {},
+    (key, preset) => {
+        Object.assign(customThemeValues, preset.values);
+        syncCustomInputs();
+        customCssControl.input.value = preset.css || "";
+        customJsControl.input.value = preset.js || "";
+        if (window.AppTheme) {
+            window.AppTheme.setCustomPreset(key);
+        }
+    }
+);
+
+const customCssControl = createCodeField("custom_css_label", themeSettings.customCss, () => {}, true);
+const customJsControl = createCodeField("custom_js_label", themeSettings.customJs, () => {}, true);
+
+const customCodeApplyBtn = document.createElement("button");
+customCodeApplyBtn.type = "button";
+customCodeApplyBtn.classList.add("theme-apply-btn");
+customCodeApplyBtn.textContent = t("settings", "custom_code_apply");
+customCodeApplyBtn.addEventListener("click", () => {
+    if (window.AppTheme) {
+        window.AppTheme.setCustomCode({
+            css: customCssControl.input.value,
+            js: customJsControl.input.value
+        });
+    }
+});
+
+customPanel.appendChild(customPresetGroup);
+customPanel.appendChild(customThemeGrid);
+customPanel.appendChild(customCssControl.field);
+customPanel.appendChild(customJsControl.field);
+customPanel.appendChild(customCodeApplyBtn);
+
+themeExtraControls.appendChild(colorPanel);
+themeExtraControls.appendChild(reUiAccentControl.field);
+themeExtraControls.appendChild(customPanel);
 
 function updateThemeControls() {
-    accentRow.style.display = themeModeSelect.value === "accent" ? "grid" : "none";
-    customColorRow.style.display = themeModeSelect.value === "custom" ? "grid" : "none";
+    colorPanel.style.display = themeModeSelect.value === "color" ? "grid" : "none";
+    reUiAccentControl.field.style.display = themeModeSelect.value === "reui" ? "grid" : "none";
+    customPanel.style.display = themeModeSelect.value === "custom" ? "grid" : "none";
 }
 
 themeModeSelect.addEventListener("change", (event) => {
@@ -454,21 +675,7 @@ themeModeSelect.addEventListener("change", (event) => {
     updateThemeControls();
 });
 
-accentSelect.addEventListener("change", (event) => {
-    if (window.AppTheme) {
-        window.AppTheme.setAccent(event.target.value);
-    }
-    updateAccentSwatches();
-});
-
-customColorInput.addEventListener("input", (event) => {
-    if (window.AppTheme) {
-        window.AppTheme.setCustomColor(event.target.value);
-    }
-});
-
 updateThemeControls();
-updateAccentSwatches();
 
 settingsBlock.appendChild(designLabel);
 settingsBlock.appendChild(themeModeRow);

@@ -923,13 +923,11 @@ createSettingGroup("settings_format", [
     { val: "TYPING", labelKey: "format_typing" }
 ], practiceFormat, value => practiceFormat = value);
 
-createSettingGroup("settings_count", [
-    { val: 5, label: "5" },
-    { val: 10, label: "10" },
-    { val: 15, label: "15" },
-    { val: 20, label: "20" },
-    { val: 50, label: "50" }
-], practiceCount, value => practiceCount = value);
+rulesSection.appendChild(AppPracticeModes.createCountSelector(
+    t("question_words", "settings_count"),
+    practiceCount,
+    value => practiceCount = value
+));
 
 const actionGroup = document.createElement("div");
 actionGroup.classList.add("action-group");

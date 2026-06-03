@@ -31,37 +31,37 @@ const TRANSLATIONS_SETTINGS = {
         da: "Tema",
         uk: "Тема"
     },
-    "design_classic": {
-        en: "Current design",
-        de: "Aktuelles Design",
-        cs: "Současný vzhled",
-        pl: "Obecny wygląd",
-        da: "Nuværende design",
-        uk: "Поточний дизайн"
+    "design_oled": {
+        en: "Oled",
+        de: "Oled",
+        cs: "Oled",
+        pl: "Oled",
+        da: "Oled",
+        uk: "Oled"
     },
-    "design_mono": {
-        en: "Black and white",
-        de: "Schwarz-Weiß",
-        cs: "Černobílý",
-        pl: "Czarno-biały",
-        da: "Sort-hvid",
-        uk: "Чорно-білий"
+    "design_color": {
+        en: "Color",
+        de: "Farbe",
+        cs: "Barva",
+        pl: "Kolor",
+        da: "Farve",
+        uk: "Колір"
     },
-    "design_accent": {
-        en: "Color accent",
-        de: "Farblicher Akzent",
-        cs: "Barevný akcent",
-        pl: "Akcent kolorystyczny",
-        da: "Farveaccent",
-        uk: "Кольоровий акцент"
+    "design_reui": {
+        en: "RE Ui",
+        de: "RE Ui",
+        cs: "RE Ui",
+        pl: "RE Ui",
+        da: "RE Ui",
+        uk: "RE Ui"
     },
     "design_custom": {
-        en: "Custom color",
-        de: "Eigene Farbe",
-        cs: "Vlastní barva",
-        pl: "Własny kolor",
-        da: "Egen farve",
-        uk: "Свій колір"
+        en: "Custom",
+        de: "Benutzerdefiniert",
+        cs: "Vlastní",
+        pl: "Własny",
+        da: "Brugerdefineret",
+        uk: "Своя тема"
     },
     "accent_color_label": {
         en: "Accent color",
@@ -79,53 +79,133 @@ const TRANSLATIONS_SETTINGS = {
         da: "Egen accent",
         uk: "Свій акцент"
     },
-    "accent_current": {
-        en: "Gold and red",
-        de: "Gold und Rot",
-        cs: "Zlatá a červená",
-        pl: "Złoty i czerwony",
-        da: "Guld og rød",
-        uk: "Золотий і червоний"
+    "reui_accent_label": {
+        en: "RE Ui accent",
+        de: "RE Ui-Akzent",
+        cs: "RE Ui akcent",
+        pl: "Akcent RE Ui",
+        da: "RE Ui-accent",
+        uk: "Акцент RE Ui"
     },
-    "accent_blue": {
-        en: "Blue",
-        de: "Blau",
-        cs: "Modrá",
-        pl: "Niebieski",
-        da: "Blå",
-        uk: "Синій"
+    "color_bg_label": {
+        en: "Background",
+        de: "Hintergrund",
+        cs: "Pozadí",
+        pl: "Tło",
+        da: "Baggrund",
+        uk: "Фон"
     },
-    "accent_green": {
-        en: "Green",
-        de: "Grün",
-        cs: "Zelená",
-        pl: "Zielony",
-        da: "Grøn",
-        uk: "Зелений"
+    "color_surface_label": {
+        en: "Surface",
+        de: "Fläche",
+        cs: "Plocha",
+        pl: "Powierzchnia",
+        da: "Flade",
+        uk: "Поверхня"
     },
-    "accent_purple": {
-        en: "Purple",
-        de: "Lila",
-        cs: "Fialová",
-        pl: "Fioletowy",
-        da: "Lilla",
-        uk: "Фіолетовий"
+    "color_text_label": {
+        en: "Text",
+        de: "Text",
+        cs: "Text",
+        pl: "Tekst",
+        da: "Tekst",
+        uk: "Текст"
     },
-    "accent_rose": {
-        en: "Rose",
-        de: "Rosa",
-        cs: "Růžová",
-        pl: "Różany",
-        da: "Rosa",
-        uk: "Рожевий"
+    "custom_text_secondary_label": {
+        en: "Secondary text",
+        de: "Sekundärer Text",
+        cs: "Vedlejší text",
+        pl: "Tekst drugorzędny",
+        da: "Sekundær tekst",
+        uk: "Другорядний текст"
     },
-    "accent_cyan": {
-        en: "Cyan",
-        de: "Cyan",
-        cs: "Tyrkysová",
-        pl: "Cyjan",
-        da: "Cyan",
-        uk: "Бірюзовий"
+    "custom_accent2_label": {
+        en: "Second accent",
+        de: "Zweiter Akzent",
+        cs: "Druhý akcent",
+        pl: "Drugi akcent",
+        da: "Anden accent",
+        uk: "Другий акцент"
+    },
+    "custom_green_label": {
+        en: "Success color",
+        de: "Erfolgsfarbe",
+        cs: "Barva úspěchu",
+        pl: "Kolor sukcesu",
+        da: "Succesfarve",
+        uk: "Колір успіху"
+    },
+    "custom_border_label": {
+        en: "Borders",
+        de: "Rahmen",
+        cs: "Okraje",
+        pl: "Obramowania",
+        da: "Kanter",
+        uk: "Обводки"
+    },
+    "custom_header_label": {
+        en: "Header",
+        de: "Kopfzeile",
+        cs: "Záhlaví",
+        pl: "Nagłówek",
+        da: "Header",
+        uk: "Шапка"
+    },
+    "custom_hover_label": {
+        en: "Hover",
+        de: "Hover",
+        cs: "Hover",
+        pl: "Hover",
+        da: "Hover",
+        uk: "Hover"
+    },
+    "custom_content_label": {
+        en: "Content panels",
+        de: "Inhaltsflächen",
+        cs: "Obsahové panely",
+        pl: "Panele treści",
+        da: "Indholdspaneler",
+        uk: "Контентні блоки"
+    },
+    "color_presets_label": {
+        en: "Color presets",
+        de: "Farbvorlagen",
+        cs: "Barevné presety",
+        pl: "Presety kolorów",
+        da: "Farveforvalg",
+        uk: "Колірні пресети"
+    },
+    "custom_presets_label": {
+        en: "Custom presets",
+        de: "Eigene Vorlagen",
+        cs: "Vlastní presety",
+        pl: "Własne presety",
+        da: "Egne forvalg",
+        uk: "Пресети своєї теми"
+    },
+    "custom_css_label": {
+        en: "Custom CSS",
+        de: "Eigenes CSS",
+        cs: "Vlastní CSS",
+        pl: "Własny CSS",
+        da: "Egen CSS",
+        uk: "Свій CSS"
+    },
+    "custom_js_label": {
+        en: "Custom JS",
+        de: "Eigenes JS",
+        cs: "Vlastní JS",
+        pl: "Własny JS",
+        da: "Egen JS",
+        uk: "Свій JS"
+    },
+    "custom_code_apply": {
+        en: "Apply Custom Code",
+        de: "Eigenen Code anwenden",
+        cs: "Použít vlastní kód",
+        pl: "Zastosuj własny kod",
+        da: "Anvend egen kode",
+        uk: "Застосувати свій код"
     },
     "clear_data_btn": {
         en: "Clear User Data",
