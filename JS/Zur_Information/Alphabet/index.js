@@ -230,7 +230,7 @@ const ALPHABET = [
     { letter: "Ä ä", pron: t("alphabet", "ae_pron") },
     { letter: "Ö ö", pron: t("alphabet", "oe_pron") },
     { letter: "Ü ü", pron: t("alphabet", "ue_pron") },
-    { letter: "ß", pron: t("alphabet", "ss_pron") }
+    { letter: "ẞ ß", pron: t("alphabet", "ss_pron") }
 ];
 
 ALPHABET.forEach(item => {

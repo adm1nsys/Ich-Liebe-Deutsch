@@ -879,14 +879,10 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .task-card {
                 position: relative;
                 overflow: hidden;
-                                   // background:
-                    //linear-gradient(145deg, rgba(255,255,255,0.076), rgba(255,255,255,0.024) 46%, rgba(0,0,0,0.12)) padding-box,
-                                 //       linear-gradient(128deg, rgba(255,255,255,0.42), ${alpha(rim, 0.42)} 28%, rgba(255,255,255,0.07) 55%, ${alpha(rim2, 0.36)} 78%, rgba(255,255,255,0.20)) border-box !important;
+                background: transparent !important;
                 border: 1px solid transparent !important;
-                box-shadow:
-                    inset 0 1px 0 rgba(255,255,255,0.115),
-                    inset 0 -1px 0 rgba(0,0,0,0.36),
-                    0 18px 42px rgba(0,0,0,0.36) !important;
+                border-image: linear-gradient(128deg, rgba(255,255,255,0.38), ${alpha(rim, 0.40)} 30%, rgba(255,255,255,0.055) 58%, ${alpha(rim2, 0.30)} 82%, rgba(255,255,255,0.14)) 1 !important;
+                box-shadow: none !important;
             }
 
             .settings-block::after,
@@ -903,18 +899,14 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .modal-content::after,
             .modal-card::after,
             .task-card::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                pointer-events: none;
-                background: linear-gradient(118deg, rgba(255,255,255,0.10), transparent 30%, rgba(255,255,255,0.035) 62%, transparent);
-                opacity: 0.86;
+                display: none !important;
             }
 
             header {
                 background: none;
                 border-bottom: 1px solid transparent !important;
-                box-shadow: 0 14px 34px rgba(0,0,0,0.30);
+                border-image: linear-gradient(90deg, rgba(255,255,255,0.08), ${alpha(rim, 0.25)}, rgba(255,255,255,0.05)) 1 !important;
+                box-shadow: none !important;
                 backdrop-filter: blur(18px) saturate(1.18);
                 -webkit-backdrop-filter: blur(18px) saturate(1.18);
             }
@@ -922,28 +914,31 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .icon-btn {
                 position: relative;
                 isolation: isolate;
-                color: #eef2f8 !important;
-                border: 1px solid transparent !important;
+                color: rgba(255, 255, 255, 0.72) !important;
+                border: none !important;
                 background: none;
-                box-shadow:
-                    inset 0 1px 0 rgba(255,255,255,0.20),
-                    inset 0 -7px 12px rgba(0,0,0,0.28),
-                    0 10px 24px rgba(0,0,0,0.36) !important;
+                box-shadow: none !important;
             }
 
             .icon-btn:hover {
-                color: #ffffff !important;
+                color: rgba(255, 255, 255, 0.92) !important;
                 background: none;
+                box-shadow: none !important;
             }
 
             .icon-btn svg,
             header svg,
             .search-box svg {
+                stroke: url(#reui-icon-gradient) !important;
                 stroke-width: 2.65px;
-                filter:
-                    drop-shadow(0 1px 0 rgba(255,255,255,0.22))
-                    drop-shadow(0 7px 12px rgba(0,0,0,0.34));
-                opacity: 0.98;
+                filter: none !important;
+                opacity: 0.92;
+            }
+
+            .icon-btn svg *,
+            header svg *,
+            .search-box svg * {
+                stroke: url(#reui-icon-gradient) !important;
             }
 
             .btn-primary,
@@ -970,14 +965,13 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .modal-input,
             .search-input {
                 border: 1px solid transparent !important;
-                //background:
-                //    linear-gradient(145deg, rgba(255,255,255,0.074), rgba(255,255,255,0.026)) padding-box,
-                //    linear-gradient(130deg, rgba(255,255,255,0.30), ${alpha(rim, 0.24)}, rgba(255,255,255,0.075)) border-box !important;
-                
+                border-image: linear-gradient(130deg, rgba(255,255,255,0.26), ${alpha(rim, 0.22)}, rgba(255,255,255,0.055)) 1 !important;
+                background: transparent !important;
+                box-shadow: none !important;
             }
 
             .accordion-content {
-                background: linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012)) !important;
+                background: transparent !important;
             }
 
             .btn-primary,
@@ -986,14 +980,11 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .practice-count-btn.active,
             .topic-btn.active,
             .mode-btn.active {
-                background:
-                    linear-gradient(145deg, #1d202a, #080a10) padding-box,
-                    linear-gradient(135deg, rgba(255,255,255,0.40), ${alpha(rim, 0.50)}, rgba(255,255,255,0.12)) border-box !important;
+                background: ${darkAccent} !important;
+                border: 1px solid transparent !important;
+                border-image: linear-gradient(135deg, rgba(255,255,255,0.34), ${alpha(rim, 0.50)}, rgba(255,255,255,0.10)) 1 !important;
                 color: #f8fafc !important;
-                box-shadow:
-                    inset 0 1px 0 rgba(255,255,255,0.18),
-                    inset 0 -8px 12px rgba(0,0,0,0.24),
-                    0 12px 28px rgba(0,0,0,0.34) !important;
+                box-shadow: none !important;
             }
 
             .btn-secondary:hover,
@@ -1006,18 +997,34 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .mini-action:hover,
             .theme-preset-btn:hover,
             .theme-apply-btn:hover {
-                background:
-                    linear-gradient(145deg, #212530, #0b0d13) padding-box,
-                    linear-gradient(135deg, rgba(255,255,255,0.46), ${alpha(rim, 0.58)}, rgba(255,255,255,0.12)) border-box !important;
+                background: rgba(255, 255, 255, 0.055) !important;
+                border-image: linear-gradient(135deg, rgba(255,255,255,0.34), ${alpha(rim, 0.48)}, rgba(255,255,255,0.08)) 1 !important;
                 color: #f8fafc !important;
-                transform: translateY(-2px);
+                box-shadow: none !important;
+                transform: none !important;
             }
 
             .comparison-table th {
-                background:
-                    linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.035)) padding-box,
-                    linear-gradient(130deg, rgba(255,255,255,0.28), ${alpha(rim, 0.26)}, rgba(255,255,255,0.08)) border-box !important;
-                border-color: transparent !important;
+                background: transparent !important;
+                border: 1px solid transparent !important;
+                border-image: linear-gradient(130deg, rgba(255,255,255,0.26), ${alpha(rim, 0.22)}, rgba(255,255,255,0.055)) 1 !important;
+                box-shadow: none !important;
+            }
+
+            .custom-select,
+            .custom-color-input,
+            .theme-code-input,
+            .theme-code-area,
+            .typing-input,
+            .modal-input,
+            .search-input,
+            input,
+            textarea,
+            select {
+                border: none !important;
+                box-shadow: none !important;
+                outline: none !important;
+                background: transparent !important;
             }
 
             .input-box,
@@ -1034,10 +1041,7 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
             .settings-card:hover,
             .table-card:hover {
                 border-color: transparent !important;
-                box-shadow:
-                    inset 0 1px 0 rgba(255,255,255,0.16),
-                    inset 0 -1px 0 rgba(0,0,0,0.40),
-                    0 22px 48px rgba(0,0,0,0.42) !important;
+                box-shadow: none !important;
             }
         `;
     }
@@ -1069,6 +1073,28 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
         document.documentElement.removeAttribute("data-glass-engine");
     }
 
+    function ensureReUiIconGradient() {
+        if (!document.body || document.getElementById("reui-icon-gradient-svg")) return;
+
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.id = "reui-icon-gradient-svg";
+        svg.setAttribute("data-theme-artifact", "reui");
+        svg.setAttribute("width", "0");
+        svg.setAttribute("height", "0");
+        svg.style.position = "fixed";
+        svg.style.pointerEvents = "none";
+        svg.innerHTML = `
+            <defs>
+                <linearGradient id="reui-icon-gradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="rgba(255,255,255,0.72)" />
+                    <stop offset="52%" stop-color="rgba(255,255,255,0.22)" />
+                    <stop offset="100%" stop-color="rgba(255,255,255,0.04)" />
+                </linearGradient>
+            </defs>
+        `;
+        document.body.appendChild(svg);
+    }
+
     function runCustomJs(settings) {
         const code = settings.mode === "custom" ? settings.customJs.trim() : "";
         if (!code) {
@@ -1098,6 +1124,9 @@ html[data-glass-engine="webgl"] .liquid-webgl-canvas {
         styleElement.textContent = buildThemeCss(settings);
         document.head.appendChild(styleElement);
         runCustomJs(settings);
+        if (settings.mode === "reui") {
+            ensureReUiIconGradient();
+        }
     }
 
     function setMode(mode) {

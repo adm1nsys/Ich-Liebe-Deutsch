@@ -626,7 +626,7 @@ const VOCAB = {
         { de: "einen Kaffee", uk: "каву" },
         { de: "einen Tee", uk: "чай" },
         { de: "einen Saft", uk: "сік" },
-        { de: "eine Milch", uk: "молоко" },
+        { de: "Milch", uk: "молоко" },
         { de: "Wasser", uk: "воду" },
         { de: "eine Suppe", uk: "суп" },
         { de: "einen Kuchen", uk: "пиріг" },
@@ -953,7 +953,7 @@ function buildFoodSentence(forcedSubj = null) {
     let food = getRandom(VOCAB.foodItems);
     
     if (v.infinitive === "trinken") {
-        food = getRandom([{ de: "einen Kaffee", uk: "каву" }, { de: "einen Tee", uk: "чай" }, { de: "einen Saft", uk: "сік" }, { de: "eine Milch", uk: "молоко" }, { de: "Wasser", uk: "воду" }]);
+        food = getRandom([{ de: "einen Kaffee", uk: "каву" }, { de: "einen Tee", uk: "чай" }, { de: "einen Saft", uk: "сік" }, { de: "Milch", uk: "молоко" }, { de: "Wasser", uk: "воду" }]);
     } else if (v.infinitive === "essen") {
         food = getRandom([{ de: "eine Pizza", uk: "піцу" }, { de: "ein Brot", uk: "хліб" }, { de: "einen Apfel", uk: "яблуко" }, { de: "eine Suppe", uk: "суп" }]);
     }

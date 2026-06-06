@@ -40,6 +40,15 @@ switch (PAGE_NAME) {
     case "Vocabulary":
         sync_load('JS/Zur_Information/Vocabulary/index.js');
         break;
+    case "VhsLesson1":
+    case "VhsLesson2":
+    case "VhsLesson3":
+    case "VhsLesson4":
+    case "VhsLesson5":
+    case "VhsLesson6":
+    case "VhsLesson7":
+        sync_load('JS/A1_1/TopicPractice/index.js');
+        break;
     case "Pronouns":
         sync_load('JS/A1_1/Pronouns/index.js');
         break;
@@ -63,6 +72,16 @@ switch (PAGE_NAME) {
         break;
     case "Negation":
         sync_load('JS/A1_1/Negation/index.js');
+        break;
+    case "NominativeCase":
+    case "AccusativeCase":
+    case "PluralNouns":
+    case "ModalVerbs":
+    case "SeparableVerbs":
+    case "BasicPrepositions":
+    case "NumbersTimeDates":
+    case "BasicStructures":
+        sync_load('JS/A1_1/TopicPractice/index.js');
         break;
     case "PossessivePronouns":
         sync_load('JS/A1_1/PossessivePronouns/index.js');

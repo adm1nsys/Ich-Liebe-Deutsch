@@ -15,14 +15,6 @@ const TRANSLATIONS_HOME = {
         da: "Indstillinger",
         uk: "Налаштування"
     },
-    "footer_note": {
-        en: "Note: Website is optimized for PC only",
-        de: "Hinweis: Die Website ist nur für den PC optimiert",
-        cs: "Poznámka: Web je optimalizován pouze pro PC",
-        pl: "Uwaga: Strona jest zoptymalizowana tylko dla PC",
-        da: "Bemærk: Webstedet er kun optimeret til pc",
-        uk: "Примітка: Сайт оптимізовано лише для ПК"
-    },
     "other_languages": {
         en: "Another languages",
         de: "Andere Sprachen",
@@ -254,5 +246,69 @@ const TRANSLATIONS_HOME = {
         pl: "17. Podstawowe zwroty: das ist / es gibt / ich möchte / ich hätte gern",
         da: "17. Grundlæggende strukturer: das ist / es gibt / ich möchte / ich hätte gern",
         uk: "17. Базові конструкції: das ist / es gibt / ich möchte / ich hätte gern"
+    },
+    "module_vhs_title": {
+        en: "VHS: Schritt für Schritt 1",
+        de: "VHS: Schritt für Schritt 1",
+        cs: "VHS: Schritt für Schritt 1",
+        pl: "VHS: Schritt für Schritt 1",
+        da: "VHS: Schritt für Schritt 1",
+        uk: "VHS: Schritt für Schritt 1"
+    },
+    "vhs_lesson_1": {
+        en: "Lektion 1. Guten Tag. Mein Name ist ...",
+        de: "Lektion 1. Guten Tag. Mein Name ist ...",
+        cs: "Lekce 1. Guten Tag. Mein Name ist ...",
+        pl: "Lekcja 1. Guten Tag. Mein Name ist ...",
+        da: "Lektion 1. Guten Tag. Mein Name ist ...",
+        uk: "Урок 1. Guten Tag. Mein Name ist ..."
+    },
+    "vhs_lesson_2": {
+        en: "Lektion 2. Meine Familie",
+        de: "Lektion 2. Meine Familie",
+        cs: "Lekce 2. Meine Familie",
+        pl: "Lekcja 2. Meine Familie",
+        da: "Lektion 2. Meine Familie",
+        uk: "Урок 2. Meine Familie"
+    },
+    "vhs_lesson_3": {
+        en: "Lektion 3. Einkaufen",
+        de: "Lektion 3. Einkaufen",
+        cs: "Lekce 3. Einkaufen",
+        pl: "Lekcja 3. Einkaufen",
+        da: "Lektion 3. Einkaufen",
+        uk: "Урок 3. Einkaufen"
+    },
+    "vhs_lesson_4": {
+        en: "Lektion 4. Meine Wohnung",
+        de: "Lektion 4. Meine Wohnung",
+        cs: "Lekce 4. Meine Wohnung",
+        pl: "Lekcja 4. Meine Wohnung",
+        da: "Lektion 4. Meine Wohnung",
+        uk: "Урок 4. Meine Wohnung"
+    },
+    "vhs_lesson_5": {
+        en: "Lektion 5. Mein Tag",
+        de: "Lektion 5. Mein Tag",
+        cs: "Lekce 5. Mein Tag",
+        pl: "Lekcja 5. Mein Tag",
+        da: "Lektion 5. Mein Tag",
+        uk: "Урок 5. Mein Tag"
+    },
+    "vhs_lesson_6": {
+        en: "Lektion 6. Freizeit",
+        de: "Lektion 6. Freizeit",
+        cs: "Lekce 6. Freizeit",
+        pl: "Lekcja 6. Freizeit",
+        da: "Lektion 6. Freizeit",
+        uk: "Урок 6. Freizeit"
+    },
+    "vhs_lesson_7": {
+        en: "Lektion 7. Kinder und Schule",
+        de: "Lektion 7. Kinder und Schule",
+        cs: "Lekce 7. Kinder und Schule",
+        pl: "Lekcja 7. Kinder und Schule",
+        da: "Lektion 7. Kinder und Schule",
+        uk: "Урок 7. Kinder und Schule"
     }
 };

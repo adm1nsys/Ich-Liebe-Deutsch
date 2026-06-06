@@ -9,6 +9,18 @@ const COURSE_MODULES = [
         ]
     },
     {
+        levelKey: "module_vhs_title",
+        topics: [
+            "vhs_lesson_1",
+            "vhs_lesson_2",
+            "vhs_lesson_3",
+            "vhs_lesson_4",
+            "vhs_lesson_5",
+            "vhs_lesson_6",
+            "vhs_lesson_7"
+        ]
+    },
+    {
         levelKey: "module_1_title",
         topics: [
             "module_1_topic_1",
@@ -46,6 +58,13 @@ const TOPIC_ROUTES = {
     module_0_topic_1: "Alphabet",
     module_0_topic_2: "Pronunciation",
     module_0_topic_3: "Vocabulary",
+    vhs_lesson_1: "VhsLesson1",
+    vhs_lesson_2: "VhsLesson2",
+    vhs_lesson_3: "VhsLesson3",
+    vhs_lesson_4: "VhsLesson4",
+    vhs_lesson_5: "VhsLesson5",
+    vhs_lesson_6: "VhsLesson6",
+    vhs_lesson_7: "VhsLesson7",
     module_1_topic_1: "Pronouns",
     module_1_topic_2: "VerbConjugation",
     module_1_topic_3: "HabenSein",
@@ -54,13 +73,28 @@ const TOPIC_ROUTES = {
     module_1_topic_6: "InterrogativeSentences",
     module_1_topic_7: "QuestionWords",
     module_1_topic_8: "Negation",
-    module_1_topic_15: "PossessivePronouns"
+    module_1_topic_12: "NominativeCase",
+    module_1_topic_13: "AccusativeCase",
+    module_1_topic_14: "PluralNouns",
+    module_1_topic_15: "PossessivePronouns",
+    module_1_topic_16: "ModalVerbs",
+    module_1_topic_17: "SeparableVerbs",
+    module_1_topic_18: "BasicPrepositions",
+    module_1_topic_19: "NumbersTimeDates",
+    module_1_topic_20: "BasicStructures"
 };
 
 const TOPIC_SEARCH_TERMS = {
     module_0_topic_1: "alphabet abc buchstaben алфавіт буквы літери",
     module_0_topic_2: "pronunciation aussprache вимова произношение sound звуки",
     module_0_topic_3: "vocabulary words wortschatz словник словарь слова lernen learned lists",
+    vhs_lesson_1: "schritt fuer schritt 1 lektion 1 guten tag name personalien alphabet countries languages ich du sie kommen heissen sprechen sein aus",
+    vhs_lesson_2: "schritt fuer schritt 1 lektion 2 meine familie wie gehts brother sister wohnen leben haben mein meine dein deine",
+    vhs_lesson_3: "schritt fuer schritt 1 lektion 3 einkaufen lebensmittel preise mengen ein eine kein keine moechten plural",
+    vhs_lesson_4: "schritt fuer schritt 1 lektion 4 meine wohnung zimmer moebel farben der die das hier dort nicht kein",
+    vhs_lesson_5: "schritt fuer schritt 1 lektion 5 mein tag uhrzeit wochentage tagesablauf trennbare verben am um von bis",
+    vhs_lesson_6: "schritt fuer schritt 1 lektion 6 freizeit wetter hobbies akkusativ ja nein doch lesen treffen nehmen fahren",
+    vhs_lesson_7: "schritt fuer schritt 1 lektion 7 kinder schule koennen wollen perfekt haben sein satzklammer",
     module_1_topic_1: "pronouns займенники местоимения ich mich mir du dich dir nominativ akkusativ dativ",
     module_1_topic_2: "verb conjugation prasens präsens відмінювання спряжение gehen sitzen sollen mussen müssen konnen können wollen mochten möchten durfen dürfen",
     module_1_topic_3: "haben sein ist bist bin war hat verbs дієслова глаголы",
@@ -520,6 +554,22 @@ styleElement.textContent = `
         color: var(--text-primary);
     }
 
+    .footer-credit {
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .footer-links .footer-credit-link {
+        color: #f5af19 !important;
+        text-decoration: underline !important;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.18em;
+    }
+
+    .footer-links .footer-credit-link:hover {
+        color: #ffcf5a !important;
+    }
+
     @media (max-width: 760px) {
         footer {
             margin-top: 2rem;
@@ -743,17 +793,13 @@ clearSearchBtn.addEventListener("click", () => {
 // ==========================================
 const footerElement = document.createElement("footer");
 
-const noteDiv = document.createElement("div");
-noteDiv.classList.add("footer-note");
-noteDiv.textContent = t("home", "footer_note");
-footerElement.appendChild(noteDiv);
-
 const linksDiv = document.createElement("div");
 linksDiv.classList.add("footer-links");
 
 const SOCIAL_LINKS = [
     { text: "GitHub", url: "https://github.com/adm1nsys" },
     { text: "Instagram", url: "https://www.instagram.com/_george_.jpg/" },
+    { prefix: "Thanks for help ", text: "@___fabn___", url: "https://www.instagram.com/___fabn___/", className: "footer-credit-link" },
     { text: t("home", "other_languages"), url: "#" }
 ];
 
@@ -761,7 +807,21 @@ SOCIAL_LINKS.forEach(linkInfo => {
     const aTag = document.createElement("a");
     aTag.href = linkInfo.url;
     aTag.target = "_blank";
+    aTag.rel = "noopener noreferrer";
     aTag.textContent = linkInfo.text;
+
+    if (linkInfo.className) {
+        aTag.classList.add(linkInfo.className);
+    }
+
+    if (linkInfo.prefix) {
+        const creditSpan = document.createElement("span");
+        creditSpan.classList.add("footer-credit");
+        creditSpan.append(document.createTextNode(linkInfo.prefix), aTag);
+        linksDiv.appendChild(creditSpan);
+        return;
+    }
+
     linksDiv.appendChild(aTag);
 });
 
