@@ -627,19 +627,10 @@ const VOCABULARY = [
         { de: "der Kuchen",             key: "word_kuchen" },
         { de: "ein Kuchen",             key: "word_ein_kuchen" },
         { de: "der Keks",               key: "word_keks" },
-        // Dairy
-        { de: "die Milch",              key: "word_milch" },
-        { de: "der Käse",               key: "word_kaese" },
-        { de: "der Joghurt",            key: "word_joghurt" },
-        { de: "die Butter",             key: "word_butter" },
         { de: "das Ei",                 key: "word_ei" },
         { de: "die Eier",               key: "word_eier" },
-        { de: "die Sahne",              key: "word_sahne" },
-        // Meat and fish
+        // Meat, fish and sausages
         { de: "das Fleisch",            key: "word_fleisch" },
-        { de: "das Hähnchen",           key: "word_haehnchen" },
-        { de: "das Rindfleisch",        key: "word_rindfleisch" },
-        { de: "das Schweinefleisch",    key: "word_schweinefleisch" },
         { de: "die Wurst",              key: "word_wurst" },
         { de: "das Würstchen",          key: "word_wuerstchen" },
         { de: "ein Würstchen",          key: "word_ein_wuerstchen" },
@@ -647,19 +638,6 @@ const VOCABULARY = [
         { de: "der Fisch",              key: "word_fisch" },
         { de: "der Lachs",              key: "word_lachs_f" },
         { de: "der Thunfisch",          key: "word_thunfisch" },
-        // Vegetables
-        { de: "das Gemüse",             key: "word_gemuese" },
-        { de: "die Kartoffel",          key: "word_kartoffel" },
-        { de: "die Tomate",             key: "word_tomate" },
-        { de: "die Gurke",              key: "word_gurke" },
-        { de: "der Paprika",            key: "word_paprika_g" },
-        { de: "die Zwiebel",            key: "word_zwiebel" },
-        { de: "der Knoblauch",          key: "word_knoblauch" },
-        { de: "der Salat",              key: "word_salat_g" },
-        { de: "die Karotte",            key: "word_karotte" },
-        { de: "der Spinat",             key: "word_spinat" },
-        { de: "der Brokkoli",           key: "word_brokkoli" },
-        { de: "die Erbsen",             key: "word_erbsen" },
         // Fruits
         { de: "das Obst",               key: "word_obst" },
         { de: "der Apfel",              key: "word_apfel" },
@@ -735,6 +713,57 @@ const VOCABULARY = [
         { de: "die Tasse",              key: "word_tasse" },
         { de: "die Pfanne",             key: "word_pfanne" },
         { de: "das Rezept",             key: "word_rezept" }
+    ] },
+    { catKey: "cat_milk_products", words: [
+        { de: "die Milch",              key: "word_milch" },
+        { de: "die Butter",             key: "word_butter" },
+        { de: "der Kefir",              key: "word_kefir" },
+        { de: "der Käse",               key: "word_kaese" },
+        { de: "der Quark",              key: "word_quark" },
+        { de: "der Joghurt",            key: "word_joghurt" },
+        { de: "die Sahne",              key: "word_sahne" },
+        { de: "der Schmand",            key: "word_schmand" },
+        { de: "die Molke",              key: "word_molke" },
+        { de: "die Buttermilch",        key: "word_buttermilch" },
+        { de: "die Dickmilch",          key: "word_dickmilch" },
+        { de: "der Sauerrahm",          key: "word_sauerrahm" },
+        { de: "der Hüttenkäse",         key: "word_huettenkaese" }
+    ] },
+    { catKey: "cat_meat_products", words: [
+        { de: "das Hähnchen",           key: "word_haehnchen" },
+        { de: "das Geflügel",           key: "word_gefluegel" },
+        { de: "das Rindfleisch",        key: "word_rindfleisch" },
+        { de: "das Lammfleisch",        key: "word_lammfleisch" },
+        { de: "das Kalbfleisch",        key: "word_kalbfleisch" },
+        { de: "das Schweinefleisch",    key: "word_schweinefleisch" }
+    ] },
+    { catKey: "cat_vegetables", words: [
+        { de: "das Gemüse",             key: "word_gemuese" },
+        { de: "die Tomate, -n",         key: "word_tomate" },
+        { de: "die Gurke, -n",          key: "word_gurke" },
+        { de: "der Salat, -e",          key: "word_salat_g" },
+        { de: "der Brokkoli",           key: "word_brokkoli" },
+        { de: "die Zucchini, -s",       key: "word_zucchini" },
+        { de: "die/der Paprika, -s",    key: "word_paprika_g" },
+        { de: "die Karotte, -n",        key: "word_karotte" },
+        { de: "die Kartoffel, -n",      key: "word_kartoffel" },
+        { de: "die Zwiebel, -n",        key: "word_zwiebel" },
+        { de: "die Bohne, -n",          key: "word_bohne" },
+        { de: "der Kohl",               key: "word_kohl" },
+        { de: "die Möhre, -n",          key: "word_moehre" },
+        { de: "der Spargel, -",         key: "word_spargel" },
+        { de: "der Kürbis, -se",        key: "word_kuerbis" },
+        { de: "der Porree, -s",         key: "word_porree" },
+        { de: "der Knoblauch",          key: "word_knoblauch" },
+        { de: "der Rettich, -e",        key: "word_rettich" },
+        { de: "die Rübe, -n",           key: "word_ruebe" },
+        { de: "die Rote Bete, -n",      key: "word_rote_bete" },
+        { de: "der Weißkohl",           key: "word_weisskohl" },
+        { de: "der Rotkohl",            key: "word_rotkohl" },
+        { de: "der Blumenkohl",         key: "word_blumenkohl" },
+        { de: "der Rosenkohl",          key: "word_rosenkohl" },
+        { de: "der Spinat",             key: "word_spinat" },
+        { de: "die Erbsen",             key: "word_erbsen" }
     ] },
     { catKey: "cat_home", words: [
         // Buildings and housing types
@@ -2201,12 +2230,12 @@ selectActions.classList.add("select-actions");
 const selectAllBtn = document.createElement("button");
 selectAllBtn.classList.add("btn", "small"); selectAllBtn.textContent = t("vocabulary", "select_all");
 selectAllBtn.addEventListener('click', () => {
-    document.querySelectorAll('.word-checkbox input').forEach(cb => cb.checked = true);
+    document.querySelectorAll('.word-checkbox input:not(:disabled)').forEach(cb => cb.checked = true);
 });
 const deselectAllBtn = document.createElement("button");
 deselectAllBtn.classList.add("btn", "small"); deselectAllBtn.textContent = t("vocabulary", "deselect_all");
 deselectAllBtn.addEventListener('click', () => {
-    document.querySelectorAll('.word-checkbox input').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.word-checkbox input:not(:disabled)').forEach(cb => cb.checked = false);
 });
 selectActions.appendChild(selectAllBtn);
 selectActions.appendChild(deselectAllBtn);
@@ -2286,6 +2315,7 @@ getVocabularyGroups().forEach(cat => {
         content.appendChild(label);
 
         wordDOMNodes.push({
+            key: w.key,
             deText: w.de.toLowerCase(),
             nativeText: nativeWordText.toLowerCase(),
             domElement: label
@@ -2306,24 +2336,33 @@ getVocabularyGroups().forEach(cat => {
 rulesSection.appendChild(rulesContainer);
 
 // Search functionality
-searchInput.addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase().trim();
-    
+function getListedWordKeys() {
+    return new Set(personalState.lists.flatMap(list => list.wordKeys || []));
+}
+
+function syncVocabularyListVisibility(term = searchInput.value.toLowerCase().trim()) {
+    const listedWordKeys = getListedWordKeys();
+
     categoryDOMNodes.forEach(cat => {
         let hasVisibleWord = false;
-        
+
         cat.words.forEach(w => {
-            if (term === '' || w.deText.includes(term) || w.nativeText.includes(term)) {
-                w.domElement.style.display = "flex";
-                hasVisibleWord = true;
-            } else {
-                w.domElement.style.display = "none";
+            const checkbox = w.domElement.querySelector("input");
+            const isInPersonalList = listedWordKeys.has(w.key);
+            const matchesSearch = term === '' || w.deText.includes(term) || w.nativeText.includes(term);
+            const shouldShow = !isInPersonalList && matchesSearch;
+
+            w.domElement.style.display = shouldShow ? "flex" : "none";
+            if (checkbox) {
+                checkbox.disabled = isInPersonalList;
+                if (isInPersonalList) checkbox.checked = false;
             }
+
+            if (shouldShow) hasVisibleWord = true;
         });
-        
+
         if (hasVisibleWord) {
             cat.domElement.style.display = "block";
-            // Auto-expand if searching, collapse if empty
             if (term !== '') {
                 cat.domElement.classList.add('open');
                 cat.headerElement.querySelector('.arrow').textContent = '▲';
@@ -2335,6 +2374,10 @@ searchInput.addEventListener('input', (e) => {
             cat.domElement.style.display = "none";
         }
     });
+}
+
+searchInput.addEventListener('input', (e) => {
+    syncVocabularyListVisibility(e.target.value.toLowerCase().trim());
 });
 
 // Settings (Repeat count)
@@ -2580,6 +2623,7 @@ function addWordToActiveList(wordKey) {
         savePersonalState();
     }
     renderPersonalListsUI();
+    syncVocabularyListVisibility();
 }
 
 function removeWordFromActiveList(wordKey) {
@@ -2587,6 +2631,7 @@ function removeWordFromActiveList(wordKey) {
     activeList.wordKeys = activeList.wordKeys.filter(key => key !== wordKey);
     savePersonalState();
     renderPersonalListsUI();
+    syncVocabularyListVisibility();
 }
 
 function selectActiveListWords() {
@@ -2918,4 +2963,5 @@ document.addEventListener('keydown', (e) => {
 
 // Init
 renderPersonalListsUI();
+syncVocabularyListVisibility();
 showRules();

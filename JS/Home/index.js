@@ -9,6 +9,12 @@ const COURSE_MODULES = [
         ]
     },
     {
+        levelKey: "module_tests_title",
+        topics: [
+            "module_tests_topic_1"
+        ]
+    },
+    {
         levelKey: "module_vhs_title",
         topics: [
             "vhs_lesson_1",
@@ -58,6 +64,7 @@ const TOPIC_ROUTES = {
     module_0_topic_1: "Alphabet",
     module_0_topic_2: "Pronunciation",
     module_0_topic_3: "Vocabulary",
+    module_tests_topic_1: "Tests",
     vhs_lesson_1: "VhsLesson1",
     vhs_lesson_2: "VhsLesson2",
     vhs_lesson_3: "VhsLesson3",
@@ -88,6 +95,7 @@ const TOPIC_SEARCH_TERMS = {
     module_0_topic_1: "alphabet abc buchstaben алфавіт буквы літери",
     module_0_topic_2: "pronunciation aussprache вимова произношение sound звуки",
     module_0_topic_3: "vocabulary words wortschatz словник словарь слова lernen learned lists",
+    module_tests_topic_1: "tests typing speed диктант dictation words печать друк слова произнести schreiben hören",
     vhs_lesson_1: "schritt fuer schritt 1 lektion 1 guten tag name personalien alphabet countries languages ich du sie kommen heissen sprechen sein aus",
     vhs_lesson_2: "schritt fuer schritt 1 lektion 2 meine familie wie gehts brother sister wohnen leben haben mein meine dein deine",
     vhs_lesson_3: "schritt fuer schritt 1 lektion 3 einkaufen lebensmittel preise mengen ein eine kein keine moechten plural",

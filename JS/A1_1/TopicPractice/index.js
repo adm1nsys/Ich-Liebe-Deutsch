@@ -516,9 +516,19 @@ const VHS_LESSON_DETAILS = {
 
 const CURRENT_TOPIC = TOPIC_PRACTICE[PAGE_NAME] || TOPIC_PRACTICE.NominativeCase;
 const lang = getLanguage();
+const HAS_DIALOG_MODE = Boolean(VHS_LESSON_DETAILS[PAGE_NAME]?.dialog?.length);
 let currentIndex = 0;
-let selectedAnswer = null;
+let currentItem = null;
+let currentQueue = [];
+let selectedAnswer = "";
 let score = 0;
+let mistakes = 0;
+let practiceCount = 5;
+let practiceFormat = "BLOCKS";
+let practiceMode = "ASSISTED";
+let attemptsLeft = 3;
+let answerLocked = false;
+let statsRunId = null;
 
 function localText(value) {
     if (typeof value === "string") return value;
@@ -799,9 +809,269 @@ styleElement.textContent = `
         line-height: 1.45;
         margin-bottom: 1rem;
     }
+    .hint-box strong { color: var(--accent-gold); }
     .feedback { min-height: 1.5rem; font-weight: 800; text-align: center; margin-bottom: 1rem; }
     .feedback.ok { color: var(--accent-green); }
     .feedback.bad { color: var(--accent-red); }
+    .section-title {
+        width: 100%;
+        color: var(--text-secondary);
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-top: 1.35rem;
+        text-transform: uppercase;
+    }
+    .pill-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        width: 100%;
+    }
+    .pill-btn {
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        background: var(--surface-color);
+        color: var(--text-primary);
+        padding: 0.75rem 1.25rem;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+    .pill-btn:hover {
+        border-color: var(--accent-gold);
+        transform: translateY(-2px);
+    }
+    .pill-btn.active {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-red));
+        color: white;
+        box-shadow: 0 4px 12px rgba(255, 75, 43, 0.28);
+    }
+    .action-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+    .game-section {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+    }
+    .task-text {
+        color: var(--text-primary);
+        font-size: 1.08rem;
+        font-weight: 700;
+        line-height: 1.45;
+        margin-bottom: 1rem;
+    }
+    .sentence-text {
+        color: var(--text-primary);
+        font-size: 1.65rem;
+        font-weight: 800;
+        line-height: 1.35;
+    }
+    .blank {
+        color: var(--accent-gold);
+        border-bottom: 3px solid var(--accent-gold);
+        padding: 0 0.25rem;
+    }
+    .answer-options {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .answer-block {
+        min-width: 105px;
+        border: 1px solid var(--border-color);
+        border-radius: 0.6rem;
+        background: var(--surface-color);
+        color: var(--text-primary);
+        padding: 0.85rem 1rem;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 800;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .answer-block:hover {
+        border-color: var(--accent-gold);
+        transform: translateY(-2px);
+    }
+    .answer-block.selected {
+        border-color: var(--accent-gold);
+        background: rgba(245, 175, 25, 0.12);
+        color: var(--accent-gold);
+    }
+    .answer-block.correct {
+        border-color: var(--accent-green);
+        background: rgba(16, 185, 129, 0.16);
+        color: var(--accent-green);
+    }
+    .answer-block.wrong {
+        border-color: var(--accent-red);
+        background: rgba(255, 75, 43, 0.12);
+        color: var(--accent-red);
+    }
+    .typing-area {
+        display: none;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .typing-input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 2px solid var(--border-color);
+        border-radius: 1rem;
+        background: var(--surface-color);
+        color: var(--text-primary);
+        padding: 1.1rem;
+        font: inherit;
+        font-size: 1.2rem;
+        font-weight: 800;
+        text-align: center;
+        outline: none;
+        transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .typing-input:focus { border-color: var(--accent-gold); }
+    .typing-input.correct { border-color: var(--accent-green); background: rgba(16, 185, 129, 0.1); }
+    .typing-input.wrong { border-color: var(--accent-red); background: rgba(255, 75, 43, 0.1); }
+    .feedback-message {
+        min-height: 1.5rem;
+        margin: 0.75rem 0 1rem;
+        text-align: center;
+        white-space: pre-line;
+        font-size: 1.08rem;
+        font-weight: 800;
+    }
+    .feedback-message.correct { color: var(--accent-green); }
+    .feedback-message.error { color: var(--accent-red); }
+    .dialog-build {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+    }
+    .dialog-build-line {
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        background: var(--content-bg);
+        padding: 0.75rem 0.9rem;
+        color: var(--text-primary);
+        line-height: 1.4;
+    }
+    .dialog-build-line.pending {
+        color: var(--text-secondary);
+        border-style: dashed;
+    }
+    .finish-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 2rem;
+        background: var(--bg-color);
+        text-align: center;
+    }
+    .finish-icon {
+        color: var(--accent-gold);
+        font-size: 4.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+    .settings-panel {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: end;
+    }
+    .setting-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+    }
+    .setting-label {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+    .mode-buttons, .count-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .mode-btn, .count-btn, .hint-btn {
+        border: 1px solid var(--border-color);
+        border-radius: 0.65rem;
+        background: var(--surface-color);
+        color: var(--text-primary);
+        padding: 0.7rem 0.9rem;
+        font-family: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .mode-btn:hover, .count-btn:hover, .hint-btn:hover {
+        border-color: var(--accent-gold);
+        transform: translateY(-2px);
+    }
+    .mode-btn.active, .count-btn.active {
+        border-color: var(--accent-gold);
+        background: var(--accent-gold);
+        color: var(--accent-contrast, #111827);
+    }
+    .answer-input {
+        display: none;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        background: var(--bg-color);
+        color: var(--text-primary);
+        padding: 0.9rem 1rem;
+        font: inherit;
+        font-size: 1.05rem;
+        outline: none;
+        margin-bottom: 1rem;
+    }
+    .answer-input:focus {
+        border-color: var(--accent-gold);
+        box-shadow: 0 0 0 2px rgba(245, 175, 25, 0.18);
+    }
+    .practice-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+    }
+    .meta-pill {
+        border: 1px solid var(--border-color);
+        border-radius: 999px;
+        background: var(--content-bg);
+        color: var(--text-secondary);
+        padding: 0.4rem 0.65rem;
+        font-size: 0.82rem;
+        font-weight: 800;
+    }
+    .meta-pill strong { color: var(--accent-gold); }
+    .hint-btn {
+        display: none;
+        margin-bottom: 1rem;
+    }
     @media (max-width: 640px) {
         main { padding: 5.5rem 1rem 1rem; }
         h1 { font-size: 1.65rem; }
@@ -809,6 +1079,9 @@ styleElement.textContent = `
         .phrase-row { grid-template-columns: 1fr; gap: 0.35rem; }
         .dialog-line { width: 100%; }
         .btn-primary, .btn-secondary { min-width: 100%; }
+        .settings-panel { grid-template-columns: 1fr; }
+        .status-bar { align-items: flex-start; gap: 0.75rem; flex-direction: column; }
+        .practice-meta { justify-content: flex-start; }
     }
 `;
 document.head.appendChild(styleElement);
@@ -857,130 +1130,490 @@ if (richLessonDetails) {
     rulesSection.appendChild(detailsWrapper);
 }
 
-const actionRow = document.createElement("div");
-actionRow.className = "action-row";
-const startBtn = document.createElement("button");
-startBtn.className = "btn-primary";
-startBtn.textContent = lang === "uk" ? "Почати тренування" : "Start practice";
-startBtn.onclick = startPractice;
-actionRow.appendChild(startBtn);
-rulesSection.appendChild(actionRow);
+function uiText(key) {
+    const texts = {
+        settings_format: { en: "Practice format", uk: "Формат тренування" },
+        format_blocks: { en: "Blocks", uk: "Блоки" },
+        format_typing: { en: "Typing", uk: "Ввід" },
+        format_dialogue: { en: "Build dialogue", uk: "Побудова діалогу" },
+        settings_count: { en: "Number of tasks", uk: "Кількість завдань" },
+        start_assisted: { en: "Practice with hints", uk: "Тренування з підказками" },
+        start_unassisted: { en: "Test without hints", uk: "Тест без підказок" },
+        module_title: { en: "Lesson practice", uk: "Тренування уроку" },
+        task_label: { en: "Task", uk: "Завдання" },
+        sentence_label: { en: "Sentence", uk: "Речення" },
+        dialogue_label: { en: "Dialogue", uk: "Діалог" },
+        choose_block: { en: "Choose the correct answer.", uk: "Обери правильну відповідь." },
+        type_here: { en: "Type here", uk: "Введи відповідь" },
+        check_btn: { en: "Check", uk: "Перевірити" },
+        next_btn: { en: "Next", uk: "Далі" },
+        finish_btn: { en: "Finish", uk: "Завершити" },
+        correct_msg: { en: "Correct.", uk: "Правильно." },
+        incorrect_msg: { en: "Not quite.", uk: "Не зовсім." },
+        tries_left: { en: "tries left: {count}", uk: "спроб залишилось: {count}" },
+        max_errors_reached: { en: "Three mistakes. Back to the rules.", uk: "Три помилки. Повернись до правил." },
+        correct_answer_was: { en: "Correct answer:", uk: "Правильна відповідь:" },
+        hint_label: { en: "Hint", uk: "Підказка" },
+        no_answer: { en: "Choose or type an answer first.", uk: "Спершу обери або введи відповідь." },
+        game_over: { en: "Practice complete", uk: "Тренування завершено" },
+        finish_summary: { en: "Result: {score} / {count}. Mistakes: {mistakes}.", uk: "Результат: {score} / {count}. Помилки: {mistakes}." },
+        back_to_rules: { en: "Back to rules", uk: "До правил" },
+        dialogue_prompt: { en: "Choose the next line.", uk: "Обери наступну репліку." },
+        dialogue_translation: { en: "Translation", uk: "Переклад" },
+        dialogue_empty: { en: "Dialogue mode is available for VHS lessons with mini-dialogues.", uk: "Режим діалогу доступний для VHS-уроків з міні-діалогами." }
+    };
+    return texts[key]?.[lang] || texts[key]?.en || key;
+}
+
+function escapeHtml(value) {
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function sentenceWithBlank(sentence) {
+    return escapeHtml(sentence).replace("___", `<span class="blank">___</span>`);
+}
+
+function normalizeAnswer(value) {
+    return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/ß/g, "ss")
+        .replace(/[.,!?;:()[\]{}"“”„«»]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLocaleLowerCase();
+}
+
+function createSettingGroup(title, options, activeVal, onSelect) {
+    const groupTitle = document.createElement("div");
+    groupTitle.className = "section-title";
+    groupTitle.textContent = title;
+    rulesSection.appendChild(groupTitle);
+
+    const group = document.createElement("div");
+    group.className = "pill-group";
+    options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.className = "pill-btn";
+        if (option.val === activeVal) btn.classList.add("active");
+        btn.textContent = option.label;
+        btn.onclick = () => {
+            Array.from(group.children).forEach(child => child.classList.remove("active"));
+            btn.classList.add("active");
+            onSelect(option.val);
+        };
+        group.appendChild(btn);
+    });
+    rulesSection.appendChild(group);
+}
+
+const formatOptions = [
+    { val: "BLOCKS", label: uiText("format_blocks") },
+    { val: "TYPING", label: uiText("format_typing") }
+];
+if (HAS_DIALOG_MODE) {
+    formatOptions.push({ val: "DIALOGUE", label: uiText("format_dialogue") });
+}
+
+createSettingGroup(uiText("settings_format"), formatOptions, practiceFormat, value => practiceFormat = value);
+
+rulesSection.appendChild(AppPracticeModes.createCountSelector(
+    uiText("settings_count"),
+    practiceCount,
+    value => practiceCount = value
+));
+
+const actionGroup = document.createElement("div");
+actionGroup.className = "action-group";
+
+const startAssistedBtn = document.createElement("button");
+startAssistedBtn.className = "btn-primary";
+startAssistedBtn.textContent = uiText("start_assisted");
+startAssistedBtn.onclick = () => startGame("ASSISTED");
+
+const startUnassistedBtn = document.createElement("button");
+startUnassistedBtn.className = "btn-secondary";
+startUnassistedBtn.textContent = uiText("start_unassisted");
+startUnassistedBtn.onclick = () => startGame("UNASSISTED");
+
+actionGroup.appendChild(startAssistedBtn);
+actionGroup.appendChild(startUnassistedBtn);
+rulesSection.appendChild(actionGroup);
 main.appendChild(rulesSection);
 
-const practiceSection = document.createElement("section");
-practiceSection.className = "practice-container";
-practiceSection.innerHTML = `
-    <div class="status-bar">
-        <span>${lang === "uk" ? "Тренування" : "Practice"}</span>
-        <span class="progress-counter"></span>
-    </div>
-    <div class="task-card">
-        <div class="task-label">${lang === "uk" ? "Обери правильний варіант" : "Choose the correct option"}</div>
-        <div class="sentence"></div>
-        <div class="options"></div>
-        <div class="hint-box"></div>
-        <div class="feedback"></div>
-        <button class="btn-primary check-btn">${lang === "uk" ? "Перевірити" : "Check"}</button>
-    </div>
-`;
-main.appendChild(practiceSection);
+const gameSection = document.createElement("section");
+gameSection.className = "game-section";
+
+const statusBar = document.createElement("div");
+statusBar.className = "status-bar";
+const statusLeft = document.createElement("div");
+statusLeft.textContent = uiText("module_title");
+const statusRight = document.createElement("div");
+statusRight.className = "progress-counter";
+statusBar.appendChild(statusLeft);
+statusBar.appendChild(statusRight);
+
+const taskCard = document.createElement("div");
+taskCard.className = "task-card";
+const taskLabel = document.createElement("div");
+taskLabel.className = "task-label";
+taskLabel.textContent = uiText("task_label");
+const taskText = document.createElement("div");
+taskText.className = "task-text";
+const sentenceLabel = document.createElement("div");
+sentenceLabel.className = "task-label";
+sentenceLabel.textContent = uiText("sentence_label");
+const sentenceText = document.createElement("div");
+sentenceText.className = "sentence-text";
+taskCard.appendChild(taskLabel);
+taskCard.appendChild(taskText);
+taskCard.appendChild(sentenceLabel);
+taskCard.appendChild(sentenceText);
+
+const hintBox = document.createElement("div");
+hintBox.className = "hint-box";
+
+const answerOptions = document.createElement("div");
+answerOptions.className = "answer-options";
+
+const typingArea = document.createElement("div");
+typingArea.className = "typing-area";
+const typingInput = document.createElement("input");
+typingInput.className = "typing-input";
+typingInput.type = "text";
+typingInput.autocomplete = "off";
+typingInput.autocapitalize = "off";
+typingInput.spellcheck = false;
+typingInput.placeholder = uiText("type_here");
+typingArea.appendChild(typingInput);
+
+const feedbackMsg = document.createElement("div");
+feedbackMsg.className = "feedback-message";
+
+const checkBtn = document.createElement("button");
+checkBtn.className = "btn-primary";
+checkBtn.style.width = "100%";
+checkBtn.textContent = uiText("check_btn");
+checkBtn.onclick = verifyAnswer;
+
+gameSection.appendChild(statusBar);
+gameSection.appendChild(taskCard);
+gameSection.appendChild(hintBox);
+gameSection.appendChild(answerOptions);
+gameSection.appendChild(typingArea);
+gameSection.appendChild(feedbackMsg);
+gameSection.appendChild(checkBtn);
+main.appendChild(gameSection);
 document.body.appendChild(main);
 
-const progressCounter = practiceSection.querySelector(".progress-counter");
-const sentenceEl = practiceSection.querySelector(".sentence");
-const optionsEl = practiceSection.querySelector(".options");
-const hintEl = practiceSection.querySelector(".hint-box");
-const feedbackEl = practiceSection.querySelector(".feedback");
-const checkBtn = practiceSection.querySelector(".check-btn");
-checkBtn.onclick = checkAnswer;
+function buildQuestionItems() {
+    return CURRENT_TOPIC.exercises.map(item => ({
+        type: "QUESTION",
+        label: uiText("task_label"),
+        meaning: localText(item.hint),
+        sentence: item.sentence,
+        answer: item.answer,
+        hint: localText(item.hint),
+        options: item.options || [item.answer]
+    }));
+}
 
-function startPractice() {
+function buildDialogueItems() {
+    const details = VHS_LESSON_DETAILS[PAGE_NAME];
+    if (!details || !details.dialog?.length) return [];
+
+    const lines = details.dialog;
+    return lines.map((line, index) => ({
+        type: "DIALOGUE",
+        label: uiText("dialogue_label"),
+        meaning: localText(line),
+        sentence: uiText("dialogue_prompt"),
+        answer: line.de,
+        hint: `${uiText("dialogue_translation")}: ${localText(line)}`,
+        options: lines.map(item => item.de),
+        step: index + 1,
+        dialogLength: lines.length
+    }));
+}
+
+function buildQueueFromItems(items, count, keepOrder = false) {
+    if (!items.length) return [];
+    const queue = [];
+    while (queue.length < count) {
+        queue.push(...(keepOrder ? items : AppPracticeModes.shuffle(items)));
+    }
+    return queue.slice(0, count);
+}
+
+function buildPracticeQueue() {
+    if (practiceFormat === "DIALOGUE") {
+        return buildQueueFromItems(buildDialogueItems(), practiceCount, true);
+    }
+
+    return buildQueueFromItems(buildQuestionItems(), practiceCount);
+}
+
+function getFormatLabel() {
+    if (practiceFormat === "TYPING") return uiText("format_typing");
+    if (practiceFormat === "DIALOGUE") return uiText("format_dialogue");
+    return uiText("format_blocks");
+}
+
+function startGame(mode) {
+    practiceMode = mode;
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
     currentIndex = 0;
     score = 0;
-    selectedAnswer = null;
+    mistakes = 0;
+    currentQueue = buildPracticeQueue();
+    if (currentQueue.length === 0) {
+        feedbackMsg.textContent = uiText("dialogue_empty");
+        feedbackMsg.className = "feedback-message error";
+        return;
+    }
+
+    if (mode === "UNASSISTED" && window.AppStats) {
+        statsRunId = window.AppStats.startRun({
+            moduleId: PAGE_NAME,
+            moduleName: localText(CURRENT_TOPIC.title),
+            mode,
+            params: [
+                { label: typeof t === "function" ? t("statistics", "questions_param") : "Questions", value: currentQueue.length },
+                { label: typeof t === "function" ? t("statistics", "format_param") : "Format", value: getFormatLabel() },
+                { label: typeof t === "function" ? t("statistics", "topic_param") : "Topic", value: localText(CURRENT_TOPIC.title) }
+            ]
+        });
+    }
+
     rulesSection.style.display = "none";
-    practiceSection.style.display = "flex";
-    renderExercise();
+    gameSection.style.display = "flex";
+    nextQuestion();
 }
 
-function renderExercise() {
-    const item = CURRENT_TOPIC.exercises[currentIndex];
-    selectedAnswer = null;
-    progressCounter.textContent = `${currentIndex + 1} / ${CURRENT_TOPIC.exercises.length}`;
-    sentenceEl.textContent = item.sentence;
-    hintEl.style.display = "none";
-    hintEl.textContent = localText(item.hint);
-    feedbackEl.textContent = "";
-    feedbackEl.className = "feedback";
-    checkBtn.textContent = lang === "uk" ? "Перевірити" : "Check";
-    checkBtn.onclick = checkAnswer;
-    optionsEl.innerHTML = "";
-    item.options.forEach(option => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = option;
-        btn.onclick = () => {
-            selectedAnswer = option;
-            optionsEl.querySelectorAll(".option-btn").forEach(el => el.classList.remove("selected"));
-            btn.classList.add("selected");
-        };
-        optionsEl.appendChild(btn);
-    });
-}
-
-function checkAnswer() {
-    const item = CURRENT_TOPIC.exercises[currentIndex];
-    if (!selectedAnswer) {
-        feedbackEl.textContent = lang === "uk" ? "Спершу обери відповідь." : "Choose an answer first.";
-        feedbackEl.className = "feedback bad";
-        return;
-    }
-
-    const isCorrect = selectedAnswer === item.answer;
-    optionsEl.querySelectorAll(".option-btn").forEach(btn => {
-        if (btn.textContent === item.answer) btn.classList.add("correct");
-        if (btn.textContent === selectedAnswer && !isCorrect) btn.classList.add("wrong");
-    });
-
-    hintEl.style.display = "block";
-    if (isCorrect) {
-        score += 1;
-        feedbackEl.textContent = lang === "uk" ? "Правильно." : "Correct.";
-        feedbackEl.className = "feedback ok";
-    } else {
-        feedbackEl.textContent = lang === "uk" ? `Не зовсім. Правильно: ${item.answer}` : `Not quite. Correct: ${item.answer}`;
-        feedbackEl.className = "feedback bad";
-    }
-
-    checkBtn.textContent = currentIndex + 1 === CURRENT_TOPIC.exercises.length
-        ? (lang === "uk" ? "Завершити" : "Finish")
-        : (lang === "uk" ? "Далі" : "Next");
-    checkBtn.onclick = nextExercise;
-}
-
-function nextExercise() {
-    currentIndex += 1;
-    if (currentIndex >= CURRENT_TOPIC.exercises.length) {
-        finishPractice();
-        return;
-    }
-    renderExercise();
-}
-
-function finishPractice() {
-    practiceSection.innerHTML = `
-        <div class="task-card">
-            <div class="rule-header">${lang === "uk" ? "Готово" : "Done"}</div>
-            <div class="rule-desc">${lang === "uk" ? "Результат" : "Score"}: ${score} / ${CURRENT_TOPIC.exercises.length}</div>
-            <div class="action-row">
-                <button class="btn-primary" id="againBtn">${lang === "uk" ? "Ще раз" : "Again"}</button>
-                <button class="btn-secondary" id="rulesBtn">${lang === "uk" ? "До правил" : "Back to rules"}</button>
-            </div>
+function renderDialogBuild(item) {
+    const cycleStart = Math.max(0, currentIndex - ((item.step || 1) - 1));
+    const previousItems = currentQueue.slice(cycleStart, currentIndex);
+    return `
+        <div class="dialog-build">
+            ${previousItems.map(line => `<div class="dialog-build-line">${escapeHtml(line.answer)}</div>`).join("")}
+            <div class="dialog-build-line pending">${escapeHtml(`${item.step}/${item.dialogLength}: ${uiText("dialogue_prompt")}`)}</div>
         </div>
     `;
-    practiceSection.querySelector("#againBtn").onclick = startPractice;
-    practiceSection.querySelector("#rulesBtn").onclick = () => {
-        practiceSection.style.display = "none";
+}
+
+function nextQuestion() {
+    if (currentIndex >= currentQueue.length) {
+        showGameOver();
+        return;
+    }
+
+    currentItem = currentQueue[currentIndex];
+    selectedAnswer = "";
+    attemptsLeft = 3;
+    answerLocked = false;
+    feedbackMsg.textContent = "";
+    feedbackMsg.className = "feedback-message";
+    typingInput.value = "";
+    typingInput.className = "typing-input";
+    checkBtn.textContent = uiText("check_btn");
+    checkBtn.onclick = verifyAnswer;
+
+    statusRight.textContent = `${currentIndex + 1} / ${currentQueue.length}`;
+    if (currentItem.type === "DIALOGUE") {
+        taskLabel.style.display = "block";
+        taskText.style.display = "block";
+        taskLabel.textContent = uiText("dialogue_label");
+        taskText.innerHTML = renderDialogBuild(currentItem);
+        sentenceLabel.style.display = practiceMode === "ASSISTED" ? "block" : "none";
+        sentenceText.style.display = practiceMode === "ASSISTED" ? "block" : "none";
+        sentenceLabel.textContent = uiText("dialogue_translation");
+        sentenceText.innerHTML = escapeHtml(currentItem.meaning);
+    } else {
+        taskLabel.style.display = practiceMode === "ASSISTED" ? "block" : "none";
+        taskText.style.display = practiceMode === "ASSISTED" ? "block" : "none";
+        taskLabel.textContent = uiText("task_label");
+        taskText.innerHTML = escapeHtml(currentItem.meaning || uiText("choose_block"));
+        sentenceLabel.style.display = "block";
+        sentenceText.style.display = "block";
+        sentenceLabel.textContent = uiText("sentence_label");
+        sentenceText.innerHTML = sentenceWithBlank(currentItem.sentence);
+    }
+
+    if (practiceMode === "ASSISTED") {
+        hintBox.style.display = "block";
+        hintBox.innerHTML = `<strong>${uiText("hint_label")}:</strong> ${escapeHtml(currentItem.hint || currentItem.answer)}`;
+    } else {
+        hintBox.style.display = "none";
+        hintBox.textContent = "";
+    }
+
+    if (practiceFormat === "TYPING") {
+        answerOptions.style.display = "none";
+        typingArea.style.display = "block";
+        typingInput.focus();
+    } else {
+        typingArea.style.display = "none";
+        answerOptions.style.display = "flex";
+        renderAnswerOptions();
+    }
+}
+
+function renderAnswerOptions() {
+    answerOptions.innerHTML = "";
+    const options = currentItem.type === "DIALOGUE"
+        ? AppPracticeModes.shuffle(currentItem.options)
+        : currentItem.options;
+
+    options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.className = "answer-block";
+        btn.textContent = option;
+        btn.onclick = () => {
+            if (answerLocked) return;
+            selectedAnswer = option;
+            Array.from(answerOptions.children).forEach(child => child.classList.remove("selected"));
+            btn.classList.add("selected");
+        };
+        answerOptions.appendChild(btn);
+    });
+}
+
+function getCurrentAnswer() {
+    return practiceFormat === "TYPING" ? typingInput.value : selectedAnswer;
+}
+
+function isCorrectAnswer(value, item) {
+    return normalizeAnswer(value) === normalizeAnswer(item.answer);
+}
+
+function verifyAnswer() {
+    if (answerLocked) {
+        currentIndex++;
+        nextQuestion();
+        return;
+    }
+
+    const answer = getCurrentAnswer();
+    if (!String(answer || "").trim()) {
+        feedbackMsg.textContent = uiText("no_answer");
+        feedbackMsg.className = "feedback-message error";
+        return;
+    }
+
+    if (isCorrectAnswer(answer, currentItem)) {
+        markCorrect();
+    } else {
+        markWrong();
+    }
+}
+
+function markCorrect() {
+    answerLocked = true;
+    score += 1;
+    feedbackMsg.textContent = uiText("correct_msg");
+    feedbackMsg.className = "feedback-message correct";
+    typingInput.classList.add("correct");
+    Array.from(answerOptions.children).forEach(btn => {
+        if (normalizeAnswer(btn.textContent) === normalizeAnswer(currentItem.answer)) btn.classList.add("correct");
+    });
+    checkBtn.textContent = currentIndex + 1 === currentQueue.length ? uiText("finish_btn") : uiText("next_btn");
+}
+
+function markWrong() {
+    mistakes += 1;
+    if (practiceMode === "UNASSISTED" && window.AppStats) window.AppStats.recordMistake(statsRunId);
+    typingInput.classList.add("wrong");
+    setTimeout(() => typingInput.classList.remove("wrong"), 400);
+    Array.from(answerOptions.children).forEach(btn => {
+        if (btn.classList.contains("selected")) btn.classList.add("wrong");
+    });
+
+    attemptsLeft--;
+    if (practiceMode === "UNASSISTED" && attemptsLeft > 0) {
+        feedbackMsg.textContent = `${uiText("incorrect_msg")} (${uiText("tries_left").replace("{count}", attemptsLeft)})`;
+        feedbackMsg.className = "feedback-message error";
+        return;
+    }
+
+    if (practiceMode === "UNASSISTED") {
+        failToRules();
+        return;
+    }
+
+    answerLocked = true;
+    feedbackMsg.textContent = `${uiText("incorrect_msg")}\n${uiText("correct_answer_was")} ${currentItem.answer}`;
+    feedbackMsg.className = "feedback-message error";
+    Array.from(answerOptions.children).forEach(btn => {
+        if (normalizeAnswer(btn.textContent) === normalizeAnswer(currentItem.answer)) btn.classList.add("correct");
+    });
+    checkBtn.textContent = currentIndex + 1 === currentQueue.length ? uiText("finish_btn") : uiText("next_btn");
+}
+
+function finishActiveStatsRun() {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.finishRun(statsRunId);
+        statsRunId = null;
+    }
+}
+
+function returnToRules() {
+    gameSection.style.display = "none";
+    rulesSection.style.display = "flex";
+}
+
+function failToRules() {
+    answerLocked = true;
+    finishActiveStatsRun();
+    feedbackMsg.textContent = `${uiText("max_errors_reached")}\n${uiText("correct_answer_was")} ${currentItem.answer}`;
+    feedbackMsg.className = "feedback-message error";
+    Array.from(answerOptions.children).forEach(btn => {
+        if (normalizeAnswer(btn.textContent) === normalizeAnswer(currentItem.answer)) btn.classList.add("correct");
+    });
+    checkBtn.textContent = uiText("back_to_rules");
+    checkBtn.onclick = returnToRules;
+}
+
+typingInput.addEventListener("keydown", event => {
+    if (gameSection.style.display === "flex" && practiceFormat === "TYPING" && event.key === "Enter") {
+        verifyAnswer();
+    }
+});
+
+function showGameOver() {
+    finishActiveStatsRun();
+
+    const finishScreen = document.createElement("div");
+    finishScreen.className = "finish-screen";
+    finishScreen.innerHTML = `
+        <div class="finish-icon">✓</div>
+        <h1 style="margin-bottom: 0.5rem;">${uiText("game_over")}</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+            ${uiText("finish_summary")
+                .replace("{score}", score)
+                .replace("{count}", currentQueue.length)
+                .replace("{mistakes}", mistakes)}
+        </p>
+        <button class="btn-primary" id="topicBackToRules">${uiText("back_to_rules")}</button>
+    `;
+    document.body.appendChild(finishScreen);
+    document.getElementById("topicBackToRules").onclick = () => {
+        finishScreen.remove();
+        gameSection.style.display = "none";
         rulesSection.style.display = "flex";
     };
 }
+
+window.addEventListener("beforeunload", () => {
+    if (statsRunId && window.AppStats) {
+        window.AppStats.cancelRun(statsRunId);
+        statsRunId = null;
+    }
+});

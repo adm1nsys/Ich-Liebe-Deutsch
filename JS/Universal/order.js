@@ -40,6 +40,9 @@ switch (PAGE_NAME) {
     case "Vocabulary":
         sync_load('JS/Zur_Information/Vocabulary/index.js');
         break;
+    case "Tests":
+        sync_load('JS/Tests/index.js');
+        break;
     case "VhsLesson1":
     case "VhsLesson2":
     case "VhsLesson3":

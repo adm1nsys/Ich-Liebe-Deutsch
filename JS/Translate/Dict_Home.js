@@ -87,6 +87,22 @@ const TRANSLATIONS_HOME = {
         da: "Fuld ordliste",
         uk: "Повний список слів"
     },
+    "module_tests_title": {
+        en: "Tests",
+        de: "Tests",
+        cs: "Testy",
+        pl: "Testy",
+        da: "Tests",
+        uk: "Тести"
+    },
+    "module_tests_topic_1": {
+        en: "Typing speed & word dictation",
+        de: "Tippgeschwindigkeit & Wortdiktat",
+        cs: "Rychlost psaní a diktát slov",
+        pl: "Szybkość pisania i dyktando słów",
+        da: "Skrivehastighed og orddiktat",
+        uk: "Швидкість друку та диктант слів"
+    },
     "module_1_title": {
         en: "A1.1 Foundation",
         de: "A1.1 Grundlage",
