@@ -527,34 +527,28 @@ styleElement.textContent = `
 
     }
 
+    /* Footer in the style of the adm1nsys project sites */
     footer {
-        padding: 2.5rem 2rem;
-        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.75rem 1.5rem;
+        margin: 4rem 0 0;
+        padding: 1.5rem 2rem 2rem;
         border-top: 1px solid var(--border-color);
-        background: var(--surface-color);
-        margin-top: 4rem;
-        transition: background-color 0.4s ease, border-color 0.4s ease;
-    }
-
-    .footer-note {
-        font-weight: 600;
-        color: var(--accent-red);
-        margin-bottom: 1.5rem;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
+        color: var(--text-secondary);
+        font: 400 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+        transition: border-color 0.4s ease;
     }
 
     .footer-links {
         display: flex;
-        justify-content: center;
-        gap: 2rem;
+        gap: 1.25rem;
     }
 
     .footer-links a {
         color: var(--text-secondary);
         text-decoration: none;
-        font-weight: 500;
         transition: color 0.4s ease;
     }
 
@@ -562,32 +556,32 @@ styleElement.textContent = `
         color: var(--text-primary);
     }
 
-    .footer-credit {
+    /* Back to the projects list, only when the visitor came from adm1nsys */
+    .back-to-projects {
+        display: inline-flex;
+        align-items: center;
+        margin-right: auto;
+        padding: 0 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
         color: var(--text-secondary);
-        font-weight: 500;
+        font: 500 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.4s ease, border-color 0.4s ease;
     }
 
-    .footer-links .footer-credit-link {
-        color: #f5af19 !important;
-        text-decoration: underline !important;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 0.18em;
-    }
-
-    .footer-links .footer-credit-link:hover {
-        color: #ffcf5a !important;
+    .back-to-projects:hover {
+        color: var(--text-primary);
     }
 
     @media (max-width: 760px) {
         footer {
             margin-top: 2rem;
-            padding: 1.5rem 1rem;
+            padding: 1.25rem 1rem 1.5rem;
         }
-
-        .footer-links {
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+    }
     }
 `;
 document.head.appendChild(styleElement);
@@ -641,6 +635,20 @@ settingsBtn.appendChild(createSVGIcon("M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a
 settingsBtn.addEventListener('click', () => {
     window.location.href = "index.html?page=Settings";
 });
+
+// Came from adm1nsys.github.io/adm1nsys: remembered for this tab, so it survives moving between pages
+try {
+    if (new URLSearchParams(window.location.search).get("from") === "adm1nsys") sessionStorage.setItem("fromAdm1nsys", "1");
+} catch (e) { /* storage blocked: no back link */ }
+let cameFromAdm1nsys = false;
+try { cameFromAdm1nsys = sessionStorage.getItem("fromAdm1nsys") === "1"; } catch (e) { }
+if (cameFromAdm1nsys) {
+    const backLink = document.createElement("a");
+    backLink.classList.add("back-to-projects");
+    backLink.href = "/adm1nsys/projects.html";
+    backLink.textContent = "‹ Projects";
+    headerElement.appendChild(backLink);
+}
 
 headerElement.appendChild(statBtn);
 headerElement.appendChild(settingsBtn);
@@ -801,38 +809,29 @@ clearSearchBtn.addEventListener("click", () => {
 // ==========================================
 const footerElement = document.createElement("footer");
 
+const copyright = document.createElement("span");
+copyright.textContent = `© ${new Date().getFullYear()} Heorhii Romanenko · MIT`;
+
 const linksDiv = document.createElement("div");
 linksDiv.classList.add("footer-links");
 
-const SOCIAL_LINKS = [
-    { text: "GitHub", url: "https://github.com/adm1nsys" },
-    { text: "Instagram", url: "https://www.instagram.com/_george_.jpg/" },
-    { prefix: "Thanks for help ", text: "@___fabn___", url: "https://www.instagram.com/___fabn___/", className: "footer-credit-link" },
-    { text: t("home", "other_languages"), url: "#" }
+const FOOTER_LINKS = [
+    { text: "adm1nsys", url: "/adm1nsys/" },
+    { text: "Source on GitHub", url: "https://github.com/adm1nsys/Ich-Liebe-Deutsch", external: true }
 ];
 
-SOCIAL_LINKS.forEach(linkInfo => {
+FOOTER_LINKS.forEach(linkInfo => {
     const aTag = document.createElement("a");
     aTag.href = linkInfo.url;
-    aTag.target = "_blank";
-    aTag.rel = "noopener noreferrer";
+    if (linkInfo.external) {
+        aTag.target = "_blank";
+        aTag.rel = "noopener noreferrer";
+    }
     aTag.textContent = linkInfo.text;
-
-    if (linkInfo.className) {
-        aTag.classList.add(linkInfo.className);
-    }
-
-    if (linkInfo.prefix) {
-        const creditSpan = document.createElement("span");
-        creditSpan.classList.add("footer-credit");
-        creditSpan.append(document.createTextNode(linkInfo.prefix), aTag);
-        linksDiv.appendChild(creditSpan);
-        return;
-    }
-
     linksDiv.appendChild(aTag);
 });
 
+footerElement.appendChild(copyright);
 footerElement.appendChild(linksDiv);
 
 // ==========================================
