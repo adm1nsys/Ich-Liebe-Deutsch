@@ -135,7 +135,7 @@ function normalizeSearchText(value) {
 // ==========================================
 const styleElement = document.createElement('style');
 styleElement.textContent = `
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    @import url('fonts/fonts.css');
 
     :root {
         /* DARK THEME (Default) */

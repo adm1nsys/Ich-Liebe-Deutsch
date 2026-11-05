@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Ich Liebe Deutsch — adm1nsys</title>
+    <meta name="description" content="My own German A1 trainer in the browser: how it is built and why.">
+    <meta name="theme-color" content="#070707" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f9f9f9" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="/adm1nsys/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/adm1nsys/fonts/fonts.css">
+    <link rel="stylesheet" href="/adm1nsys/assets/css/style.css">
+    <link rel="stylesheet" href="/adm1nsys/kit/project.css">
+    <style>
+      .shots { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(.75rem, 3vw, 1.5rem); margin: 0 0 clamp(2rem, 5vw, 3rem); }
+      .shots figure { margin: 0; }
+      .shots img { width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid var(--line-soft); }
+      .shots figcaption { margin-top: .5rem; font-size: .85rem; color: var(--muted); text-align: center; }
+      @media (max-width: 640px) { .shots { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="backdrop backdrop-short" aria-hidden="true"></div>
+
+    <main class="wrap">
+      <header class="page-head">
+        <p class="eyebrow">HTML · CSS · JavaScript</p>
+        <h1>Ich Liebe Deutsch</h1>
+        <p class="lead" data-i18n="lead"></p>
+        <div class="actions">
+          <a class="btn btn-primary" href="../" target="_blank" rel="noopener"><span data-i18n="openBtn"></span> ↗</a>
+          <a class="btn btn-ghost" href="https://github.com/adm1nsys/Ich-Liebe-Deutsch" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+        <p class="meta" data-i18n="meta"></p>
+      </header>
+
+      <div class="shots">
+        <figure><img src="home.jpg" data-i18n-alt="shot1Alt" width="1600" height="1000"><figcaption data-i18n="shot1Cap"></figcaption></figure>
+        <figure><img src="articles.jpg" data-i18n-alt="shot2Alt" width="1600" height="1000"><figcaption data-i18n="shot2Cap"></figcaption></figure>
+      </div>
+
+      <div class="folds">
+        <details class="card fold" open>
+          <summary><span data-i18n="whyTitle"></span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div class="fold-body" data-i18n-html="whyBody"></div>
+        </details>
+
+        <details class="card fold">
+          <summary><span data-i18n="whatTitle"></span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div class="fold-body" data-i18n-html="whatBody"></div>
+        </details>
+
+        <details class="card fold">
+          <summary><span data-i18n="howTitle"></span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div class="fold-body" data-i18n-html="howBody"></div>
+        </details>
+
+        <details class="card fold">
+          <summary><span data-i18n="statusTitle"></span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div class="fold-body" data-i18n-html="statusBody"></div>
+        </details>
+      </div>
+    </main>
+
+    <script>
+      const REPO = 'https://github.com/adm1nsys/Ich-Liebe-Deutsch';
+      const file = (path, label = path) => `<a href="${REPO}/tree/main/${path}" target="_blank" rel="noopener"><code>${label}</code></a>`;
+      window.PROJECT = {
+        repo: 'adm1nsys/Ich-Liebe-Deutsch',
+        license: 'MIT',
+        langs: ['de', 'en'],
+        i18n: {
+          de: {
+            lead: 'Mein eigener Deutsch-Trainer für das Niveau A1, gebaut, während ich selbst Deutsch lerne: kurze Erklärungen, Übungen und Tests im Browser — ohne Konto und ohne Server.',
+            openBtn: 'Trainer öffnen',
+            meta: 'HTML · CSS · JavaScript · ohne Framework · MIT',
+            shot1Alt: 'Startseite mit den Modulen', shot1Cap: 'Startseite: alle Module und die Suche',
+            shot2Alt: 'Übungsseite zu bestimmten und unbestimmten Artikeln', shot2Cap: 'Eine Themenseite: Erklärung, Regeln, Tabelle',
+            whyTitle: 'Warum ich ihn gebaut habe',
+            whyBody: `<p>Ich habe den Trainer geschrieben, während ich selbst Deutsch lerne — Seite für Seite, parallel zu meinem Kurs. Ein Modul folgt deshalb direkt dem Kursbuch <em>Schritt für Schritt 1</em> der VHS.</p>`,
+            whatTitle: 'Was es gibt',
+            whatBody: `<ul><li><strong>Zur Information</strong> — Alphabet, Aussprache und die vollständige Wortliste mit eigenen Lernlisten.</li><li><strong>VHS: Schritt für Schritt 1</strong> — Lektionen 1–7 passend zum Kursbuch.</li><li><strong>A1.1</strong> — Pronomen, Konjugation im Präsens, <em>haben</em> und <em>sein</em>, Zahlen, Uhrzeit und Datum.</li><li><strong>Satzbau</strong> und <strong>Artikel, Fälle &amp; Pronomen</strong> — von A1 bis B1+.</li><li><strong>Tests</strong> — Tippgeschwindigkeit und Wortdiktat.</li></ul><p>Antworten gibt man durch Antippen von Bausteinen oder durch Tippen. Dazu kommen eine Suche über Module, Regeln und Wörter, eine Statistik und Farbthemen. Die Oberfläche gibt es auf Englisch, Deutsch, Ukrainisch, Tschechisch, Polnisch und Dänisch.</p>`,
+            howTitle: 'Wie er gebaut ist',
+            howBody: `<p>Reines HTML und JavaScript — kein Framework, kein Build-Schritt. Jede Seite baut ihre Oberfläche in ihrem eigenen Skript auf, die Stile stehen mit im Skript. Gemeinsames liegt in ${file('JS/Universal', 'JS/Universal/')}: Navigation, Übungsmodi, Statistik und Themen.</p><p>Die Übersetzungen stehen pro Seite in eigenen Wörterbüchern in ${file('JS/Translate', 'JS/Translate/')}. Fortschritt, Statistik und Einstellungen speichert der Browser im <code>localStorage</code> — es gibt keinen Server und kein Konto, und nichts verlässt den Rechner. Die Schrift Inter liegt mit im Repository.</p>`,
+            statusTitle: 'Stand',
+            statusBody: `<p>Ein persönliches Lernprojekt, das derzeit pausiert. Der Trainer funktioniert, ist aber an manchen Stellen noch roh — vor allem auf schmalen Bildschirmen.</p>`,
+            title: 'Ich Liebe Deutsch — adm1nsys'
+          },
+          en: {
+            lead: 'My own German trainer for level A1, built while learning German myself: short explanations, exercises and tests in the browser — no account and no server.',
+            openBtn: 'Open the trainer',
+            meta: 'HTML · CSS · JavaScript · no framework · MIT',
+            shot1Alt: 'Home page with the modules', shot1Cap: 'Home: every module and the search',
+            shot2Alt: 'Topic page about definite and indefinite articles', shot2Cap: 'A topic page: explanation, rules, table',
+            whyTitle: 'Why I built it',
+            whyBody: `<p>I wrote the trainer while learning German myself — page by page, alongside my course. That is why one module follows the VHS course book <em>Schritt für Schritt 1</em> directly.</p>`,
+            whatTitle: 'What is there',
+            whatBody: `<ul><li><strong>Zur Information</strong> — alphabet, pronunciation and the full word list with personal word lists.</li><li><strong>VHS: Schritt für Schritt 1</strong> — lessons 1–7 to match the course book.</li><li><strong>A1.1</strong> — pronouns, present-tense conjugation, <em>haben</em> and <em>sein</em>, numbers, time and dates.</li><li><strong>Sentence Builder</strong> and <strong>Articles, Cases &amp; Pronouns</strong> — from A1 to B1+.</li><li><strong>Tests</strong> — typing speed and word dictation.</li></ul><p>Answers are given by tapping blocks or by typing. There is also a search across modules, rules and words, statistics and colour themes. The interface is available in English, German, Ukrainian, Czech, Polish and Danish.</p>`,
+            howTitle: 'How it is built',
+            howBody: `<p>Plain HTML and JavaScript — no framework, no build step. Every page builds its interface in its own script, with its styles inside that script. Shared parts live in ${file('JS/Universal', 'JS/Universal/')}: navigation, practice modes, statistics and themes.</p><p>Translations are kept per page in their own dictionaries in ${file('JS/Translate', 'JS/Translate/')}. Progress, statistics and settings are stored by the browser in <code>localStorage</code> — there is no server and no account, and nothing leaves the computer. The Inter font is part of the repository.</p>`,
+            statusTitle: 'Status',
+            statusBody: `<p>A personal learning project, currently on hold. The trainer works, but it is still rough in places — above all on narrow screens.</p>`,
+            title: 'Ich Liebe Deutsch — adm1nsys'
+          }
+        }
+      };
+    </script>
+    <script src="/adm1nsys/kit/project.js"></script>
+  </body>
+</html>
