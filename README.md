@@ -39,6 +39,14 @@ A personal learning project, built while learning German myself, and still rough
 together page by page — plain HTML and JavaScript, no framework and no build step, with each page's styles inside
 its script.
 
+I built the code and the interface myself. The content I did not: when I started, I knew zero German, literally zero,
+so I had no way to check whether a sentence was right. The word lists, example sentences and grammar were written by an
+AI; I no longer remember which model.
+
+The idea was simple: in my VHS German course we covered a topic in class. I gave the AI that topic, it built a trainer
+for it, and at home I practised with it, against the clock, until I knew it. If I develop the trainer further, it will
+most likely be with AI only: I want to spend my time learning German, not building the tool.
+
 ## Run locally
 
 Any static web server in the repository folder, for example:
